@@ -30,10 +30,15 @@ export const INITIAL_CONFIG: SiteConfig = {
     ],
     bestSellers: {
         title: "Signature",
-        subtitle: "The Elite Collection"
+        subtitle: "The Elite Collection",
+        btnText: "VIEW ALL"
     },
     missionVision: {
+        missionTitle: "Our Mission",
+        missionDesc: "To provide the highest quality event materials.",
         missionIcon: "🎯",
+        visionTitle: "Our Vision",
+        visionDesc: "To be the leading choice for event planners.",
         visionIcon: "👁️"
     },
     aboutMe: {
@@ -45,6 +50,12 @@ export const INITIAL_CONFIG: SiteConfig = {
             "Después de trabajar con múltiples proveedores y no encontrar el nivel de servicio y calidad que esperaba, decidí crear mi propia imprenta, diseñada para apoyar a planificadores de eventos y clientes con soluciones refinadas y confiables.",
             "Hoy tengo el privilegio de trabajar con algunos de los mejores planificadores de eventos de la ciudad 🤝. Soy conocida por mi servicio personalizado, tiempos de entrega rápidos, entrega directamente al evento, instalación profesional y una calidad de impresión que establece un estándar superior."
         ],
-        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800"
-    }
+        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800",
+        slogan: "Transforming Dreams Into Reality"
+    },
+    footer: {
+        slogan: "Excellence in Event Printing",
+        copyright: "© 2026 Magic Prints For You. All rights reserved."
+    },
+    corporateGallery: []
 };
