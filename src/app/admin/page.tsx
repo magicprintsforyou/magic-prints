@@ -1,0 +1,694 @@
+'use client';
+
+import React, { useState } from 'react';
+import { ArrowLeft, Upload, Sparkles, Save, Image as ImageIcon, CheckCircle2, Package, Tag, Layers, FolderPlus } from 'lucide-react';
+import Link from 'next/link';
+import { useProducts, Product } from '../../context/ProductContext';
+import { translations } from '../../constants/translations';
+
+export default function AdminPortal() {
+  const { 
+    catalog, 
+    t,
+    addProduct, 
+    updateProduct, 
+    deleteProduct, 
+    addCategory, 
+    updateCategory, 
+    deleteCategory,
+    updateContentValue,
+    uploadImage,
+    isContentConfigured 
+  } = useProducts();
+  
+  const [activeTab, setActiveTab] = useState<'product' | 'category' | 'content'>('product');
+  
+  // Product Form State
+  const [editingProductId, setEditingProductId] = useState<string | null>(null);
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [image, setImage] = useState('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop');
+  const [category, setCategory] = useState(Object.keys(catalog)[0] || '');
+  const [tags, setTags] = useState('');
+  
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [catSaveSuccess, setCatSaveSuccess] = useState(false);
+
+  // New Category State
+  const [editingCatId, setEditingCatId] = useState<string | null>(null);
+  const [newCatKey, setNewCatKey] = useState('');
+  const [newCatTitle, setNewCatTitle] = useState('');
+  const [newCatDesc, setNewCatDesc] = useState('');
+  const [newCatImage, setNewCatImage] = useState('');
+
+  // Content Editor State
+  const [contentSaving, setContentSaving] = useState(false);
+  const [contentSuccess, setContentSuccess] = useState(false);
+
+  // Upload State
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, setter: (val: string) => void) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      const url = await uploadImage(file);
+      setter(url);
+    } catch (err) {
+      console.error("Upload failed", err);
+      alert("Failed to upload image. Please check your storage settings.");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const resetProductForm = () => {
+    setEditingProductId(null);
+    setName('');
+    setPrice('');
+    setDescription('');
+    setTags('');
+    setImage('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop');
+  };
+
+  const handleEditProduct = (prod: Product) => {
+    setEditingProductId(prod.id);
+    setName(prod.name);
+    setPrice(prod.price?.toString() || '');
+    setDescription(prod.description);
+    setImage(prod.image);
+    setCategory(prod.category);
+    setTags(prod.themes?.join(', ') || '');
+    setActiveTab('product');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDeleteProduct = async (catId: string, prodId: string) => {
+    if (confirm('Are you sure you want to delete this product?')) {
+      await deleteProduct(catId, prodId);
+    }
+  };
+
+  const handlePublish = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !category) return;
+
+    const productData: Product = {
+      id: editingProductId || crypto.randomUUID(),
+      name,
+      price: parseFloat(price) || 0,
+      description: description || 'Superb quality event material.',
+      category,
+      image,
+      themes: tags.split(',').map(t => t.trim()).filter(Boolean)
+    };
+
+    if (editingProductId) {
+      await updateProduct(category, productData);
+    } else {
+      await addProduct(category, productData);
+    }
+
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 3000);
+    resetProductForm();
+  };
+
+  const handleEditCategory = (key: string, data: any) => {
+    setEditingCatId(key);
+    setNewCatKey(key);
+    setNewCatTitle(data.title);
+    setNewCatDesc(data.description);
+    setNewCatImage(data.image || '');
+    setActiveTab('category');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDeleteCategory = async (key: string) => {
+    if (confirm('Deleting a category will remove all products inside it. Continue?')) {
+      await deleteCategory(key);
+    }
+  };
+
+  const handlePublishCategory = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCatKey || !newCatTitle) return;
+
+    const formattedKey = newCatKey.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    const catData = {
+      title: newCatTitle,
+      description: newCatDesc || 'A premium collection of event materials.',
+      image: newCatImage || undefined,
+      items: []
+    };
+
+    if (editingCatId) {
+      await updateCategory(editingCatId, catData);
+    } else {
+      await addCategory(formattedKey, catData);
+    }
+
+    setCatSaveSuccess(true);
+    setTimeout(() => setCatSaveSuccess(false), 3000);
+
+    setEditingCatId(null);
+    setNewCatKey('');
+    setNewCatTitle('');
+    setNewCatDesc('');
+    setNewCatImage('');
+    setCategory(formattedKey);
+    setActiveTab('product');
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0f172a] p-4 md:p-8 pb-24 font-sans text-white">
+      {/* Header Admin */}
+      <header className="flex justify-between items-center mb-12 border-b border-white/10 pb-6 relative">
+        <div>
+          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#ff2a70] tracking-tighter uppercase mb-2 flex items-center gap-3">
+            <Sparkles className="text-[#d90082]" /> Magic Prints Admin
+          </h1>
+          <p className="text-white/60">Global Content Management System (CMS)</p>
+        </div>
+
+        <Link href="/products" className="flex items-center gap-2 px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all text-sm font-bold uppercase tracking-widest text-white/80 hover:text-white border border-white/10">
+          <ArrowLeft size={16} />
+          View Live Catalog
+        </Link>
+      </header>
+
+      <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        {/* CONTROL PANEL */}
+        <section className="col-span-1 lg:col-span-12 xl:col-span-5 bg-white/5 border border-white/10 rounded-[40px] p-8 md:p-12 backdrop-blur-md shadow-2xl relative overflow-hidden flex flex-col">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#d90082]/10 rounded-full blur-[80px] -z-10 pointer-events-none" />
+          
+          {/* TABS */}
+          <div className="flex bg-black/40 rounded-2xl p-2 mb-10 border border-white/10 shrink-0">
+            <button 
+              onClick={() => { setActiveTab('product'); resetProductForm(); }}
+              className={`flex-1 py-3 px-4 rounded-xl font-bold tracking-widest uppercase text-[10px] md:text-sm flex items-center justify-center gap-2 transition-all ${activeTab === 'product' ? 'bg-[#d90082] text-white shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5'}`}
+            >
+              <Package size={16} /> {editingProductId ? 'Edit Product' : 'New Product'}
+            </button>
+            <button 
+              onClick={() => setActiveTab('category')}
+              className={`flex-1 py-3 px-4 rounded-xl font-bold tracking-widest uppercase text-[10px] md:text-sm flex items-center justify-center gap-2 transition-all ${activeTab === 'category' ? 'bg-[#41137e] text-white shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5'}`}
+            >
+              <FolderPlus size={16} /> {editingCatId ? 'Edit Category' : 'New Category'}
+            </button>
+            <button 
+              onClick={() => setActiveTab('content')}
+              className={`flex-1 py-3 px-4 rounded-xl font-bold tracking-widest uppercase text-[10px] md:text-sm flex items-center justify-center gap-2 transition-all ${activeTab === 'content' ? 'bg-[#00bff3] text-white shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5'}`}
+            >
+              <Sparkles size={16} /> Page Content
+            </button>
+          </div>
+
+          <div className="flex-grow overflow-y-auto no-scrollbar pb-6 relative min-h-[500px]">
+            {activeTab === 'product' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 relative h-full">
+                <form onSubmit={handlePublish} className="space-y-6">
+                  
+                  {/* Visual Proof / Photo */}
+                  <div>
+                    <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Product Photo (URL)</label>
+                    <div className="flex gap-4 items-center">
+                      <div className="w-24 h-24 rounded-2xl bg-black/40 border border-white/10 overflow-hidden shrink-0 shadow-inner">
+                        <img src={image} alt="Preview" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-grow space-y-2">
+                        <input
+                          type="text"
+                          value={image}
+                          onChange={(e) => setImage(e.target.value)}
+                          placeholder="Enter image URL..."
+                          className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-[10px] focus:outline-none focus:border-[#d90082] transition-colors"
+                        />
+                        <div className="relative">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange(e, setImage)}
+                            className="hidden"
+                            id="product-upload"
+                          />
+                          <label
+                            htmlFor="product-upload"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 cursor-pointer transition-all text-[10px] font-bold uppercase tracking-widest ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}
+                          >
+                            <Upload size={14} className={isUploading ? 'animate-bounce' : ''} />
+                            {isUploading ? 'Uploading...' : 'Upload from device'}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Product Name */}
+                  <div>
+                    <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Product Name</label>
+                    <input
+                      required
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. Barbie Dreamhouse Backdrop"
+                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white font-bold focus:outline-none focus:border-[#d90082] transition-colors"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Category Dropdown */}
+                    <div>
+                      <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <Layers size={14} /> Category
+                      </label>
+                      <select
+                        disabled={!!editingProductId}
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white font-bold focus:outline-none focus:border-[#d90082] transition-colors appearance-none cursor-pointer disabled:opacity-50"
+                      >
+                        {Object.entries(catalog).map(([key, cat]) => (
+                          <option key={key} value={key}>{cat.title}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Price */}
+                    <div>
+                      <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Base Price ($)</label>
+                      <input
+                        required
+                        type="number"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        placeholder="0.00"
+                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white font-bold focus:outline-none focus:border-[#d90082] transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Tags / Themes */}
+                  <div>
+                    <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3 flex items-center gap-2">
+                      <Tag size={14} /> Tags & Themes (Comma separated)
+                    </label>
+                    <input
+                      type="text"
+                      value={tags}
+                      onChange={(e) => setTags(e.target.value)}
+                      placeholder="e.g. birthday, barbie, kids, wedding"
+                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-[#d90082] transition-colors"
+                    />
+                  </div>
+
+                  {/* Description */}
+                  <div>
+                    <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Description</label>
+                    <textarea
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      placeholder="Write a museum-grade description of this asset..."
+                      rows={3}
+                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-[#d90082] transition-colors resize-none"
+                    />
+                  </div>
+
+                  {/* Action Area */}
+                  <div className="pt-6">
+                    <button
+                      type="submit"
+                      className="w-full py-5 rounded-2xl bg-gradient-to-r from-[#d90082] to-[#ff2a70] text-white font-black tracking-widest uppercase flex items-center justify-center gap-2 hover:shadow-[0_0_40px_rgba(217,0,130,0.4)] transition-all hover:scale-[1.02] active:scale-95 shadow-xl cursor-pointer"
+                    >
+                      <Save size={18} /> {editingProductId ? 'Update Item' : 'Publish Item'}
+                    </button>
+                    {editingProductId && (
+                      <button type="button" onClick={resetProductForm} className="w-full mt-4 py-3 text-xs font-bold text-white/40 hover:text-white uppercase tracking-widest">Cancel Editing</button>
+                    )}
+
+                    {saveSuccess && (
+                      <div className="mt-4 p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-sm font-bold flex items-center justify-center gap-2 animate-magic-float">
+                        <CheckCircle2 size={18} />
+                        Update Successful!
+                      </div>
+                    )}
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {activeTab === 'category' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 h-full flex flex-col pt-10">
+                <form onSubmit={handlePublishCategory} className="space-y-6">
+                  <div>
+                    <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Category Title</label>
+                    <input
+                      required
+                      type="text"
+                      value={newCatTitle}
+                      onChange={(e) => {
+                         setNewCatTitle(e.target.value);
+                         if (!editingCatId && !newCatKey) setNewCatKey(e.target.value.toLowerCase().replace(/[^a-z0-9]/g, ''));
+                      }}
+                      placeholder="e.g. Neon Signs"
+                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white font-bold focus:outline-none focus:border-[#41137e] transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">System Key ID</label>
+                    <input
+                      required
+                      disabled={!!editingCatId}
+                      type="text"
+                      value={newCatKey}
+                      onChange={(e) => setNewCatKey(e.target.value.toLowerCase().replace(/[^a-z0-9]/g, ''))}
+                      placeholder="e.g. neonSigns (Auto-generated)"
+                      className="w-full bg-black/60 border border-white/5 rounded-xl px-4 py-3 text-white/50 text-sm focus:outline-none focus:border-[#41137e] transition-colors font-mono disabled:opacity-50"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Category Image URL (Optional)</label>
+                    <div className="flex gap-4 items-center">
+                      <div className="w-16 h-16 rounded-2xl bg-black/40 border border-white/10 overflow-hidden shrink-0 shadow-inner flex items-center justify-center">
+                        {newCatImage ? (
+                           <img src={newCatImage} alt="Preview" className="w-full h-full object-cover" />
+                        ) : (
+                           <ImageIcon size={20} className="text-white/20" />
+                        )}
+                      </div>
+                      <div className="flex-grow space-y-2">
+                        <input
+                          type="text"
+                          value={newCatImage}
+                          onChange={(e) => setNewCatImage(e.target.value)}
+                          placeholder="https://images.unsplash.com/..."
+                          className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-[10px] focus:outline-none focus:border-[#41137e] transition-colors"
+                        />
+                        <div className="relative">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange(e, setNewCatImage)}
+                            className="hidden"
+                            id="category-upload"
+                          />
+                          <label
+                            htmlFor="category-upload"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 cursor-pointer transition-all text-[10px] font-bold uppercase tracking-widest ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}
+                          >
+                            <Upload size={14} className={isUploading ? 'animate-bounce' : ''} />
+                            {isUploading ? 'Uploading...' : 'Upload from device'}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Public Description</label>
+                    <textarea
+                      value={newCatDesc}
+                      onChange={(e) => setNewCatDesc(e.target.value)}
+                      placeholder="Write a short description to appear on the category card..."
+                      rows={3}
+                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-[#41137e] transition-colors resize-none"
+                    />
+                  </div>
+
+                  <div className="pt-6">
+                    <button
+                      type="submit"
+                      className="w-full py-5 rounded-2xl bg-gradient-to-r from-[#41137e] to-purple-600 text-white font-black tracking-widest uppercase flex items-center justify-center gap-2 hover:shadow-[0_0_40px_rgba(65,19,126,0.4)] transition-all hover:scale-[1.02] active:scale-95 shadow-xl cursor-pointer"
+                    >
+                      <FolderPlus size={18} /> {editingCatId ? 'Save Category' : 'Create Category'}
+                    </button>
+                    {catSaveSuccess && (
+                      <div className="mt-4 p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-sm font-bold flex items-center justify-center gap-2 animate-magic-float">
+                        <CheckCircle2 size={18} />
+                        Successfully Saved! 
+                      </div>
+                    )}
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {activeTab === 'content' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 h-full flex flex-col pt-10">
+                {!isContentConfigured ? (
+                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-6 mb-8">
+                    <h4 className="text-blue-400 font-bold mb-2 flex items-center gap-2">
+                      <Sparkles size={16} /> Database Setup Required
+                    </h4>
+                    <p className="text-white/60 text-sm">
+                      Para editar los textos de la página (Hero, About, etc.), necesito que inicialices la tabla en Supabase siguiendo el enlace que te envié. 
+                    </p>
+                    <a 
+                      href="https://supabase.com/dashboard/project/kwymuavqzpvesanxahyv/sql/new" 
+                      target="_blank" 
+                      className="inline-block mt-4 text-xs font-black text-blue-400 border-b border-blue-400/30 pb-1 hover:text-white hover:border-white transition-all uppercase tracking-widest"
+                    >
+                      Open Supabase SQL Editor
+                    </a>
+                  </div>
+                ) : (
+                  <div className="space-y-12">
+                    {/* HERO SECTION EDITOR */}
+                    <div className="space-y-6">
+                       <h3 className="text-xl font-black text-white uppercase tracking-tighter flex items-center gap-2">
+                         <Sparkles className="text-[#00bff3]" /> Hero Section
+                       </h3>
+                       
+                       <ContentBlock 
+                         section="hero" 
+                         field="welcome" 
+                         label="Welcome Phrase" 
+                         valEn={translations.en.hero.welcome} 
+                         valEs={translations.es.hero.welcome}
+                         currentEn={t.hero.welcome}
+                         currentEs={translations.es.hero.welcome} // Fallback to translations if not in DB yet
+                         onSave={updateContentValue}
+                       />
+
+                       <ContentBlock 
+                         section="hero" 
+                         field="title" 
+                         label="Main Title" 
+                         valEn={translations.en.hero.title} 
+                         valEs={translations.es.hero.title}
+                         currentEn={t.hero.title}
+                         currentEs={translations.es.hero.title}
+                         onSave={updateContentValue}
+                       />
+
+                       <ContentBlock 
+                         section="hero" 
+                         field="title_highlight" 
+                         label="Title Highlight" 
+                         valEn={translations.en.hero.title_highlight} 
+                         valEs={translations.es.hero.title_highlight}
+                         currentEn={t.hero.title_highlight}
+                         currentEs={translations.es.hero.title_highlight}
+                         onSave={updateContentValue}
+                       />
+
+                       <ContentBlock 
+                         section="hero" 
+                         field="subtitle" 
+                         label="Subtitle" 
+                         valEn={translations.en.hero.subtitle} 
+                         valEs={translations.es.hero.subtitle}
+                         currentEn={t.hero.subtitle}
+                         currentEs={translations.es.hero.subtitle}
+                         isTextArea
+                         onSave={updateContentValue}
+                       />
+
+                       <div className="grid grid-cols-2 gap-4">
+                         <ContentBlock 
+                           section="hero" 
+                           field="cta_primary" 
+                           label="Primary Button" 
+                           valEn={translations.en.hero.cta_primary} 
+                           valEs={translations.es.hero.cta_primary}
+                           currentEn={t.hero.cta_primary}
+                           currentEs={translations.es.hero.cta_primary}
+                           onSave={updateContentValue}
+                         />
+                         <ContentBlock 
+                           section="hero" 
+                           field="cta_secondary" 
+                           label="Secondary Button" 
+                           valEn={translations.en.hero.cta_secondary} 
+                           valEs={translations.es.hero.cta_secondary}
+                           currentEn={t.hero.cta_secondary}
+                           currentEs={translations.es.hero.cta_secondary}
+                           onSave={updateContentValue}
+                         />
+                       </div>
+                    </div>
+
+                    <p className="text-white/20 text-center italic text-xs pt-10">
+                      Changes are saved instantly to the global database.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </section>
+ 
+        {/* LIVE INVENTORY OVERVIEW */}
+        <section className="col-span-1 lg:col-span-12 xl:col-span-7 space-y-6">
+          <div className="bg-white/5 border border-white/10 rounded-[40px] p-8 md:p-12 backdrop-blur-md shadow-xl h-full flex flex-col">
+            <div className="flex items-center justify-between mb-10">
+              <div>
+                <h2 className="text-3xl font-black text-white tracking-tight mb-2">Live Inventory</h2>
+                <p className="text-white/40 font-medium tracking-wide">Dynamic Catalog Management</p>
+              </div>
+              <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50">
+                <Layers size={24} />
+              </div>
+            </div>
+
+            <div className="flex-grow overflow-y-auto no-scrollbar space-y-12 pr-4">
+              {Object.entries(catalog).map(([catKey, catData]) => (
+                <div key={catKey} className="space-y-6">
+                  <div className="sticky top-0 bg-[#0f172a]/95 backdrop-blur-md py-4 z-10 border-b border-white/10 flex items-center justify-between">
+                    <div>
+                      <h3 className="text-lg font-black text-[#00bff3] tracking-widest uppercase">{catData.title}</h3>
+                      <p className="text-[10px] text-white/30 uppercase tracking-tighter mt-1">{catKey}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={() => handleEditCategory(catKey, catData)}
+                        className="p-2 transition-colors text-white/30 hover:text-blue-400 bg-white/5 rounded-lg border border-white/5"
+                        title="Edit Category"
+                      >
+                        <Layers size={16} />
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteCategory(catKey)}
+                        className="p-2 transition-colors text-white/30 hover:text-red-400 bg-white/5 rounded-lg border border-white/5"
+                        title="Delete Category"
+                      >
+                        <Tag size={16} />
+                      </button>
+                      <span className="text-xs font-bold text-white/30 px-3 py-1 bg-white/5 rounded-full">{catData.items.length} Items</span>
+                    </div>
+                  </div>
+                  
+                  {catData.items.length === 0 ? (
+                    <p className="text-white/20 text-sm italic py-4">No items in this category yet.</p>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {catData.items.map((prod) => (
+                        <div key={prod.id} className="bg-black/40 border border-white/5 rounded-2xl p-4 flex gap-4 hover:border-white/20 transition-all group relative overflow-hidden group">
+                          <img src={prod.image} alt={prod.name} className="w-20 h-20 rounded-xl object-cover shrink-0" />
+                          <div className="min-w-0 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h4 className="font-bold text-white truncate text-sm group-hover:text-[#d90082] transition-colors">{prod.name}</h4>
+                                <span className="text-[#00bff3] font-black text-xs block mt-1">${prod.price || 0}</span>
+                            </div>
+                            <div className="flex gap-2 mt-4">
+                                <button 
+                                  onClick={() => handleEditProduct(prod)}
+                                  className="flex-1 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[10px] uppercase font-black tracking-widest text-white/60 hover:text-white transition-all border border-white/10"
+                                >
+                                  Edit
+                                </button>
+                                <button 
+                                  onClick={() => handleDeleteProduct(catKey, prod.id)}
+                                  className="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500/60 hover:text-red-400 transition-all border border-red-500/10"
+                                >
+                                  Delete
+                                </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  );
+}
+
+function ContentBlock({ section, field, label, valEn, valEs, currentEn, currentEs, isTextArea = false, onSave }: any) {
+  const [en, setEn] = useState(currentEn || valEn);
+  const [es, setEs] = useState(currentEs || valEs);
+  const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  // Update local state if current values change (e.g. from DB load)
+  React.useEffect(() => {
+    if (currentEn) setEn(currentEn);
+    if (currentEs) setEs(currentEs);
+  }, [currentEn, currentEs]);
+
+  const handleSave = async () => {
+    setSaving(true);
+    await onSave(section, field, en, es);
+    setSaving(false);
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 2000);
+  };
+
+  const InputComponent = isTextArea ? 'textarea' : 'input';
+
+  return (
+    <div className="bg-black/40 border border-white/5 rounded-2xl p-6 space-y-4 hover:border-white/20 transition-all group">
+      <div className="flex justify-between items-center">
+        <label className="text-xs font-black text-white/40 uppercase tracking-widest">{label}</label>
+        {success ? (
+          <span className="text-green-400 text-[10px] font-black uppercase flex items-center gap-1 animate-in zoom-in">
+            <CheckCircle2 size={12} /> Saved
+          </span>
+        ) : (
+          <button 
+            onClick={handleSave}
+            disabled={saving}
+            className="text-[10px] font-black uppercase px-3 py-1 rounded-md bg-white/5 hover:bg-[#00bff3] text-white/40 hover:text-white transition-all disabled:opacity-50"
+          >
+            {saving ? '...' : 'Update'}
+          </button>
+        )}
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <div className="text-[10px] font-bold text-white/20 uppercase tracking-widest px-2">English</div>
+          <InputComponent
+            value={en}
+            onChange={(e: any) => setEn(e.target.value)}
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#00bff3] transition-colors resize-none"
+            rows={isTextArea ? 3 : 1}
+          />
+        </div>
+        <div className="space-y-2">
+          <div className="text-[10px] font-bold text-white/20 uppercase tracking-widest px-2">Español</div>
+          <InputComponent
+            value={es}
+            onChange={(e: any) => setEs(e.target.value)}
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#00bff3] transition-colors resize-none"
+            rows={isTextArea ? 3 : 1}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
