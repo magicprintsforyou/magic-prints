@@ -3,7 +3,6 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import AIAssistant from "../components/AIAssistant";
 import Footer from "../components/Footer";
-import { LanguageProvider } from "../context/LanguageContext";
 import { ProductProvider } from "../context/ProductContext";
 
 export const metadata: Metadata = {
