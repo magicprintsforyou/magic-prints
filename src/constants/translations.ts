@@ -6,6 +6,7 @@ export const translations = {
             admin: "Admin",
             quote: "Get Quote",
             whatsapp: "WhatsApp",
+            slogan: "Transforming ordinary spaces into museum-grade experiences.",
         },
         nav: {
             home: 'HOME',
@@ -190,8 +191,9 @@ export const translations = {
     es: {
         common: {
             admin: "Admin",
-            quote: "Cotizar",
+            quote: "Solicitar Presupuesto",
             whatsapp: "WhatsApp",
+            slogan: "Transformando espacios ordinarios en experiencias de grado museo.",
         },
         nav: {
             home: 'INICIO',
