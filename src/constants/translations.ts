@@ -22,6 +22,11 @@ export const translations = {
             subtitle: 'Where Premium Craftsmanship Meets Flawless Event Execution.',
             cta_primary: 'START YOUR PROJECT',
             cta_secondary: 'VIEW CATALOG',
+            backgroundImages: [
+                "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2000",
+                "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=2000",
+                "https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&q=80&w=2000"
+            ]
         },
         process: {
             badge: "THE MAGIC WORKFLOW",
@@ -47,11 +52,14 @@ export const translations = {
             text3: "\"They don't just print; they bring brands to life. Professional, fast, and remarkably high-impact.\"",
         },
         footer: {
-            quickLinks: 'Global Navigation',
+            quickLinks: 'Quick Access',
             contact: 'Inquiries',
-            hours: 'Project Availability',
-            designed: 'Crafted with Magic ✨',
-            rights: '© 2026 MAGIC IMPRESSIONS LLC',
+            hours: 'Studio Hours',
+            rights: '© 2026 MAGIC PRINTS. ALL RIGHTS RESERVED.',
+            designed: 'CRAFTED WITH PRECISION IN TEXAS',
+            email: 'sales@magicprintsforyou.com',
+            address: '1600 Industrial Ct, Arlington, TX 76011',
+            whatsapp_msg: 'Direct WhatsApp Line'
         },
         quote: {
             dream: 'You Visualize.',
@@ -64,10 +72,13 @@ export const translations = {
             experience: '8+ Years of Excellence',
             history: 'The Magic Behind the Prints',
             slogan: 'Curating the World\'s Most Iconic Event Impressions.',
+            image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800",
             mission_title: "THE MISSION",
             mission_desc: "To provide the event industry with uncompromising printing standards that turn ambitious ideas into tangible magic.",
+            mission_icon: "🎯",
             vision_title: "THE VISION",
             vision_desc: "To be the global benchmark for luxury event aesthetics and technical execution.",
+            vision_icon: "👁️",
             bio: [
                 "With over 8 years as an Event Planner, I have a deep obsession with the details that define a truly premium event experience.",
                 "I founded this studio after realizing that 'good enough' wasn't an option for the industry's elite planners. I wanted a partner that understood precision as much as I did.",
@@ -81,6 +92,7 @@ export const translations = {
             subtitle: "We architect immersive corporate spaces with professional-grade print technology and massive scale.",
             cta_primary: "BOOK CONSULTATION",
             cta_secondary: "TECHNICAL PORTFOLIO",
+            hero_image: "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop",
             pilar1_title: "Precision Engineering",
             pilar1_desc: "High-density polymers and UV-resistant finishes for maximum impact.",
             pilar2_title: "Production Speed",
@@ -97,7 +109,41 @@ export const translations = {
             tech_specs_title: "Technical Prowess",
             tech_specs_subtitle: "Micron-level accuracy in every square inch.",
             success_stories_title: "Signature Projects",
-            success_stories_subtitle: "Large-scale deployments delivered with zero-error philosophy."
+            success_stories_subtitle: "Large-scale deployments delivered with zero-error philosophy.",
+            services: [
+                {
+                    title: "Event Signage",
+                    desc: "Museum-grade welcome boards and seating charts.",
+                    icon: "Layout",
+                    image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop"
+                },
+                {
+                    title: "Luxury Vinyls",
+                    desc: "Non-slip dance floor wraps and wall murals.",
+                    icon: "Gem",
+                    image: "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?q=80&w=2070&auto=format&fit=crop"
+                },
+                {
+                    title: "Brand Activations",
+                    desc: "High-impact visual branding for corporate scales.",
+                    icon: "Zap",
+                    image: "https://images.unsplash.com/photo-1551818255-e6e10975bc17?q=80&w=2070&auto=format&fit=crop"
+                }
+            ],
+            success_stories: [
+                {
+                    title: "Corporate Gala 2025",
+                    client: "Fortune 500 Tech",
+                    results: "2000+ custom prints installed in 12 hours.",
+                    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop"
+                },
+                {
+                    title: "Product Launch",
+                    client: "Luxury Auto Brand",
+                    results: "Seamless floor-to-wall vinyl integration.",
+                    img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop"
+                }
+            ]
         },
         products: {
             badge: "EDUCATION & MATERIALS",
@@ -156,12 +202,17 @@ export const translations = {
             admin: 'ADMIN',
         },
         hero: {
-            welcome: 'Bienvenido a la',
+            welcome: 'Bienvenido a',
             title: 'IMPRESIÓN DE ALTO IMPACTO E',
             title_highlight: 'INSTALACIÓN PROFESIONAL',
-            subtitle: 'Donde la Artesanía Premium se Encuentra con la Ejecución Impecable de Eventos.',
+            subtitle: 'Donde la Artesanía Premium se Une a la Ejecución Impecable de Eventos.',
             cta_primary: 'INICIA TU PROYECTO',
             cta_secondary: 'VER CATÁLOGO',
+            backgroundImages: [
+                "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2000",
+                "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=2000",
+                "https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&q=80&w=2000"
+            ]
         },
         process: {
             badge: "EL FLUJO MÁGICO",
@@ -187,11 +238,14 @@ export const translations = {
             text3: "\"No solo imprimen; le dan vida a tu marca. Profesionales, rápidos y con un impacto visual increíble.\"",
         },
         footer: {
-            quickLinks: 'Navegación Opciones',
+            quickLinks: 'Acceso Rápido',
             contact: 'Consultas',
-            hours: 'Disponibilidad de Proyecto',
-            designed: 'Creado con Magia ✨',
-            rights: '© 2026 MAGIC IMPRESSIONS LLC',
+            hours: 'Horarios del Studio',
+            rights: '© 2026 MAGIC PRINTS. TODOS LOS DERECHOS RESERVADOS.',
+            designed: 'DISEÑADO CON PRECISIÓN EN TEXAS',
+            email: 'sales@magicprintsforyou.com',
+            address: '1600 Industrial Ct, Arlington, TX 76011',
+            whatsapp_msg: 'Línea Directa de WhatsApp'
         },
         quote: {
             dream: 'Tú lo Visualizas.',
@@ -204,10 +258,13 @@ export const translations = {
             experience: '8+ Años de Excelencia',
             history: 'La Magia Detrás de las Impresiones',
             slogan: 'Curando las Impresiones de Eventos más Icónicas del Mundo.',
+            image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800",
             mission_title: "LA MISIÓN",
             mission_desc: "Proveer a la industria de eventos con estándares de impresión inflexibles que convierten ideas ambiciosas en magia tangible.",
+            mission_icon: "🎯",
             vision_title: "LA VISIÓN",
             vision_desc: "Ser el referente global de estética y ejecución técnica en eventos de lujo.",
+            vision_icon: "👁️",
             bio: [
                 "Como Event Planner con más de 8 años de experiencia, entiendo lo vitales que son las impresiones de alta calidad para crear un evento verdaderamente elevado.",
                 "Después de trabajar con múltiples proveedores y no encontrar el nivel de servicio y calidad impecable que mis clientes merecían, decidí crear mi propia imprenta, diseñada para apoyar a los planners más exigentes.",
@@ -221,6 +278,7 @@ export const translations = {
             subtitle: "Arquitectamos espacios corporativos inmersivos con tecnología de impresión profesional y escala masiva.",
             cta_primary: "AGENDAR CONSULTA",
             cta_secondary: "PORTAFOLIO TÉCNICO",
+            hero_image: "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop",
             pilar1_title: "Ingeniería de Precisión",
             pilar1_desc: "Polímeros de alta densidad y acabados resistentes a rayos UV para el mayor impacto.",
             pilar2_title: "Velocidad de Producción",
@@ -234,10 +292,44 @@ export const translations = {
             alliance2_title: "Fabricación a Medida",
             alliance2_desc: "Desde vinilos arquitectónicos hasta letreros fabricados a medida. Materializamos todo lo imposible.",
             form_title: "Consulta Estratégica",
-            tech_specs_title: "Destreza Técnica",
+            tech_specs_title: "Poder Técnico",
             tech_specs_subtitle: "Precisión milimétrica en cada pulgada cuadrada.",
             success_stories_title: "Proyectos Insignia",
-            success_stories_subtitle: "Despliegues a gran escala producidos con una estricta filosofía de cero errores."
+            success_stories_subtitle: "Despliegues a gran escala producidos con una estricta filosofía de cero errores.",
+            services: [
+                {
+                    title: "Señalización de Eventos",
+                    desc: "Tableros de bienvenida y listas de invitados de grado museo.",
+                    icon: "Layout",
+                    image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop"
+                },
+                {
+                    title: "Vinilos de Lujo",
+                    desc: "Envolturas para pistas de baile antideslizantes y murales.",
+                    icon: "Gem",
+                    image: "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?q=80&w=2070&auto=format&fit=crop"
+                },
+                {
+                    title: "Activaciones de Marca",
+                    desc: "Branding visual de alto impacto para escalas corporativas.",
+                    icon: "Zap",
+                    image: "https://images.unsplash.com/photo-1551818255-e6e10975bc17?q=80&w=2070&auto=format&fit=crop"
+                }
+            ],
+            success_stories: [
+                {
+                    title: "Gala Corporativa 2025",
+                    client: "Tech Fortune 500",
+                    results: "Más de 2000 impresiones personalizadas instaladas en 12 horas.",
+                    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop"
+                },
+                {
+                    title: "Lanzamiento de Producto",
+                    client: "Marca de Autos de Lujo",
+                    results: "Integración perfecta de vinilo de piso a pared.",
+                    img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop"
+                }
+            ]
         },
         products: {
             badge: "EDUCACIÓN & MATERIALES",

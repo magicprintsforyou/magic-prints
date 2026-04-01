@@ -79,10 +79,16 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       // Merge DB content into the translation structure
       const baseContent = JSON.parse(JSON.stringify(translations[currentLang]));
       data.forEach((item : any) => {
-        const value = currentLang === 'en' ? item.en_value : item.es_value;
+        let value = currentLang === 'en' ? item.en_value : item.es_value;
         const section = item.section as keyof SiteContent;
+        
         if (baseContent[section] && typeof baseContent[section] === 'object') {
-           (baseContent[section] as any)[item.key] = value;
+           // If the original field is an array (like about.bio), we split the DB string by newlines
+           if (Array.isArray((baseContent[section] as any)[item.key])) {
+             (baseContent[section] as any)[item.key] = value.split('\n').filter((p: string) => p.trim() !== '');
+           } else {
+             (baseContent[section] as any)[item.key] = value;
+           }
         }
       });
       
@@ -143,6 +149,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const updateContentValue = async (section: string, key: string, en: string, es: string) => {
     try {
+      // Clean up values (if they were arrays converted to strings with newlines)
+      // The DB just stores the string, fetchSiteContent handles the split.
       const { error } = await supabase
         .from('site_content')
         .upsert({ section, key, en_value: en, es_value: es }, { onConflict: 'key' });

@@ -12,32 +12,30 @@ export default function ClientFooter() {
                         Magic Prints
                     </span>
                     <p className="text-gray-500 text-sm italic leading-relaxed">
-                        {language === 'es'
-                            ? 'Transformando espacios ordinarios en experiencias de grado museo.'
-                            : 'Transforming ordinary spaces into museum-grade experiences.'}
+                        {t.common.slogan || 'Transforming ordinary spaces into museum-grade experiences.'}
                     </p>
                 </div>
                 <div className="space-y-6">
                     <h4 className="text-xs font-black uppercase tracking-[0.3em] text-[#ffcc00]">{t.footer.quickLinks}</h4>
                     <ul className="space-y-4 text-sm font-bold text-gray-400">
-                        <li><a href="/historia" className="hover:text-white transition-colors">{t.nav.history}</a></li>
+                        <li><a href="/our-story" className="hover:text-white transition-colors">{t.nav.history}</a></li>
                         <li><a href="/" className="hover:text-white transition-colors">{t.nav.home}</a></li>
-                        <li><a href="/corporativo" className="hover:text-white transition-colors">{t.nav.corporate}</a></li>
-                        <li><a href="/cotizacion" className="hover:text-white transition-colors">{t.nav.quote}</a></li>
+                        <li><a href="/corporate" className="hover:text-white transition-colors">{t.nav.corporate}</a></li>
+                        <li><a href="/quote" className="hover:text-white transition-colors">{t.nav.quote}</a></li>
                     </ul>
                 </div>
                 <div className="space-y-6">
                     <h4 className="text-xs font-black uppercase tracking-[0.3em] text-[#ffcc00]">{t.footer.contact}</h4>
                     <ul className="space-y-4 text-sm font-bold text-gray-400">
-                        <li>✉️ sales@magicprintsforyou.com</li>
+                        <li>✉️ {t.footer.email}</li>
                         <li>
                             <a href="#" className="hover:text-white transition-colors flex items-center gap-2">
-                                <i className="fa-brands fa-whatsapp text-emerald-400"></i> {t.common.whatsapp}
+                                <i className="fa-brands fa-whatsapp text-emerald-400"></i> {t.footer.whatsapp_msg || t.common.whatsapp}
                             </a>
                         </li>
                         <li className="flex items-start gap-2">
                             <span className="text-purple-400">📍</span>
-                            <a href="#" className="hover:text-white transition-colors">1600 Industrial Ct, <br />Arlington, TX 76011</a>
+                            <a href="#" className="hover:text-white transition-colors">{t.footer.address}</a>
                         </li>
                     </ul>
                 </div>

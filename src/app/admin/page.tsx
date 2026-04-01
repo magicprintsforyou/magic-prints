@@ -1,12 +1,32 @@
 'use client';
 
-import React, { useState } from 'react';
-import { ArrowLeft, Upload, Sparkles, Save, Image as ImageIcon, CheckCircle2, Package, Tag, Layers, FolderPlus } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ArrowLeft, Upload, Sparkles, Save, Image as ImageIcon, CheckCircle2, Package, Tag, Layers, FolderPlus, Building2 } from 'lucide-react';
 import Link from 'next/link';
 import { useProducts, Product } from '../../context/ProductContext';
 import { translations } from '../../constants/translations';
 
+import { useRouter } from 'next/navigation';
+import { supabase } from '../../lib/supabase';
+
 export default function AdminPortal() {
+  const router = useRouter();
+  const [session, setSession] = useState<any>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/admin/login');
+      } else {
+        setSession(session);
+        setAuthLoading(false);
+      }
+    };
+    checkUser();
+  }, [router, supabase]);
+
   const { 
     catalog, 
     t,
@@ -20,6 +40,17 @@ export default function AdminPortal() {
     uploadImage,
     isContentConfigured 
   } = useProducts();
+  
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-[#0f172a] flex items-center justify-center p-6">
+        <div className="flex flex-col items-center gap-6">
+          <div className="w-16 h-16 border-4 border-[#d90082] border-t-transparent rounded-full animate-spin" />
+          <p className="text-white/40 font-black uppercase tracking-widest text-xs animate-pulse">Authenticating...</p>
+        </div>
+      </div>
+    );
+  }
   
   const [activeTab, setActiveTab] = useState<'product' | 'category' | 'content'>('product');
   
@@ -461,80 +492,204 @@ export default function AdminPortal() {
                   </div>
                 ) : (
                   <div className="space-y-12">
-                    {/* HERO SECTION EDITOR */}
-                    <div className="space-y-6">
-                       <h3 className="text-xl font-black text-white uppercase tracking-tighter flex items-center gap-2">
-                         <Sparkles className="text-[#00bff3]" /> Hero Section
-                       </h3>
-                       
-                       <ContentBlock 
-                         section="hero" 
-                         field="welcome" 
-                         label="Welcome Phrase" 
-                         valEn={translations.en.hero.welcome} 
-                         valEs={translations.es.hero.welcome}
-                         currentEn={t.hero.welcome}
-                         currentEs={translations.es.hero.welcome} // Fallback to translations if not in DB yet
-                         onSave={updateContentValue}
-                       />
+                     {/* HERO SECTION EDITOR */}
+                     <div className="space-y-6">
+                        <h3 className="text-xl font-black text-white uppercase tracking-tighter flex items-center gap-2">
+                          <Sparkles className="text-[#00bff3]" /> Hero Section
+                        </h3>
+                        
+                        <ContentBlock 
+                          section="hero" 
+                          field="welcome" 
+                          label="Welcome Phrase" 
+                          valEn={translations.en.hero.welcome} 
+                          valEs={translations.es.hero.welcome}
+                          currentEn={t.hero.welcome}
+                          currentEs={t.hero.welcome === translations.en.hero.welcome ? translations.es.hero.welcome : t.hero.welcome} // Improved fallback
+                          onSave={updateContentValue}
+                        />
 
-                       <ContentBlock 
-                         section="hero" 
-                         field="title" 
-                         label="Main Title" 
-                         valEn={translations.en.hero.title} 
-                         valEs={translations.es.hero.title}
-                         currentEn={t.hero.title}
-                         currentEs={translations.es.hero.title}
-                         onSave={updateContentValue}
-                       />
+                        <ContentBlock 
+                          section="hero" 
+                          field="title" 
+                          label="Main Title" 
+                          valEn={translations.en.hero.title} 
+                          valEs={translations.es.hero.title}
+                          currentEn={t.hero.title}
+                          currentEs={t.hero.title === translations.en.hero.title ? translations.es.hero.title : t.hero.title}
+                          onSave={updateContentValue}
+                        />
 
-                       <ContentBlock 
-                         section="hero" 
-                         field="title_highlight" 
-                         label="Title Highlight" 
-                         valEn={translations.en.hero.title_highlight} 
-                         valEs={translations.es.hero.title_highlight}
-                         currentEn={t.hero.title_highlight}
-                         currentEs={translations.es.hero.title_highlight}
-                         onSave={updateContentValue}
-                       />
+                        <ContentBlock 
+                          section="hero" 
+                          field="title_highlight" 
+                          label="Title Highlight" 
+                          valEn={translations.en.hero.title_highlight} 
+                          valEs={translations.es.hero.title_highlight}
+                          currentEn={t.hero.title_highlight}
+                          currentEs={t.hero.title_highlight === translations.en.hero.title_highlight ? translations.es.hero.title_highlight : t.hero.title_highlight}
+                          onSave={updateContentValue}
+                        />
 
-                       <ContentBlock 
-                         section="hero" 
-                         field="subtitle" 
-                         label="Subtitle" 
-                         valEn={translations.en.hero.subtitle} 
-                         valEs={translations.es.hero.subtitle}
-                         currentEn={t.hero.subtitle}
-                         currentEs={translations.es.hero.subtitle}
-                         isTextArea
-                         onSave={updateContentValue}
-                       />
+                        <ContentBlock 
+                          section="hero" 
+                          field="subtitle" 
+                          label="Subtitle" 
+                          valEn={translations.en.hero.subtitle} 
+                          valEs={translations.es.hero.subtitle}
+                          currentEn={t.hero.subtitle}
+                          currentEs={t.hero.subtitle === translations.en.hero.subtitle ? translations.es.hero.subtitle : t.hero.subtitle}
+                          isTextArea
+                          onSave={updateContentValue}
+                        />
 
-                       <div className="grid grid-cols-2 gap-4">
-                         <ContentBlock 
-                           section="hero" 
-                           field="cta_primary" 
-                           label="Primary Button" 
-                           valEn={translations.en.hero.cta_primary} 
-                           valEs={translations.es.hero.cta_primary}
-                           currentEn={t.hero.cta_primary}
-                           currentEs={translations.es.hero.cta_primary}
-                           onSave={updateContentValue}
-                         />
-                         <ContentBlock 
-                           section="hero" 
-                           field="cta_secondary" 
-                           label="Secondary Button" 
-                           valEn={translations.en.hero.cta_secondary} 
-                           valEs={translations.es.hero.cta_secondary}
-                           currentEn={t.hero.cta_secondary}
-                           currentEs={translations.es.hero.cta_secondary}
-                           onSave={updateContentValue}
-                         />
-                       </div>
-                    </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <ContentBlock 
+                            section="hero" 
+                            field="cta_primary" 
+                            label="Primary Button" 
+                            valEn={translations.en.hero.cta_primary} 
+                            valEs={translations.es.hero.cta_primary}
+                            currentEn={t.hero.cta_primary}
+                            currentEs={t.hero.cta_primary === translations.en.hero.cta_primary ? translations.es.hero.cta_primary : t.hero.cta_primary}
+                            onSave={updateContentValue}
+                          />
+                        <ContentBlock 
+                          section="hero" 
+                          field="cta_secondary" 
+                          label="Secondary Button" 
+                          valEn={translations.en.hero.cta_secondary} 
+                          valEs={translations.es.hero.cta_secondary}
+                          currentEn={t.hero.cta_secondary}
+                          currentEs={t.hero.cta_secondary === translations.en.hero.cta_secondary ? translations.es.hero.cta_secondary : t.hero.cta_secondary}
+                          onSave={updateContentValue}
+                        />
+                      </div>
+
+                      <ContentBlock 
+                        section="hero" 
+                        field="backgroundImages" 
+                        label="Hero Gallery (One URL per line)" 
+                        valEn={translations.en.hero.backgroundImages} 
+                        valEs={translations.es.hero.backgroundImages}
+                        currentEn={t.hero.backgroundImages}
+                        currentEs={t.hero.backgroundImages}
+                        isTextArea
+                        onSave={updateContentValue}
+                      />
+                     </div>
+
+                     <div className="border-t border-white/5 pt-10 space-y-6">
+                        <h3 className="text-xl font-black text-white uppercase tracking-tighter flex items-center gap-2">
+                          <Layers className="text-[#d90082]" /> Nuestra Historia & About Me
+                        </h3>
+                        {/* ... about blocks ... */}
+                        <ImageContentBlock
+                          section="about"
+                          field="image"
+                          label="About Me Photo"
+                          currentUrl={t.about.image}
+                          onSave={updateContentValue}
+                          uploadImage={uploadImage}
+                        />
+
+                        <ContentBlock 
+                          section="about" 
+                          field="history" 
+                          label="Section Title" 
+                          valEn={translations.en.about.history} 
+                          valEs={translations.es.about.history}
+                          currentEn={t.about.history}
+                          currentEs={t.about.history === translations.en.about.history ? translations.es.about.history : t.about.history}
+                          onSave={updateContentValue}
+                        />
+
+                        <ContentBlock 
+                          section="about" 
+                          field="slogan" 
+                          label="Main Slogan" 
+                          valEn={translations.en.about.slogan} 
+                          valEs={translations.es.about.slogan}
+                          currentEn={t.about.slogan}
+                          currentEs={t.about.slogan === translations.en.about.slogan ? translations.es.about.slogan : t.about.slogan}
+                          onSave={updateContentValue}
+                        />
+
+                        <ContentBlock 
+                          section="about" 
+                          field="bio" 
+                          label="Biography (One paragraph per line)" 
+                          valEn={translations.en.about.bio} 
+                          valEs={translations.es.about.bio}
+                          currentEn={t.about.bio}
+                          currentEs={t.about.bio === translations.en.about.bio ? translations.es.about.bio : t.about.bio}
+                          isTextArea
+                          onSave={updateContentValue}
+                        />
+                     </div>
+
+                     <div className="border-t border-white/5 pt-10 space-y-6">
+                        <h3 className="text-xl font-black text-white uppercase tracking-tighter flex items-center gap-2">
+                          <Tag className="text-[#ffcc00]" /> Mission & Vision
+                        </h3>
+                        {/* ... mission blocks ... */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          <div className="space-y-4">
+                            <h4 className="text-sm font-black text-white/40 uppercase tracking-[0.2em]">Mission</h4>
+                            <ContentBlock section="about" field="mission_title" label="Title" valEn={translations.en.about.mission_title} valEs={translations.es.about.mission_title} currentEn={t.about.mission_title} currentEs={t.about.mission_title === translations.en.about.mission_title ? translations.es.about.mission_title : t.about.mission_title} onSave={updateContentValue} />
+                            <ContentBlock section="about" field="mission_desc" label="Description" valEn={translations.en.about.mission_desc} valEs={translations.es.about.mission_desc} currentEn={t.about.mission_desc} currentEs={t.about.mission_desc === translations.en.about.mission_desc ? translations.es.about.mission_desc : t.about.mission_desc} isTextArea onSave={updateContentValue} />
+                            <ContentBlock section="about" field="mission_icon" label="Icon (Emoji)" valEn={translations.en.about.mission_icon} valEs={translations.es.about.mission_icon} currentEn={t.about.mission_icon} currentEs={t.about.mission_icon === translations.en.about.mission_icon ? translations.es.about.mission_icon : t.about.mission_icon} onSave={updateContentValue} />
+                          </div>
+                          <div className="space-y-4">
+                            <h4 className="text-sm font-black text-white/40 uppercase tracking-[0.2em]">Vision</h4>
+                            <ContentBlock section="about" field="vision_title" label="Title" valEn={translations.en.about.vision_title} valEs={translations.es.about.vision_title} currentEn={t.about.vision_title} currentEs={t.about.vision_title === translations.en.about.vision_title ? translations.es.about.vision_title : t.about.vision_title} onSave={updateContentValue} />
+                            <ContentBlock section="about" field="vision_desc" label="Description" valEn={translations.en.about.vision_desc} valEs={translations.es.about.vision_desc} currentEn={t.about.vision_desc} currentEs={t.about.vision_desc === translations.en.about.vision_desc ? translations.es.about.vision_desc : t.about.vision_desc} isTextArea onSave={updateContentValue} />
+                            <ContentBlock section="about" field="vision_icon" label="Icon (Emoji)" valEn={translations.en.about.vision_icon} valEs={translations.es.about.vision_icon} currentEn={t.about.vision_icon} currentEs={t.about.vision_icon === translations.en.about.vision_icon ? translations.es.about.vision_icon : t.about.vision_icon} onSave={updateContentValue} />
+                          </div>
+                        </div>
+                     </div>
+
+                     <div className="border-t border-white/5 pt-10 space-y-6">
+                        <h3 className="text-xl font-black text-white uppercase tracking-tighter flex items-center gap-2">
+                          <Package className="text-[#00bff3]" /> The Magic Process
+                        </h3>
+                        <ContentBlock 
+                          section="process" 
+                          field="title" 
+                          label="Section Heading" 
+                          valEn={translations.en.process.title} 
+                          valEs={translations.es.process.title}
+                          currentEn={t.process.title}
+                          currentEs={t.process.title === translations.en.process.title ? translations.es.process.title : t.process.title}
+                          onSave={updateContentValue}
+                        />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                          {[1, 2, 3].map(num => (
+                            <div key={num} className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                              <h4 className="text-[10px] font-black text-[#00bff3] uppercase tracking-widest">Step {num}</h4>
+                              <ContentBlock section="process" field={`step${num}_title`} label="Title" valEn={(translations.en.process as any)[`step${num}_title`]} valEs={(translations.es.process as any)[`step${num}_title`]} currentEn={(t.process as any)[`step${num}_title`]} currentEs={(t.process as any)[`step${num}_title`] === (translations.en.process as any)[`step${num}_title`] ? (translations.es.process as any)[`step${num}_title`] : (t.process as any)[`step${num}_title`]} onSave={updateContentValue} />
+                              <ContentBlock section="process" field={`step${num}_desc`} label="Description" valEn={(translations.en.process as any)[`step${num}_desc`]} valEs={(translations.es.process as any)[`step${num}_desc`]} currentEn={(t.process as any)[`step${num}_desc`]} currentEs={(t.process as any)[`step${num}_desc`] === (translations.en.process as any)[`step${num}_desc`] ? (translations.es.process as any)[`step${num}_desc`] : (t.process as any)[`step${num}_desc`]} isTextArea onSave={updateContentValue} />
+                            </div>
+                          ))}
+                        </div>
+                     </div>
+
+                     <div className="border-t border-white/5 pt-10 space-y-6">
+                        <h3 className="text-xl font-black text-white uppercase tracking-tighter flex items-center gap-2">
+                          <CheckCircle2 className="text-[#ffcc00]" /> Testimonials
+                        </h3>
+                        <ContentBlock section="testimonials" field="title" label="Section Heading" valEn={translations.en.testimonials.title} valEs={translations.es.testimonials.title} currentEn={t.testimonials.title} currentEs={t.testimonials.title === translations.en.testimonials.title ? translations.es.testimonials.title : t.testimonials.title} isTextArea onSave={updateContentValue} />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                          {[1, 2, 3].map(num => (
+                            <div key={num} className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                              <h4 className="text-[10px] font-black text-[#ffcc00] uppercase tracking-widest">Client {num}</h4>
+                              <ContentBlock section="testimonials" field={`author${num}`} label="Name" valEn={(translations.en.testimonials as any)[`author${num}`]} valEs={(translations.es.testimonials as any)[`author${num}`]} currentEn={(t.testimonials as any)[`author${num}`]} currentEs={(t.testimonials as any)[`author${num}`]} onSave={updateContentValue} />
+                              <ContentBlock section="testimonials" field={`role${num}`} label="Role" valEn={(translations.en.testimonials as any)[`role${num}`]} valEs={(translations.es.testimonials as any)[`role${num}`]} currentEn={(t.testimonials as any)[`role${num}`]} currentEs={(t.testimonials as any)[`role${num}`]} onSave={updateContentValue} />
+                              <ContentBlock section="testimonials" field={`text${num}`} label="Text" valEn={(translations.en.testimonials as any)[`text${num}`]} valEs={(translations.es.testimonials as any)[`text${num}`]} currentEn={(t.testimonials as any)[`text${num}`]} currentEs={(t.testimonials as any)[`text${num}`]} isTextArea onSave={updateContentValue} />
+                            </div>
+                          ))}
+                        </div>
+                     </div>
 
                     <p className="text-white/20 text-center italic text-xs pt-10">
                       Changes are saved instantly to the global database.
@@ -629,15 +784,17 @@ export default function AdminPortal() {
 }
 
 function ContentBlock({ section, field, label, valEn, valEs, currentEn, currentEs, isTextArea = false, onSave }: any) {
-  const [en, setEn] = useState(currentEn || valEn);
-  const [es, setEs] = useState(currentEs || valEs);
+  const formatVal = (v: any) => Array.isArray(v) ? v.join('\n') : v;
+  
+  const [en, setEn] = useState(formatVal(currentEn || valEn));
+  const [es, setEs] = useState(formatVal(currentEs || valEs));
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
 
   // Update local state if current values change (e.g. from DB load)
   React.useEffect(() => {
-    if (currentEn) setEn(currentEn);
-    if (currentEs) setEs(currentEs);
+    if (currentEn) setEn(formatVal(currentEn));
+    if (currentEs) setEs(formatVal(currentEs));
   }, [currentEn, currentEs]);
 
   const handleSave = async () => {
@@ -676,7 +833,7 @@ function ContentBlock({ section, field, label, valEn, valEs, currentEn, currentE
             value={en}
             onChange={(e: any) => setEn(e.target.value)}
             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#00bff3] transition-colors resize-none"
-            rows={isTextArea ? 3 : 1}
+            rows={isTextArea ? 6 : 1}
           />
         </div>
         <div className="space-y-2">
@@ -685,10 +842,87 @@ function ContentBlock({ section, field, label, valEn, valEs, currentEn, currentE
             value={es}
             onChange={(e: any) => setEs(e.target.value)}
             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#00bff3] transition-colors resize-none"
-            rows={isTextArea ? 3 : 1}
+            rows={isTextArea ? 6 : 1}
           />
         </div>
       </div>
     </div>
   );
+}
+
+function ImageContentBlock({ section, field, label, currentUrl, onSave, uploadImage }: any) {
+    const [url, setUrl] = useState(currentUrl);
+    const [isUploading, setIsUploading] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        if (currentUrl) setUrl(currentUrl);
+    }, [currentUrl]);
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setIsUploading(true);
+        try {
+            const newUrl = await uploadImage(file);
+            setUrl(newUrl);
+            await onSave(section, field, newUrl, newUrl); // Same for both languages for images usually
+            setSuccess(true);
+            setTimeout(() => setSuccess(false), 2000);
+        } catch (err) {
+            console.error("Upload failed", err);
+            alert("Failed to upload image.");
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
+    return (
+        <div className="bg-black/40 border border-white/5 rounded-2xl p-6 space-y-4 hover:border-white/20 transition-all group">
+            <div className="flex justify-between items-center">
+                <label className="text-xs font-black text-white/40 uppercase tracking-widest">{label}</label>
+                {success && (
+                    <span className="text-green-400 text-[10px] font-black uppercase flex items-center gap-1 animate-in zoom-in">
+                        <CheckCircle2 size={12} /> Applied
+                    </span>
+                )}
+            </div>
+            
+            <div className="flex gap-6 items-center">
+                <div className="w-24 h-24 rounded-2xl bg-black/40 border border-white/10 overflow-hidden shrink-0 shadow-inner flex items-center justify-center">
+                    {url ? (
+                        <img src={url} alt="Preview" className="w-full h-full object-cover" />
+                    ) : (
+                        <ImageIcon size={24} className="text-white/20" />
+                    )}
+                </div>
+                <div className="flex-grow space-y-4">
+                    <input
+                        type="text"
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                        placeholder="Image URL..."
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-[10px] text-white focus:outline-none focus:border-[#00bff3] transition-colors"
+                    />
+                    <div className="relative">
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            className="hidden"
+                            id={`file-${field}`}
+                        />
+                        <label
+                            htmlFor={`file-${field}`}
+                            className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-[#00bff3] hover:text-white transition-all cursor-pointer text-[10px] font-black uppercase tracking-widest ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}
+                        >
+                            <Upload size={14} className={isUploading ? 'animate-bounce' : ''} />
+                            {isUploading ? 'Uploading...' : 'Change Image from Device'}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }

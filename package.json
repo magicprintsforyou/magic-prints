@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.43",
+    "@supabase/auth-helpers-nextjs": "^0.15.0",
+    "@supabase/auth-helpers-react": "^0.15.0",
     "@supabase/supabase-js": "^2.100.0",
     "ai": "^6.0.116",
     "framer-motion": "^12.35.1",

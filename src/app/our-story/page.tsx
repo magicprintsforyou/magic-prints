@@ -15,7 +15,7 @@ export default function OurStoryPage() {
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
           <div className="relative">
             <div className="rounded-[80px] overflow-hidden shadow-2xl border-8 border-gray-50 transform -rotate-2 hover:rotate-0 transition-transform duration-700">
-              <img src={INITIAL_CONFIG.aboutMe.image} className="w-full h-auto" alt="Yndira" />
+              <img src={t.about.image} className="w-full h-auto" alt="Yndira" />
             </div>
             <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[#ffcc00] rounded-full mix-blend-multiply filter blur-[30px] opacity-70 animate-pulse"></div>
           </div>
@@ -35,14 +35,14 @@ export default function OurStoryPage() {
           <div className="grid md:grid-cols-2 gap-12">
             <div className="bg-white p-16 rounded-[60px] shadow-xl border border-purple-50 transform hover:-translate-y-2 transition-transform duration-500 group">
               <div className="w-20 h-20 bg-[#d90082] rounded-3xl flex items-center justify-center text-white text-4xl mb-10 group-hover:rotate-12 transition-transform shadow-[0_10px_30px_rgba(217,0,130,0.3)]">
-                {INITIAL_CONFIG.missionVision.missionIcon}
+                {t.about.mission_icon}
               </div>
               <h3 className="text-4xl font-black text-[#41137e] mb-6 tracking-tighter uppercase">{t.about.mission_title}</h3>
               <p className="text-xl text-gray-500 leading-relaxed italic">"{t.about.mission_desc}"</p>
             </div>
             <div className="bg-white p-16 rounded-[60px] shadow-xl border border-purple-50 transform hover:-translate-y-2 transition-transform duration-500 group">
               <div className="w-20 h-20 bg-[#00bff3] rounded-3xl flex items-center justify-center text-white text-4xl mb-10 group-hover:rotate-12 transition-transform shadow-[0_10px_30px_rgba(0,191,243,0.3)]">
-                {INITIAL_CONFIG.missionVision.visionIcon}
+                {t.about.vision_icon}
               </div>
               <h3 className="text-4xl font-black text-[#41137e] mb-6 tracking-tighter uppercase">{t.about.vision_title}</h3>
               <p className="text-xl text-gray-500 leading-relaxed italic">"{t.about.vision_desc}"</p>

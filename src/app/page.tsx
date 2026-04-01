@@ -28,10 +28,10 @@ export default function Home() {
 
   useEffect(() => {
     const slideTimer = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % INITIAL_CONFIG.hero.backgroundImages.length);
+      setCurrentSlide(prev => (prev + 1) % (t.hero.backgroundImages?.length || 1));
     }, 4000);
     return () => clearInterval(slideTimer);
-  }, []);
+  }, [t.hero.backgroundImages]);
 
   const bestSellers = useMemo(() => {
     if (!catalog) return [];
@@ -55,7 +55,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center bg-[#0A0212] overflow-hidden py-32">
         <div className="absolute inset-0">
-          {INITIAL_CONFIG.hero.backgroundImages.map((img, idx) => (
+          {(t.hero.backgroundImages || []).map((img : string, idx : number) => (
             <div key={idx} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === currentSlide ? 'opacity-40' : 'opacity-0'}`}>
               <img src={img} className="w-full h-full object-cover scale-105" alt={`Hero Slide ${idx}`} />
             </div>

@@ -15,26 +15,20 @@ export default function CorporatePage() {
   const { catalog } = useProducts();
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
 
-  const services = [
-    {
-      title: "Event Signage",
-      desc: "Museum-grade welcome boards and seating charts.",
-      icon: <Layout className="text-[#d90082]" />,
-      image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop"
-    },
-    {
-      title: "Luxury Vinyls",
-      desc: "Non-slip dance floor wraps and wall murals.",
-      icon: <Gem className="text-[#f9a826]" />,
-      image: "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?q=80&w=2070&auto=format&fit=crop"
-    },
-    {
-      title: "Brand Activations",
-      desc: "High-impact visual branding for corporate scales.",
-      icon: <Zap className="text-[#00f2fe]" />,
-      image: "https://images.unsplash.com/photo-1551818255-e6e10975bc17?q=80&w=2070&auto=format&fit=crop"
-    }
-  ];
+  const iconMap : Record<string, React.ReactNode> = {
+    Layout: <Layout className="text-[#d90082]" />,
+    Gem: <Gem className="text-[#f9a826]" />,
+    Zap: <Zap className="text-[#00f2fe]" />,
+    Award: <Award className="text-[#ffcc00]" />,
+    ShieldCheck: <ShieldCheck className="text-[#41137e]" />
+  };
+
+  const services = (t.corporate.services || []).map((s: any) => ({
+    ...s,
+    icon: iconMap[s.icon] || <Layout className="text-[#d90082]" />
+  }));
+
+  const successStories = t.corporate.success_stories || [];
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0A0212] text-white -mt-8">
@@ -42,7 +36,7 @@ export default function CorporatePage() {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop"
+            src={t.corporate.hero_image || "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop"}
             className="w-full h-full object-cover opacity-20 scale-105"
             alt="Premium Corporate Event"
           />
@@ -150,20 +144,7 @@ export default function CorporatePage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">
-             {[
-               {
-                 title: "Corporate Gala 2025",
-                 client: "Fortune 500 Tech",
-                 results: "2000+ custom prints installed in 12 hours.",
-                 img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop"
-               },
-               {
-                 title: "Product Launch",
-                 client: "Luxury Auto Brand",
-                 results: "Seamless floor-to-wall vinyl integration.",
-                 img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop"
-               }
-             ].map((story, i) => (
+             {successStories.map((story: any, i: number) => (
                <div key={i} className="group relative rounded-[60px] overflow-hidden shadow-2xl aspect-[16/10]">
                   <img src={story.img} className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" alt={story.title} />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#41137e] via-transparent to-transparent opacity-90" />
