@@ -31,13 +31,13 @@ export default function QuotePage() {
             <Sparkles size={14} /> Bespoke & Volume Productions
           </div>
           <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tighter text-[#0f172a]">
-            {t.quote.dream}<br />
+            {t?.quote?.dream || 'Dream It.'}<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff2a70] to-[#f9a826]">
-              {t.quote.print}
+              {t?.quote?.print || 'Print It.'}
             </span>
           </h1>
           <p className="text-slate-600 text-xl font-light leading-relaxed mb-10 max-w-lg">
-            {t.quote.desc}
+            {t?.quote?.desc || 'Bespoke large format production for events that leave a mark.'}
           </p>
           <div className="space-y-6">
             <div className="flex gap-4 items-start">
@@ -45,8 +45,8 @@ export default function QuotePage() {
                 <Calendar className="text-[#ff2a70]" size={24} />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-[#0f172a]">{t.quote.express}</h3>
-                <p className="text-slate-500 font-light">{t.quote.expressDesc}</p>
+                <h3 className="text-lg font-bold text-[#0f172a]">{t?.quote?.express || 'Express Production'}</h3>
+                <p className="text-slate-500 font-light">{t?.quote?.expressDesc || '24h turnaround available.'}</p>
               </div>
             </div>
           </div>

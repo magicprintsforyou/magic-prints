@@ -28,10 +28,10 @@ export default function Home() {
 
   useEffect(() => {
     const slideTimer = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % (t.hero.backgroundImages?.length || 1));
+      setCurrentSlide(prev => (prev + 1) % (t?.hero?.backgroundImages?.length || 1));
     }, 4000);
     return () => clearInterval(slideTimer);
-  }, [t.hero.backgroundImages]);
+  }, [t?.hero?.backgroundImages]);
 
   const bestSellers = useMemo(() => {
     if (!catalog) return [];
@@ -45,9 +45,9 @@ export default function Home() {
 
   // Process steps localized and improved
   const processSteps = [
-    { num: '01', t: t.process.step1_title, d: t.process.step1_desc, icon: '🛍️' },
-    { num: '02', t: t.process.step2_title, d: t.process.step2_desc, icon: '🎨' },
-    { num: '03', t: t.process.step3_title, d: t.process.step3_desc, icon: '✨' }
+    { num: '01', t: t?.process?.step1_title || 'Consulting', d: t?.process?.step1_desc || 'Phase 1 description', icon: '🛍️' },
+    { num: '02', t: t?.process?.step2_title || 'Production', d: t?.process?.step2_desc || 'Phase 2 description', icon: '🎨' },
+    { num: '03', t: t?.process?.step3_title || 'Creation', d: t?.process?.step3_desc || 'Phase 3 description', icon: '✨' }
   ];
 
   return (
@@ -55,7 +55,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center bg-[#0A0212] overflow-hidden py-32">
         <div className="absolute inset-0">
-          {(t.hero.backgroundImages || []).map((img : string, idx : number) => (
+          {(t?.hero?.backgroundImages || []).map((img : string, idx : number) => (
             <div key={idx} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === currentSlide ? 'opacity-40' : 'opacity-0'}`}>
               <img src={img} className="w-full h-full object-cover scale-105" alt={`Hero Slide ${idx}`} />
             </div>
@@ -69,23 +69,23 @@ export default function Home() {
             </div>
           </div>
           <div className={`mb-10 transition-all duration-1000 delay-300 ${!showHeroLogo ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10 h-0 overflow-hidden'}`}>
-            <p className="font-script text-[40px] md:text-[60px] text-[#ffcc00] -rotate-2 drop-shadow-[0_0_15px_rgba(255,204,0,0.6)] leading-none mb-4">{t.hero.welcome}</p>
+            <p className="font-script text-[40px] md:text-[60px] text-[#ffcc00] -rotate-2 drop-shadow-[0_0_15px_rgba(255,204,0,0.6)] leading-none mb-4">{t?.hero?.welcome || 'Welcome'}</p>
           </div>
           <h1 className="text-5xl md:text-[100px] font-black text-white mb-8 tracking-tight leading-[0.8] uppercase italic drop-shadow-2xl">
-            {t.hero.title} <br />
+            {t?.hero?.title || 'Magic'} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#cc004e] via-[#d90082] to-[#ffcc00] drop-shadow-[0_2px_10px_rgba(217,0,130,0.3)]">
-              {t.hero.title_highlight}
+              {t?.hero?.title_highlight || 'Prints'}
             </span>
           </h1>
           <p className="text-[#a0a0a0] text-xl md:text-2xl mb-12 max-w-3xl mx-auto font-light italic leading-relaxed">
-            {t.hero.subtitle}
+            {t?.hero?.subtitle || 'Transforming ordinary spaces into museum-grade experiences.'}
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-8 mt-12">
             <Link href="/corporate" className="px-16 py-7 bg-white text-black rounded-full font-black text-2xl hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)] text-center">
-              {t.hero.cta_secondary}
+              {t?.hero?.cta_secondary || 'Corporate'}
             </Link>
             <Link href="/quote" className="px-16 py-7 bg-[#d90082] text-white rounded-full font-black text-2xl hover:scale-105 transition-all shadow-[0_0_40px_rgba(217,0,130,0.4)] text-center">
-              {t.hero.cta_primary}
+              {t?.hero?.cta_primary || 'Get a Quote'}
             </Link>
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-24">
             <h2 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter uppercase drop-shadow-lg">
-              {t.process.title}
+              {t?.process?.title || 'Our Process'}
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#d90082] to-transparent mx-auto"></div>
           </div>
@@ -163,13 +163,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
-              <span className="text-[#d90082] font-black text-xs tracking-[0.3em] uppercase mb-4 block">{t.products.badge}</span>
+              <span className="text-[#d90082] font-black text-xs tracking-[0.3em] uppercase mb-4 block">{t?.products?.badge || 'Museum Grade'}</span>
               <h2 className="text-5xl md:text-7xl font-black text-[#41137e] tracking-tighter mb-8 leading-none uppercase italic">
-                {t.products.title} <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#7e22ce]">{t.products.title_highlight}</span>
+                {t?.products?.title || 'Product'} <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#7e22ce]">{t?.products?.title_highlight || 'Catalog'}</span>
               </h2>
               <p className="text-xl text-slate-500 font-medium italic mb-10 leading-relaxed">
-                "{t.products.subtitle}"
+                "{t?.products?.subtitle || 'Explore our full range of professional event substrate.'}"
               </p>
               <div className="space-y-6">
                 <h3 className="text-3xl md:text-5xl font-black text-[#41137e] leading-tight uppercase">
@@ -207,13 +207,13 @@ export default function Home() {
       <section className="py-32 bg-white px-6 border-t border-gray-100">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-5xl md:text-7xl font-black text-[#41137e] text-center mb-24 tracking-tighter uppercase whitespace-pre-line">
-            {t.testimonials.title}
+            {t?.testimonials?.title || 'Client Love'}
           </h2>
           <div className="grid md:grid-cols-3 gap-10">
             {[
-              { name: t.testimonials.author1, role: t.testimonials.role1, text: t.testimonials.text1 },
-              { name: t.testimonials.author2, role: t.testimonials.role2, text: t.testimonials.text2 },
-              { name: t.testimonials.author3, role: t.testimonials.role3, text: t.testimonials.text3 }
+              { name: t?.testimonials?.author1 || 'Client', role: t?.testimonials?.role1 || 'Reviewer', text: t?.testimonials?.text1 || 'Great service!' },
+              { name: t?.testimonials?.author2 || 'Client', role: t?.testimonials?.role2 || 'Reviewer', text: t?.testimonials?.text2 || 'Amazing production!' },
+              { name: t?.testimonials?.author3 || 'Client', role: t?.testimonials?.role3 || 'Reviewer', text: t?.testimonials?.text3 || 'Highly recommended!' }
             ].map((test, i) => (
               <div key={i} className="bg-white p-12 rounded-[50px] shadow-xl border border-slate-50 space-y-6 relative group hover:-translate-y-4 transition-all duration-500 hover:shadow-2xl">
                 <div className="flex text-[#ffcc00] text-xl">

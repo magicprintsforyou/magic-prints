@@ -23,12 +23,12 @@ export default function CorporatePage() {
     ShieldCheck: <ShieldCheck className="text-[#41137e]" />
   };
 
-  const services = (t.corporate.services || []).map((s: any) => ({
+  const services = (t?.corporate?.services || []).map((s: any) => ({
     ...s,
     icon: iconMap[s.icon] || <Layout className="text-[#d90082]" />
   }));
 
-  const successStories = t.corporate.success_stories || [];
+  const successStories = t?.corporate?.success_stories || [];
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0A0212] text-white -mt-8">
@@ -45,26 +45,26 @@ export default function CorporatePage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-40 pb-32">
           <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 text-[#d90082] font-black text-xs tracking-[0.3em] uppercase mb-8 border border-white/10 backdrop-blur-md">
-            <Building2 size={16} /> {t.corporate.badge}
+            <Building2 size={16} /> {t?.corporate?.badge || 'Corporate Elite'}
           </div>
 
           <h1 className="text-6xl md:text-[110px] font-black mb-6 leading-none tracking-tighter uppercase italic">
-            {t.corporate.title} <br />
+            {t?.corporate?.title || 'Corporate'} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#cc004e] via-[#d90082] to-[#ffcc00] drop-shadow-[0_0_30px_rgba(217,0,130,0.3)]">
-              {t.corporate.title_highlight}
+              {t?.corporate?.title_highlight || 'Productions'}
             </span>
           </h1>
 
           <p className="text-gray-400 text-xl md:text-2xl mb-12 max-w-2xl font-light italic leading-relaxed">
-            "{t.corporate.subtitle}"
+            "{t?.corporate?.subtitle || 'Museum-grade signage for industry leaders.'}"
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6">
             <Link href="#enquire" className="group bg-[#cc004e] text-white px-10 py-5 rounded-full font-black tracking-widest uppercase text-sm hover:scale-105 hover:bg-[#ff2a70] transition-all flex items-center justify-center gap-3 shadow-[0_10px_40px_rgba(204,0,78,0.4)]">
-              {t.corporate.cta_primary} <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              {t?.corporate?.cta_primary || 'Enquire Now'} <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <button className="bg-white/5 text-white border border-white/10 px-10 py-5 rounded-full font-black tracking-widest uppercase text-sm hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3 backdrop-blur-md">
-              {t.corporate.cta_secondary} <ChevronRight size={18} />
+              {t?.corporate?.cta_secondary || 'Our Work'} <ChevronRight size={18} />
             </button>
           </div>
         </div>
@@ -104,12 +104,12 @@ export default function CorporatePage() {
            <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
               <div className="max-w-2xl">
                  <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-tight">
-                   {t.corporate.tech_specs_title} <br />
+                   {t?.corporate?.tech_specs_title || 'Technical'} <br />
                    <span className="text-[#ffcc00] italic">Precision.</span>
                  </h2>
               </div>
               <p className="text-xl text-white/60 font-light italic max-w-sm border-l-2 border-[#ffcc00] pl-8">
-                "{t.corporate.tech_specs_subtitle}"
+                "{t?.corporate?.tech_specs_subtitle || 'Ultra-high definition for every texture.'}"
               </p>
            </div>
 
@@ -135,11 +135,11 @@ export default function CorporatePage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center text-center mb-24">
              <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-[#41137e]/5 text-[#41137e] font-black text-xs tracking-[0.3em] uppercase mb-8 border border-[#41137e]/10">
-                <Award size={16} /> {t.corporate.success_stories_title}
+                <Award size={16} /> {t?.corporate?.success_stories_title || 'Case Studies'}
              </div>
-             <h2 className="text-6xl md:text-8xl font-black text-[#41137e] tracking-tighter uppercase leading-none mb-8">{t.corporate.success_stories_title}</h2>
+             <h2 className="text-6xl md:text-8xl font-black text-[#41137e] tracking-tighter uppercase leading-none mb-8">{t?.corporate?.success_stories_title || 'Success'}</h2>
              <p className="text-2xl text-gray-500 font-light italic max-w-2xl">
-               {t.corporate.success_stories_subtitle}
+               {t?.corporate?.success_stories_subtitle || 'Delivering excellence under pressure.'}
              </p>
           </div>
 
@@ -168,13 +168,13 @@ export default function CorporatePage() {
               <span className="text-[#d90082]">Partnerships.</span>
             </h2>
             <p className="text-2xl text-gray-500 font-light italic leading-relaxed border-l-4 border-[#ffcc00] pl-8">
-              "{t.corporate.alliance_quote}"
+              "{t?.corporate?.alliance_quote || 'Joining forces to build monuments.'}"
             </p>
 
             <div className="space-y-12 pt-8">
               {[
-                { title: t.corporate.alliance1_title, desc: t.corporate.alliance1_desc, icon: <ShieldCheck size={24} /> },
-                { title: t.corporate.alliance2_title, desc: t.corporate.alliance2_desc, icon: <Award size={24} /> }
+                { title: t?.corporate?.alliance1_title || 'Production', desc: t?.corporate?.alliance1_desc || 'Museum-quality standards.', icon: <ShieldCheck size={24} /> },
+                { title: t?.corporate?.alliance2_title || 'Speed', desc: t?.corporate?.alliance2_desc || 'Rapid deployment for events.', icon: <Award size={24} /> }
               ].map((alliance, i) => (
                 <div key={i} className="flex gap-8 group">
                   <div className="w-16 h-16 bg-[#41137e] text-white rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
@@ -241,7 +241,7 @@ export default function CorporatePage() {
           <div className="inline-block p-4 rounded-3xl bg-white/5 border border-white/10 mb-8">
             <MousePointer2 className="text-[#ffcc00] animate-bounce" />
           </div>
-          <h2 className="text-6xl md:text-8xl font-black text-white tracking-tighter uppercase italic leading-none">{t.corporate.form_title}</h2>
+          <h2 className="text-6xl md:text-8xl font-black text-white tracking-tighter uppercase italic leading-none">{t?.corporate?.form_title || 'Partner With Us'}</h2>
           <p className="text-gray-400 mt-6 text-xl italic font-light">Tell us about your monumental project.</p>
         </div>
         <BespokeForm />
