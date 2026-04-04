@@ -750,30 +750,39 @@ export default function AdminPortal() {
                            onSave={updateContentValue}
                          />
                          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                           {[1, 2, 3].map(num => (
-                             <div key={num} className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
-                               <h4 className="text-[10px] font-black text-[#00bff3] uppercase tracking-widest">Step {num}</h4>
-                               <ContentBlock section="process" field={`step${num}_title`} label="Title" valEn={(translations.en.process as any)[`step${num}_title`]} valEs={(translations.es.process as any)[`step${num}_title`]} currentEn={t?.process ? (t.process as any)[`step${num}_title`] : null} currentEs={t?.process && (t.process as any)[`step${num}_title`] === (translations.en.process as any)[`step${num}_title`] ? (translations.es.process as any)[`step${num}_title`] : (t.process || {} as any)[`step${num}_title`]} onSave={updateContentValue} />
-                               <ContentBlock section="process" field={`step${num}_desc`} label="Description" valEn={(translations.en.process as any)[`step${num}_desc`]} valEs={(translations.es.process as any)[`step${num}_desc`]} currentEn={t?.process ? (t.process as any)[`step${num}_desc`] : null} currentEs={t?.process && (t.process as any)[`step${num}_desc`] === (translations.en.process as any)[`step${num}_desc`] ? (translations.es.process as any)[`step${num}_desc`] : (t.process || {} as any)[`step${num}_desc`]} isTextArea onSave={updateContentValue} />
-                             </div>
-                           ))}
+                           {[1, 2, 3].map(num => {
+                             const pEn = translations.en.process as any;
+                             const pEs = translations.es.process as any;
+                             const pCurr = t?.process as any;
+                             return (
+                               <div key={num} className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                                 <h4 className="text-[10px] font-black text-[#00bff3] uppercase tracking-widest">Step {num}</h4>
+                                 <ContentBlock section="process" field={`step${num}_title`} label="Title" valEn={pEn[`step${num}_title`]} valEs={pEs[`step${num}_title`]} currentEn={pCurr ? pCurr[`step${num}_title`] : null} currentEs={pCurr && pCurr[`step${num}_title`] === pEn[`step${num}_title`] ? pEs[`step${num}_title`] : (pCurr || {})[`step${num}_title`]} onSave={updateContentValue} />
+                                 <ContentBlock section="process" field={`step${num}_desc`} label="Description" valEn={pEn[`step${num}_desc`]} valEs={pEs[`step${num}_desc`]} currentEn={pCurr ? pCurr[`step${num}_desc`] : null} currentEs={pCurr && pCurr[`step${num}_desc`] === pEn[`step${num}_desc`] ? pEs[`step${num}_desc`] : (pCurr || {})[`step${num}_desc`]} isTextArea onSave={updateContentValue} />
+                               </div>
+                             );
+                           })}
                          </div>
                      </div>
 
                      <div className="border-t border-white/5 pt-10 space-y-6">
                         <h3 className="text-xl font-black text-white uppercase tracking-tighter flex items-center gap-2">
-                          <CheckCircle2 className="text-[#ffcc00]" /> Testimonials
+                          <CheckCircle2 className="text-[#ffcc00]" /> Client Love
                         </h3>
-                        <ContentBlock section="testimonials" field="title" label="Section Heading" valEn={translations.en.testimonials.title} valEs={translations.es.testimonials.title} currentEn={t.testimonials.title} currentEs={t.testimonials.title === translations.en.testimonials.title ? translations.es.testimonials.title : t.testimonials.title} isTextArea onSave={updateContentValue} />
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                          {[1, 2, 3].map(num => (
-                            <div key={num} className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
-                              <h4 className="text-[10px] font-black text-[#ffcc00] uppercase tracking-widest">Client {num}</h4>
-                              <ContentBlock section="testimonials" field={`author${num}`} label="Name" valEn={(translations.en.testimonials as any)[`author${num}`]} valEs={(translations.es.testimonials as any)[`author${num}`]} currentEn={t?.testimonials ? (t.testimonials as any)[`author${num}`] : null} currentEs={t?.testimonials ? (t.testimonials as any)[`author${num}`] : null} onSave={updateContentValue} />
-                              <ContentBlock section="testimonials" field={`role${num}`} label="Role" valEn={(translations.en.testimonials as any)[`role${num}`]} valEs={(translations.es.testimonials as any)[`role${num}`]} currentEn={t?.testimonials ? (t.testimonials as any)[`role${num}`] : null} currentEs={t?.testimonials ? (t.testimonials as any)[`role${num}`] : null} onSave={updateContentValue} />
-                              <ContentBlock section="testimonials" field={`text${num}`} label="Text" valEn={(translations.en.testimonials as any)[`text${num}`]} valEs={(translations.es.testimonials as any)[`text${num}`]} currentEn={t?.testimonials ? (t.testimonials as any)[`text${num}`] : null} currentEs={t?.testimonials ? (t.testimonials as any)[`text${num}`] : null} isTextArea onSave={updateContentValue} />
-                            </div>
-                          ))}
+                          {[1, 2, 3].map(num => {
+                            const tEn = translations.en.testimonials as any;
+                            const tEs = translations.es.testimonials as any;
+                            const tCurr = t?.testimonials as any;
+                            return (
+                              <div key={num} className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <h4 className="text-[10px] font-black text-[#ffcc00] uppercase tracking-widest">Client {num}</h4>
+                                <ContentBlock section="testimonials" field={`author${num}`} label="Name" valEn={tEn[`author${num}`]} valEs={tEs[`author${num}`]} currentEn={tCurr ? tCurr[`author${num}`] : null} currentEs={tCurr ? tCurr[`author${num}`] : null} onSave={updateContentValue} />
+                                <ContentBlock section="testimonials" field={`role${num}`} label="Role" valEn={tEn[`role${num}`]} valEs={tEs[`role${num}`]} currentEn={tCurr ? tCurr[`role${num}`] : null} currentEs={tCurr ? tCurr[`role${num}`] : null} onSave={updateContentValue} />
+                                <ContentBlock section="testimonials" field={`text${num}`} label="Text" valEn={tEn[`text${num}`]} valEs={tEs[`text${num}`]} currentEn={tCurr ? tCurr[`text${num}`] : null} currentEs={tCurr ? tCurr[`text${num}`] : null} isTextArea onSave={updateContentValue} />
+                              </div>
+                            );
+                          })}
                         </div>
                      </div>
 
