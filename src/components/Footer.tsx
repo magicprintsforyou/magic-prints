@@ -12,35 +12,35 @@ export default function ClientFooter() {
                         Magic Prints
                     </span>
                     <p className="text-gray-500 text-sm italic leading-relaxed">
-                        {t.common.slogan || 'Transforming ordinary spaces into museum-grade experiences.'}
+                        {t?.common?.slogan || 'Transforming ordinary spaces into museum-grade experiences.'}
                     </p>
                 </div>
                 <div className="space-y-6">
-                    <h4 className="text-xs font-black uppercase tracking-[0.3em] text-[#ffcc00]">{t.footer.quickLinks}</h4>
+                    <h4 className="text-xs font-black uppercase tracking-[0.3em] text-[#ffcc00]">{t?.footer?.quickLinks || 'Quick Access'}</h4>
                     <ul className="space-y-4 text-sm font-bold text-gray-400">
-                        <li><a href="/our-story" className="hover:text-white transition-colors">{t.nav.history}</a></li>
-                        <li><a href="/" className="hover:text-white transition-colors">{t.nav.home}</a></li>
-                        <li><a href="/corporate" className="hover:text-white transition-colors">{t.nav.corporate}</a></li>
-                        <li><a href="/quote" className="hover:text-white transition-colors">{t.nav.quote}</a></li>
+                        <li><a href="/our-story" className="hover:text-white transition-colors">{t?.nav?.history || 'History'}</a></li>
+                        <li><a href="/" className="hover:text-white transition-colors">{t?.nav?.home || 'Home'}</a></li>
+                        <li><a href="/corporate" className="hover:text-white transition-colors">{t?.nav?.corporate || 'Corporate'}</a></li>
+                        <li><a href="/quote" className="hover:text-white transition-colors">{t?.nav?.quote || 'Quote'}</a></li>
                     </ul>
                 </div>
                 <div className="space-y-6">
-                    <h4 className="text-xs font-black uppercase tracking-[0.3em] text-[#ffcc00]">{t.footer.contact}</h4>
+                    <h4 className="text-xs font-black uppercase tracking-[0.3em] text-[#ffcc00]">{t?.footer?.contact || 'Contact'}</h4>
                     <ul className="space-y-4 text-sm font-bold text-gray-400">
-                        <li>✉️ {t.footer.email}</li>
+                        <li>✉️ {t?.footer?.email || 'sales@magicprintsforyou.com'}</li>
                         <li>
                             <a href="#" className="hover:text-white transition-colors flex items-center gap-2">
-                                <i className="fa-brands fa-whatsapp text-emerald-400"></i> {t.footer.whatsapp_msg || t.common.whatsapp}
+                                <i className="fa-brands fa-whatsapp text-emerald-400"></i> {t?.footer?.whatsapp_msg || t?.common?.whatsapp || 'WhatsApp'}
                             </a>
                         </li>
                         <li className="flex items-start gap-2">
                             <span className="text-purple-400">📍</span>
-                            <a href="#" className="hover:text-white transition-colors">{t.footer.address}</a>
+                            <a href="#" className="hover:text-white transition-colors">{t?.footer?.address || ''}</a>
                         </li>
                     </ul>
                 </div>
                 <div className="space-y-6">
-                    <h4 className="text-xs font-black uppercase tracking-[0.3em] text-[#ffcc00]">{t.footer.hours}</h4>
+                    <h4 className="text-xs font-black uppercase tracking-[0.3em] text-[#ffcc00]">{t?.footer?.hours || 'Hours'}</h4>
                     <div className="text-sm font-bold text-gray-400 space-y-2">
                         <p>{language === 'es' ? 'Lun - Sáb' : 'Mon - Sat'}: 9:00 AM - 6:00 PM</p>
                         <p className="text-[#d90082]">{language === 'es' ? 'Domingo: Solo Instalaciones Programadas' : 'Sunday: Scheduled Installations Only'}</p>
@@ -51,8 +51,8 @@ export default function ClientFooter() {
                 </div>
             </div>
             <div className="max-w-7xl mx-auto px-6 mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p className="text-gray-700 font-black text-[10px] uppercase tracking-[0.5em]">{t.footer.rights}</p>
-                <p className="text-gray-800 font-black text-[8px] uppercase tracking-widest">{t.footer.designed}</p>
+                <p className="text-gray-700 font-black text-[10px] uppercase tracking-[0.5em]">{t?.footer?.rights || '© 2026 MAGIC PRINTS'}</p>
+                <p className="text-gray-800 font-black text-[8px] uppercase tracking-widest">{t?.footer?.designed || 'CRAFTED WITH PRECISION'}</p>
             </div>
         </footer>
     );

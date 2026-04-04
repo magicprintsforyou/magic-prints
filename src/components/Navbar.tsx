@@ -39,11 +39,11 @@ const Navbar = () => {
   const showBackground = scrolled || !isHome || mobileMenuOpen;
 
   const navLinks = [
-    { label: t.nav.home, href: '/' },
-    { label: t.nav.history, href: '/our-story' },
-    { label: t.nav.products, href: '/products' },
-    { label: t.nav.corporate, href: '/corporate' },
-    { label: t.nav.quote, href: '/quote' },
+    { label: t?.nav?.home || 'HOME', href: '/' },
+    { label: t?.nav?.history || 'OUR STORY', href: '/our-story' },
+    { label: t?.nav?.products || 'CATALOG', href: '/products' },
+    { label: t?.nav?.corporate || 'CORPORATE', href: '/corporate' },
+    { label: t?.nav?.quote || 'GET A QUOTE', href: '/quote' },
   ];
 
   return (

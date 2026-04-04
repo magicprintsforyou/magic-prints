@@ -18,7 +18,8 @@ const AIAssistant: React.FC = () => {
   // Initialize messages in useEffect to avoid issues with t being undefined/wrong type during first render
   useEffect(() => {
     if (t && typeof t !== 'function') {
-      setMessages([{ role: 'model', text: t.ai?.sparkle_intro || "Hi! I'm Sparkle ✨" }]);
+      const intro = t?.ai?.sparkle_intro || "Hi! I'm Sparkle ✨. Ready to define the visual language of your next production?";
+      setMessages([{ role: 'model', text: intro }]);
     }
   }, [t]);
   const [input, setInput] = useState('');
@@ -47,9 +48,9 @@ const AIAssistant: React.FC = () => {
         body: JSON.stringify({ message: input, history })
       });
       const data = await response.json();
-      setMessages(prev => [...prev, { role: 'model', text: data.reply || t.ai.error_interrupt }]);
+      setMessages(prev => [...prev, { role: 'model', text: data.reply || t?.ai?.error_interrupt || "Connection interrupted." }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'model', text: t.ai.error_sparkle }]);
+      setMessages(prev => [...prev, { role: 'model', text: t?.ai?.error_sparkle || "Sparkle had a flicker." }]);
     }
 
     setIsTyping(false);
@@ -73,8 +74,8 @@ const AIAssistant: React.FC = () => {
         <div className="fixed bottom-28 right-8 w-[90vw] md:w-[400px] h-[600px] bg-white rounded-[40px] shadow-[0_20px_60px_rgba(48,5,95,0.2)] border border-purple-50 flex flex-col overflow-hidden z-50 animate-in fade-in slide-in-from-bottom-8 duration-500">
           <div className="p-8 bg-[#30055F] text-white relative">
             <div className="absolute top-0 right-0 p-4 opacity-10 text-8xl">✨</div>
-            <h3 className="font-black text-2xl tracking-tighter">{t.ai.assistant_title}</h3>
-            <p className="text-[10px] font-black tracking-widest text-cyan-300 opacity-80 uppercase">{t.ai.assistant_subtitle}</p>
+            <h3 className="font-black text-2xl tracking-tighter">{t?.ai?.assistant_title || 'Sparkle AI'}</h3>
+            <p className="text-[10px] font-black tracking-widest text-cyan-300 opacity-80 uppercase">{t?.ai?.assistant_subtitle || 'Consultant Designer'}</p>
           </div>
 
           <div
@@ -110,7 +111,7 @@ const AIAssistant: React.FC = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              placeholder={t.ai.placeholder}
+              placeholder={t?.ai?.placeholder || "How can we assist your vision?"}
               className="flex-1 bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-medium focus:ring-2 focus:ring-purple-200 outline-none"
             />
             <button
