@@ -12,13 +12,14 @@ interface ProductModalProps {
 
 const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, onAddToCart }) => {
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(product.variants && product.variants.length > 0 ? product.variants[0] : null);
-  const [material, setMaterial] = useState<string>('Foamboard');
+  const [material, setMaterial] = useState<string>(product.materials?.[0] || 'Foamboard');
   const [isRushOrder, setIsRushOrder] = useState<boolean>(false);
   const [fileUploaded, setFileUploaded] = useState<boolean>(false);
 
   // Fallback base price if no variants exist
   const basePrice = selectedVariant?.price || product.price || 0;
-  const totalPrice = basePrice + (isRushOrder ? 30 : 0);
+  const rushSurcharge = product.rush_price || 30;
+  const totalPrice = basePrice + (isRushOrder ? rushSurcharge : 0);
 
   if (!isOpen) return null;
 
@@ -112,8 +113,16 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
                     value={material}
                     onChange={(e) => setMaterial(e.target.value)}
                   >
-                    <option value="Foamboard">Premium Foamboard</option>
-                    <option value="Coroplast">Coroplast (Weatherproof)</option>
+                    {product.materials && product.materials.length > 0 ? (
+                      product.materials.map(m => (
+                        <option key={m} value={m}>{m}</option>
+                      ))
+                    ) : (
+                      <>
+                        <option value="Foamboard">Premium Foamboard</option>
+                        <option value="Coroplast">Coroplast (Weatherproof)</option>
+                      </>
+                    )}
                   </select>
                   <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={20} />
                 </div>
@@ -153,7 +162,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
                   </div>
                 </div>
                 <div className={`font-black tracking-tight ${isRushOrder ? 'text-[#ff2a70]' : 'text-slate-400'}`}>
-                  +$30.00
+                  +${rushSurcharge.toFixed(2)}
                 </div>
               </div>
 

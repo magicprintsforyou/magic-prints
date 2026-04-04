@@ -15,6 +15,8 @@ export interface Product {
   image: string;
   rating?: number;
   variants?: Variant[];
+  materials?: string[];
+  rush_price?: number;
   paymentLink?: string;
 }
 

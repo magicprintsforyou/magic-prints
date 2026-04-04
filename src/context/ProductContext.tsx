@@ -17,6 +17,8 @@ export type Product = {
   description: string;
   themes?: string[];
   variants?: ProductVariant[];
+  materials?: string[];
+  rush_price?: number;
   price?: number;
   includes?: string[];
 };
@@ -83,11 +85,14 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         const section = item.section as keyof SiteContent;
         
         if (baseContent[section] && typeof baseContent[section] === 'object') {
-           // If the original field is an array (like about.bio), we split the DB string by newlines
-           if (Array.isArray((baseContent[section] as any)[item.key])) {
-             (baseContent[section] as any)[item.key] = value.split('\n').filter((p: string) => p.trim() !== '');
-           } else {
-             (baseContent[section] as any)[item.key] = value;
+           // Ensure the key exists in our local translations before overwriting
+           if ((baseContent[section] as any)[item.key] !== undefined) {
+              // If the original field is an array (like about.bio), we split the DB string by newlines
+              if (Array.isArray((baseContent[section] as any)[item.key])) {
+                (baseContent[section] as any)[item.key] = value.split('\n').filter((p: string) => p.trim() !== '');
+              } else {
+                (baseContent[section] as any)[item.key] = value;
+              }
            }
         }
       });
@@ -129,6 +134,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
             image: prod.image,
             themes: prod.themes || [],
             variants: prod.variants || [],
+            materials: prod.materials || [],
+            rush_price: prod.rush_price ? parseFloat(prod.rush_price) : undefined,
             includes: prod.includes || []
           });
         }
@@ -196,6 +203,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         image: product.image,
         themes: product.themes || [],
         variants: product.variants || [],
+        materials: product.materials || [],
+        rush_price: product.rush_price || null,
         includes: product.includes || []
       });
 
@@ -217,7 +226,10 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
           description: product.description,
           price: product.price || null,
           image: product.image,
-          themes: product.themes || []
+          themes: product.themes || [],
+          variants: product.variants || [],
+          materials: product.materials || [],
+          rush_price: product.rush_price || null
         })
         .eq('id', product.id);
 

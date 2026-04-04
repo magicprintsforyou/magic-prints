@@ -62,6 +62,9 @@ export default function AdminPortal() {
   const [image, setImage] = useState('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop');
   const [category, setCategory] = useState(Object.keys(catalog)[0] || '');
   const [tags, setTags] = useState('');
+  const [materials, setMaterials] = useState('');
+  const [rushPrice, setRushPrice] = useState('');
+  const [variants, setVariants] = useState<{size: string, price: number}[]>([]);
   
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [catSaveSuccess, setCatSaveSuccess] = useState(false);
@@ -103,6 +106,9 @@ export default function AdminPortal() {
     setDescription('');
     setTags('');
     setImage('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop');
+    setMaterials('');
+    setRushPrice('');
+    setVariants([]);
   };
 
   const handleEditProduct = (prod: Product) => {
@@ -113,6 +119,9 @@ export default function AdminPortal() {
     setImage(prod.image);
     setCategory(prod.category);
     setTags(prod.themes?.join(', ') || '');
+    setMaterials(prod.materials?.join(', ') || '');
+    setRushPrice(prod.rush_price?.toString() || '');
+    setVariants(prod.variants || []);
     setActiveTab('product');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -134,7 +143,10 @@ export default function AdminPortal() {
       description: description || 'Superb quality event material.',
       category,
       image,
-      themes: tags.split(',').map(t => t.trim()).filter(Boolean)
+      themes: tags.split(',').map(t => t.trim()).filter(Boolean),
+      materials: materials.split(',').map(m => m.trim()).filter(Boolean),
+      rush_price: parseFloat(rushPrice) || 0,
+      variants
     };
 
     if (editingProductId) {
@@ -339,6 +351,80 @@ export default function AdminPortal() {
                     />
                   </div>
 
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Materials */}
+                    <div>
+                      <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        Materials (Comma separated)
+                      </label>
+                      <input
+                        type="text"
+                        value={materials}
+                        onChange={(e) => setMaterials(e.target.value)}
+                        placeholder="e.g. Foamboard, Coroplast"
+                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-[#d90082] transition-colors"
+                      />
+                    </div>
+
+                    {/* Rush Price */}
+                    <div>
+                      <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Rush Order Fee ($)</label>
+                      <input
+                        type="number"
+                        value={rushPrice}
+                        onChange={(e) => setRushPrice(e.target.value)}
+                        placeholder="30.00"
+                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-[#d90082] transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Variants (Size/Price) Editor */}
+                  <div className="space-y-4">
+                    <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Size & Price Variants</label>
+                    <div className="space-y-2">
+                      {variants.map((v, i) => (
+                        <div key={i} className="flex gap-2 items-center bg-black/20 p-3 rounded-xl border border-white/5">
+                          <input 
+                            placeholder="Size (e.g. 8x8ft)"
+                            value={v.size}
+                            onChange={(e) => {
+                              const newVariants = [...variants];
+                              newVariants[i].size = e.target.value;
+                              setVariants(newVariants);
+                            }}
+                            className="flex-grow bg-transparent border-none outline-none text-sm font-bold"
+                          />
+                          <input 
+                            type="number"
+                            placeholder="Price"
+                            value={v.price}
+                            onChange={(e) => {
+                              const newVariants = [...variants];
+                              newVariants[i].price = parseFloat(e.target.value) || 0;
+                              setVariants(newVariants);
+                            }}
+                            className="w-20 bg-transparent border-none outline-none text-sm font-black text-[#00bff3]"
+                          />
+                          <button 
+                            type="button" 
+                            onClick={() => setVariants(variants.filter((_, idx) => idx !== i))}
+                            className="text-red-400 hover:text-red-600 px-2"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                      <button 
+                        type="button"
+                        onClick={() => setVariants([...variants, { size: '', price: 0 }])}
+                        className="w-full py-3 border-2 border-dashed border-white/10 rounded-xl text-xs font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-white/30 transition-all"
+                      >
+                        + Add Size Variant
+                      </button>
+                    </div>
+                  </div>
+
                   {/* Description */}
                   <div>
                     <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Description</label>
@@ -504,8 +590,8 @@ export default function AdminPortal() {
                           label="Welcome Phrase" 
                           valEn={translations.en.hero.welcome} 
                           valEs={translations.es.hero.welcome}
-                          currentEn={t.hero.welcome}
-                          currentEs={t.hero.welcome === translations.en.hero.welcome ? translations.es.hero.welcome : t.hero.welcome} // Improved fallback
+                          currentEn={t?.hero?.welcome}
+                          currentEs={t?.hero?.welcome === translations.en.hero.welcome ? translations.es.hero.welcome : t?.hero?.welcome}
                           onSave={updateContentValue}
                         />
 
@@ -515,8 +601,8 @@ export default function AdminPortal() {
                           label="Main Title" 
                           valEn={translations.en.hero.title} 
                           valEs={translations.es.hero.title}
-                          currentEn={t.hero.title}
-                          currentEs={t.hero.title === translations.en.hero.title ? translations.es.hero.title : t.hero.title}
+                          currentEn={t?.hero?.title}
+                          currentEs={t?.hero?.title === translations.en.hero.title ? translations.es.hero.title : t?.hero?.title}
                           onSave={updateContentValue}
                         />
 
@@ -526,8 +612,8 @@ export default function AdminPortal() {
                           label="Title Highlight" 
                           valEn={translations.en.hero.title_highlight} 
                           valEs={translations.es.hero.title_highlight}
-                          currentEn={t.hero.title_highlight}
-                          currentEs={t.hero.title_highlight === translations.en.hero.title_highlight ? translations.es.hero.title_highlight : t.hero.title_highlight}
+                          currentEn={t?.hero?.title_highlight}
+                          currentEs={t?.hero?.title_highlight === translations.en.hero.title_highlight ? translations.es.hero.title_highlight : t?.hero?.title_highlight}
                           onSave={updateContentValue}
                         />
 
@@ -537,8 +623,8 @@ export default function AdminPortal() {
                           label="Subtitle" 
                           valEn={translations.en.hero.subtitle} 
                           valEs={translations.es.hero.subtitle}
-                          currentEn={t.hero.subtitle}
-                          currentEs={t.hero.subtitle === translations.en.hero.subtitle ? translations.es.hero.subtitle : t.hero.subtitle}
+                          currentEn={t?.hero?.subtitle}
+                          currentEs={t?.hero?.subtitle === translations.en.hero.subtitle ? translations.es.hero.subtitle : t?.hero?.subtitle}
                           isTextArea
                           onSave={updateContentValue}
                         />
@@ -550,8 +636,8 @@ export default function AdminPortal() {
                             label="Primary Button" 
                             valEn={translations.en.hero.cta_primary} 
                             valEs={translations.es.hero.cta_primary}
-                            currentEn={t.hero.cta_primary}
-                            currentEs={t.hero.cta_primary === translations.en.hero.cta_primary ? translations.es.hero.cta_primary : t.hero.cta_primary}
+                            currentEn={t?.hero?.cta_primary}
+                            currentEs={t?.hero?.cta_primary === translations.en.hero.cta_primary ? translations.es.hero.cta_primary : t?.hero?.cta_primary}
                             onSave={updateContentValue}
                           />
                         <ContentBlock 
@@ -560,8 +646,8 @@ export default function AdminPortal() {
                           label="Secondary Button" 
                           valEn={translations.en.hero.cta_secondary} 
                           valEs={translations.es.hero.cta_secondary}
-                          currentEn={t.hero.cta_secondary}
-                          currentEs={t.hero.cta_secondary === translations.en.hero.cta_secondary ? translations.es.hero.cta_secondary : t.hero.cta_secondary}
+                          currentEn={t?.hero?.cta_secondary}
+                          currentEs={t?.hero?.cta_secondary === translations.en.hero.cta_secondary ? translations.es.hero.cta_secondary : t?.hero?.cta_secondary}
                           onSave={updateContentValue}
                         />
                       </div>
@@ -572,8 +658,8 @@ export default function AdminPortal() {
                         label="Hero Gallery (One URL per line)" 
                         valEn={translations.en.hero.backgroundImages} 
                         valEs={translations.es.hero.backgroundImages}
-                        currentEn={t.hero.backgroundImages}
-                        currentEs={t.hero.backgroundImages}
+                        currentEn={t?.hero?.backgroundImages}
+                        currentEs={t?.hero?.backgroundImages}
                         isTextArea
                         onSave={updateContentValue}
                       />
@@ -588,7 +674,7 @@ export default function AdminPortal() {
                           section="about"
                           field="image"
                           label="About Me Photo"
-                          currentUrl={t.about.image}
+                          currentUrl={t?.about?.image}
                           onSave={updateContentValue}
                           uploadImage={uploadImage}
                         />
@@ -599,8 +685,8 @@ export default function AdminPortal() {
                           label="Section Title" 
                           valEn={translations.en.about.history} 
                           valEs={translations.es.about.history}
-                          currentEn={t.about.history}
-                          currentEs={t.about.history === translations.en.about.history ? translations.es.about.history : t.about.history}
+                          currentEn={t?.about?.history}
+                          currentEs={t?.about?.history === translations.en.about.history ? translations.es.about.history : t?.about?.history}
                           onSave={updateContentValue}
                         />
 
@@ -610,8 +696,8 @@ export default function AdminPortal() {
                           label="Main Slogan" 
                           valEn={translations.en.about.slogan} 
                           valEs={translations.es.about.slogan}
-                          currentEn={t.about.slogan}
-                          currentEs={t.about.slogan === translations.en.about.slogan ? translations.es.about.slogan : t.about.slogan}
+                          currentEn={t?.about?.slogan}
+                          currentEs={t?.about?.slogan === translations.en.about.slogan ? translations.es.about.slogan : t?.about?.slogan}
                           onSave={updateContentValue}
                         />
 
@@ -621,8 +707,8 @@ export default function AdminPortal() {
                           label="Biography (One paragraph per line)" 
                           valEn={translations.en.about.bio} 
                           valEs={translations.es.about.bio}
-                          currentEn={t.about.bio}
-                          currentEs={t.about.bio === translations.en.about.bio ? translations.es.about.bio : t.about.bio}
+                          currentEn={t?.about?.bio}
+                          currentEs={Array.isArray(t?.about?.bio) && t?.about?.bio?.length === translations.en.about.bio.length && t?.about?.bio[0] === translations.en.about.bio[0] ? translations.es.about.bio : t?.about?.bio}
                           isTextArea
                           onSave={updateContentValue}
                         />
@@ -636,15 +722,15 @@ export default function AdminPortal() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                           <div className="space-y-4">
                             <h4 className="text-sm font-black text-white/40 uppercase tracking-[0.2em]">Mission</h4>
-                            <ContentBlock section="about" field="mission_title" label="Title" valEn={translations.en.about.mission_title} valEs={translations.es.about.mission_title} currentEn={t.about.mission_title} currentEs={t.about.mission_title === translations.en.about.mission_title ? translations.es.about.mission_title : t.about.mission_title} onSave={updateContentValue} />
-                            <ContentBlock section="about" field="mission_desc" label="Description" valEn={translations.en.about.mission_desc} valEs={translations.es.about.mission_desc} currentEn={t.about.mission_desc} currentEs={t.about.mission_desc === translations.en.about.mission_desc ? translations.es.about.mission_desc : t.about.mission_desc} isTextArea onSave={updateContentValue} />
-                            <ContentBlock section="about" field="mission_icon" label="Icon (Emoji)" valEn={translations.en.about.mission_icon} valEs={translations.es.about.mission_icon} currentEn={t.about.mission_icon} currentEs={t.about.mission_icon === translations.en.about.mission_icon ? translations.es.about.mission_icon : t.about.mission_icon} onSave={updateContentValue} />
+                            <ContentBlock section="about" field="mission_title" label="Title" valEn={translations.en.about.mission_title} valEs={translations.es.about.mission_title} currentEn={t?.about?.mission_title} currentEs={t?.about?.mission_title === translations.en.about.mission_title ? translations.es.about.mission_title : t?.about?.mission_title} onSave={updateContentValue} />
+                            <ContentBlock section="about" field="mission_desc" label="Description" valEn={translations.en.about.mission_desc} valEs={translations.es.about.mission_desc} currentEn={t?.about?.mission_desc} currentEs={t?.about?.mission_desc === translations.en.about.mission_desc ? translations.es.about.mission_desc : t?.about?.mission_desc} isTextArea onSave={updateContentValue} />
+                            <ContentBlock section="about" field="mission_icon" label="Icon (Emoji)" valEn={translations.en.about.mission_icon} valEs={translations.es.about.mission_icon} currentEn={t?.about?.mission_icon} currentEs={t?.about?.mission_icon === translations.en.about.mission_icon ? translations.es.about.mission_icon : t?.about?.mission_icon} onSave={updateContentValue} />
                           </div>
                           <div className="space-y-4">
                             <h4 className="text-sm font-black text-white/40 uppercase tracking-[0.2em]">Vision</h4>
-                            <ContentBlock section="about" field="vision_title" label="Title" valEn={translations.en.about.vision_title} valEs={translations.es.about.vision_title} currentEn={t.about.vision_title} currentEs={t.about.vision_title === translations.en.about.vision_title ? translations.es.about.vision_title : t.about.vision_title} onSave={updateContentValue} />
-                            <ContentBlock section="about" field="vision_desc" label="Description" valEn={translations.en.about.vision_desc} valEs={translations.es.about.vision_desc} currentEn={t.about.vision_desc} currentEs={t.about.vision_desc === translations.en.about.vision_desc ? translations.es.about.vision_desc : t.about.vision_desc} isTextArea onSave={updateContentValue} />
-                            <ContentBlock section="about" field="vision_icon" label="Icon (Emoji)" valEn={translations.en.about.vision_icon} valEs={translations.es.about.vision_icon} currentEn={t.about.vision_icon} currentEs={t.about.vision_icon === translations.en.about.vision_icon ? translations.es.about.vision_icon : t.about.vision_icon} onSave={updateContentValue} />
+                            <ContentBlock section="about" field="vision_title" label="Title" valEn={translations.en.about.vision_title} valEs={translations.es.about.vision_title} currentEn={t?.about?.vision_title} currentEs={t?.about?.vision_title === translations.en.about.vision_title ? translations.es.about.vision_title : t?.about?.vision_title} onSave={updateContentValue} />
+                            <ContentBlock section="about" field="vision_desc" label="Description" valEn={translations.en.about.vision_desc} valEs={translations.es.about.vision_desc} currentEn={t?.about?.vision_desc} currentEs={t?.about?.vision_desc === translations.en.about.vision_desc ? translations.es.about.vision_desc : t?.about?.vision_desc} isTextArea onSave={updateContentValue} />
+                            <ContentBlock section="about" field="vision_icon" label="Icon (Emoji)" valEn={translations.en.about.vision_icon} valEs={translations.es.about.vision_icon} currentEn={t?.about?.vision_icon} currentEs={t?.about?.vision_icon === translations.en.about.vision_icon ? translations.es.about.vision_icon : t?.about?.vision_icon} onSave={updateContentValue} />
                           </div>
                         </div>
                      </div>
@@ -653,25 +739,25 @@ export default function AdminPortal() {
                         <h3 className="text-xl font-black text-white uppercase tracking-tighter flex items-center gap-2">
                           <Package className="text-[#00bff3]" /> The Magic Process
                         </h3>
-                        <ContentBlock 
-                          section="process" 
-                          field="title" 
-                          label="Section Heading" 
-                          valEn={translations.en.process.title} 
-                          valEs={translations.es.process.title}
-                          currentEn={t.process.title}
-                          currentEs={t.process.title === translations.en.process.title ? translations.es.process.title : t.process.title}
-                          onSave={updateContentValue}
-                        />
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                          {[1, 2, 3].map(num => (
-                            <div key={num} className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
-                              <h4 className="text-[10px] font-black text-[#00bff3] uppercase tracking-widest">Step {num}</h4>
-                              <ContentBlock section="process" field={`step${num}_title`} label="Title" valEn={(translations.en.process as any)[`step${num}_title`]} valEs={(translations.es.process as any)[`step${num}_title`]} currentEn={(t.process as any)[`step${num}_title`]} currentEs={(t.process as any)[`step${num}_title`] === (translations.en.process as any)[`step${num}_title`] ? (translations.es.process as any)[`step${num}_title`] : (t.process as any)[`step${num}_title`]} onSave={updateContentValue} />
-                              <ContentBlock section="process" field={`step${num}_desc`} label="Description" valEn={(translations.en.process as any)[`step${num}_desc`]} valEs={(translations.es.process as any)[`step${num}_desc`]} currentEn={(t.process as any)[`step${num}_desc`]} currentEs={(t.process as any)[`step${num}_desc`] === (translations.en.process as any)[`step${num}_desc`] ? (translations.es.process as any)[`step${num}_desc`] : (t.process as any)[`step${num}_desc`]} isTextArea onSave={updateContentValue} />
-                            </div>
-                          ))}
-                        </div>
+                         <ContentBlock 
+                           section="process" 
+                           field="title" 
+                           label="Section Heading" 
+                           valEn={translations.en.process.title} 
+                           valEs={translations.es.process.title}
+                           currentEn={t?.process?.title}
+                           currentEs={t?.process?.title === translations.en.process.title ? translations.es.process.title : t?.process?.title}
+                           onSave={updateContentValue}
+                         />
+                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                           {[1, 2, 3].map(num => (
+                             <div key={num} className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                               <h4 className="text-[10px] font-black text-[#00bff3] uppercase tracking-widest">Step {num}</h4>
+                               <ContentBlock section="process" field={`step${num}_title`} label="Title" valEn={(translations.en.process as any)[`step${num}_title`]} valEs={(translations.es.process as any)[`step${num}_title`]} currentEn={t?.process ? (t.process as any)[`step${num}_title`] : null} currentEs={t?.process && (t.process as any)[`step${num}_title`] === (translations.en.process as any)[`step${num}_title`] ? (translations.es.process as any)[`step${num}_title`] : (t.process || {} as any)[`step${num}_title`]} onSave={updateContentValue} />
+                               <ContentBlock section="process" field={`step${num}_desc`} label="Description" valEn={(translations.en.process as any)[`step${num}_desc`]} valEs={(translations.es.process as any)[`step${num}_desc`]} currentEn={t?.process ? (t.process as any)[`step${num}_desc`] : null} currentEs={t?.process && (t.process as any)[`step${num}_desc`] === (translations.en.process as any)[`step${num}_desc`] ? (translations.es.process as any)[`step${num}_desc`] : (t.process || {} as any)[`step${num}_desc`]} isTextArea onSave={updateContentValue} />
+                             </div>
+                           ))}
+                         </div>
                      </div>
 
                      <div className="border-t border-white/5 pt-10 space-y-6">
@@ -683,9 +769,9 @@ export default function AdminPortal() {
                           {[1, 2, 3].map(num => (
                             <div key={num} className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
                               <h4 className="text-[10px] font-black text-[#ffcc00] uppercase tracking-widest">Client {num}</h4>
-                              <ContentBlock section="testimonials" field={`author${num}`} label="Name" valEn={(translations.en.testimonials as any)[`author${num}`]} valEs={(translations.es.testimonials as any)[`author${num}`]} currentEn={(t.testimonials as any)[`author${num}`]} currentEs={(t.testimonials as any)[`author${num}`]} onSave={updateContentValue} />
-                              <ContentBlock section="testimonials" field={`role${num}`} label="Role" valEn={(translations.en.testimonials as any)[`role${num}`]} valEs={(translations.es.testimonials as any)[`role${num}`]} currentEn={(t.testimonials as any)[`role${num}`]} currentEs={(t.testimonials as any)[`role${num}`]} onSave={updateContentValue} />
-                              <ContentBlock section="testimonials" field={`text${num}`} label="Text" valEn={(translations.en.testimonials as any)[`text${num}`]} valEs={(translations.es.testimonials as any)[`text${num}`]} currentEn={(t.testimonials as any)[`text${num}`]} currentEs={(t.testimonials as any)[`text${num}`]} isTextArea onSave={updateContentValue} />
+                              <ContentBlock section="testimonials" field={`author${num}`} label="Name" valEn={(translations.en.testimonials as any)[`author${num}`]} valEs={(translations.es.testimonials as any)[`author${num}`]} currentEn={t?.testimonials ? (t.testimonials as any)[`author${num}`] : null} currentEs={t?.testimonials ? (t.testimonials as any)[`author${num}`] : null} onSave={updateContentValue} />
+                              <ContentBlock section="testimonials" field={`role${num}`} label="Role" valEn={(translations.en.testimonials as any)[`role${num}`]} valEs={(translations.es.testimonials as any)[`role${num}`]} currentEn={t?.testimonials ? (t.testimonials as any)[`role${num}`] : null} currentEs={t?.testimonials ? (t.testimonials as any)[`role${num}`] : null} onSave={updateContentValue} />
+                              <ContentBlock section="testimonials" field={`text${num}`} label="Text" valEn={(translations.en.testimonials as any)[`text${num}`]} valEs={(translations.es.testimonials as any)[`text${num}`]} currentEn={t?.testimonials ? (t.testimonials as any)[`text${num}`] : null} currentEs={t?.testimonials ? (t.testimonials as any)[`text${num}`] : null} isTextArea onSave={updateContentValue} />
                             </div>
                           ))}
                         </div>
