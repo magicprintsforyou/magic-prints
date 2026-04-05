@@ -36,7 +36,7 @@ export default function CorporatePage() {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src={t.corporate.hero_image || "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop"}
+            src={t?.corporate?.hero_image || "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop"}
             className="w-full h-full object-cover opacity-20 scale-105"
             alt="Premium Corporate Event"
           />
@@ -227,7 +227,7 @@ export default function CorporatePage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {catalog?.b2bSigns?.items?.map(product => (
+            {catalog?.b2bSigns?.items?.map((product: any) => (
               <ProductCard key={product.id} product={product} onViewDetails={setSelectedProduct} />
             ))}
           </div>
@@ -252,7 +252,7 @@ export default function CorporatePage() {
           product={selectedProduct} 
           isOpen={!!selectedProduct} 
           onClose={() => setSelectedProduct(null)} 
-          onAddToCart={(product, config) => {
+          onAddToCart={(product: any, config: any) => {
              console.log("Corporate B2B Quote requested: ", product.name, config);
              setSelectedProduct(null);
           }}

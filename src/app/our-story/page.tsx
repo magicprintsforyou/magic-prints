@@ -23,7 +23,7 @@ export default function OurStoryPage() {
             <h2 className="text-6xl md:text-7xl font-black text-[#41137e] tracking-tighter">{t?.about?.history || 'Our History'}</h2>
             <p className="text-2xl text-[#d90082] font-black italic">{t?.about?.slogan || 'Bespoke event productions.'}</p>
             <div className="space-y-6 text-xl text-gray-500 leading-relaxed italic">
-              {(Array.isArray(t?.about?.bio) ? t.about.bio : []).map((p: string, i: number) => <p key={i}>{p}</p>)}
+              {(Array.isArray(t?.about?.bio) ? t?.about?.bio : []).map((p: string, i: number) => <p key={i}>{p}</p>)}
             </div>
           </div>
         </div>

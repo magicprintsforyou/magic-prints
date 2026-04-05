@@ -79,24 +79,37 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setIsContentConfigured(true);
 
       // Merge DB content into the translation structure
-      const baseContent = JSON.parse(JSON.stringify(translations[currentLang]));
-      data.forEach((item : any) => {
-        let value = currentLang === 'en' ? item.en_value : item.es_value;
+      const baseContent = JSON.parse(JSON.stringify(translations[currentLang] || translations.en));
+      data.forEach((item: any) => {
+        // Defensive: Ensure item has required fields
+        if (!item || !item.section || !item.key) return;
+
+        const value = currentLang === 'en' ? item.en_value : item.es_value;
         const section = item.section as keyof SiteContent;
-        
-        if (baseContent[section] && typeof baseContent[section] === 'object') {
-           // Ensure the key exists in our local translations before overwriting
-           if ((baseContent[section] as any)[item.key] !== undefined) {
-              // If the original field is an array (like about.bio), we split the DB string by newlines
-              if (Array.isArray((baseContent[section] as any)[item.key])) {
-                (baseContent[section] as any)[item.key] = value.split('\n').filter((p: string) => p.trim() !== '');
-              } else {
-                (baseContent[section] as any)[item.key] = value;
-              }
-           }
+
+        // Defensive: Check if section exists and is an object, and value is valid
+        if (
+          baseContent[section] && 
+          typeof baseContent[section] === 'object' && 
+          baseContent[section] !== null && 
+          value !== null && 
+          value !== undefined
+        ) {
+          // Defensive: Check if key exists in local translations
+          const sectionRef = baseContent[section] as any;
+          if (Object.prototype.hasOwnProperty.call(sectionRef, item.key)) {
+            // If the original field is an array (like about.bio), we split the DB string by newlines
+            if (Array.isArray(sectionRef[item.key])) {
+              sectionRef[item.key] = typeof value === 'string' 
+                ? value.split('\n').filter((p: string) => p.trim() !== '')
+                : [];
+            } else {
+              sectionRef[item.key] = value;
+            }
+          }
         }
       });
-      
+
       setSiteContent(baseContent);
     } catch (err) {
       console.warn("Site content table not ready, using local translations");

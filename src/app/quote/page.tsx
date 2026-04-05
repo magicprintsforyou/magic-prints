@@ -31,24 +31,17 @@ export default function QuotePage() {
             <Sparkles size={14} /> Bespoke & Volume Productions
           </div>
           <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tighter text-[#0f172a]">
-            {t?.quote?.dream || 'Dream It.'}<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff2a70] to-[#f9a826]">
-              {t?.quote?.print || 'Print It.'}
+            <span className="text-white drop-shadow-lg">{t?.quote?.dream || 'You Visualize.'}</span> <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#cc004e] via-[#d90082] to-[#ffcc00] drop-shadow-[0_0_20px_rgba(217,0,130,0.3)] italic">
+              {t?.quote?.print || 'We Materialize.'}
             </span>
           </h1>
-          <p className="text-slate-600 text-xl font-light leading-relaxed mb-10 max-w-lg">
-            {t?.quote?.desc || 'Bespoke large format production for events that leave a mark.'}
+          <p className="text-gray-400 text-xl md:text-2xl mb-12 max-w-2xl font-light italic leading-relaxed">
+            "{t?.quote?.desc || 'Handling a large-scale production? Our VIP logistics team ensures a bespoke quote and a flawless plan in record time.'}"
           </p>
-          <div className="space-y-6">
-            <div className="flex gap-4 items-start">
-              <div className="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-100 flex items-center justify-center shrink-0">
-                <Calendar className="text-[#ff2a70]" size={24} />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-[#0f172a]">{t?.quote?.express || 'Express Production'}</h3>
-                <p className="text-slate-500 font-light">{t?.quote?.expressDesc || '24h turnaround available.'}</p>
-              </div>
-            </div>
+
+          <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.3em] text-[#00f2fe] drop-shadow-[0_0_10px_rgba(0,242,254,0.3)]">
+            <Sparkles size={20} /> {t?.quote?.express || 'Record Turnaround (24-48h)'}
           </div>
         </div>
 
