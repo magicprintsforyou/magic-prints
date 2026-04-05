@@ -59,10 +59,10 @@
   to { filter: drop-shadow(0 0 10px #ffcc00); }
 }
 
-/* Efecto de destello al hacer clic */
-body:active {
+/* Efecto de destello al hacer clic (Desactivado temporalmente - rompe position:fixed) */
+/* body:active {
   filter: saturate(1.2) brightness(1.1);
-}
+} */
 
 .magic-click-effect {
   position: fixed;

@@ -1,0 +1,18 @@
+{
+  "company": "Magic Prints For You",
+  "vision": "Transform ordinary spaces into extraordinary magical experiences through high-impact, museum-grade large format printing.",
+  "philosophy": "Precision in every pixel. We don't just print; we create atmospheres.",
+  "location": "Miami, Florida & Texas",
+  "specialties": [
+    "Large Format Printing",
+    "Event Backdrops",
+    "Floor Wrapping",
+    "Custom Party Decor",
+    "Corporate Branding",
+    "Express 24-48h Delivery"
+  ],
+  "contact": {
+    "email": "info@magicprintsforyou.com",
+    "website": "https://magic-prints.vercel.app/"
+  }
+}

@@ -42,10 +42,12 @@ export async function POST(req: Request) {
     3. MANTEN TUS RESPUESTAS CORTAS Y CONCISAS.
     `;
 
-    const mappedHistory = history.map((msg: ChatMessage) => ({
+    const mappedHistory = (history || []).map((msg: ChatMessage) => ({
       role: msg.role === 'model' ? 'assistant' : 'user',
-      content: msg.text
+      content: msg.text || ''
     }));
+
+    console.log('Sparkle: Processing message:', message.slice(0, 50));
 
     const { text } = await generateText({
       model: google('gemini-1.5-flash'),
@@ -54,12 +56,22 @@ export async function POST(req: Request) {
         ...mappedHistory,
         { role: 'user', content: message }
       ],
-      temperature: 0.75,
+      temperature: 0.7,
+      maxTokens: 500,
     });
 
     return Response.json({ reply: text });
-  } catch (error) {
-    console.error('Chat API Error:', error);
-    return Response.json({ reply: "Lo siento, mi conexión mágica falló. Intenta de nuevo." }, { status: 500 });
+  } catch (error: any) {
+    console.error('CRITICAL: Sparkle API Error:', error.message || error);
+    
+    // Check for specific common errors
+    const errorMessage = error.message?.includes('API key') 
+      ? "Sparkle holds a secret (Missing Key). Please config the API Key."
+      : "Sparkle had a minor flicker. Please try again or refresh.";
+
+    return Response.json({ 
+      reply: errorMessage,
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined 
+    }, { status: 500 });
   }
 }
