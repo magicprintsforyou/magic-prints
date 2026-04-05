@@ -7,6 +7,15 @@ import { ChatMessage } from '@/types';
 export async function POST(req: Request) {
   try {
     const { message, history } = await req.json();
+    
+    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+
+    if (!apiKey) {
+      console.warn('Sparkle AI: GOOGLE_GENERATIVE_AI_API_KEY is missing from environment.');
+      return Response.json({ 
+        reply: "Sparkle is currently in deep meditation (Missing API Key). Please configure the AI credentials to continue." 
+      }, { status: 501 });
+    }
 
     // Read the knowledge base
     const kbPath = path.join(process.cwd(), 'knowledge_base.json');

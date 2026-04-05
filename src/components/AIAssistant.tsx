@@ -7,13 +7,13 @@ import { useLanguage } from '../context/ProductContext';
 const AIAssistant: React.FC = () => {
   const { t } = useLanguage();
   
-  // Defensive check to identify the source of "t is not a function"
-  if (typeof t === 'function') {
-    console.error('AIAssistant: t is incorrectly a function! Path: src/components/AIAssistant.tsx');
-  }
-
+  const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Initialize messages in useEffect to avoid issues with t being undefined/wrong type during first render
   useEffect(() => {
@@ -55,6 +55,8 @@ const AIAssistant: React.FC = () => {
 
     setIsTyping(false);
   };
+
+  if (!mounted) return null;
 
   return (
     <>
