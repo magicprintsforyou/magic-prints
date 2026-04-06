@@ -1,5 +1,4 @@
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { generateText } from 'ai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import fs from 'fs';
 import path from 'path';
 import { ChatMessage } from '@/types';
@@ -8,18 +7,16 @@ export async function POST(req: Request) {
   try {
     const { message, history } = await req.json();
     
-    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+    const apiKey = process.env.VITE_APP_STARDUST_ID || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 
     if (!apiKey) {
-      console.error('CRITICAL: Sparkle AI: GOOGLE_GENERATIVE_AI_API_KEY is missing.');
+      console.error('CRITICAL: Sparkle AI: API Key is missing.');
       return Response.json({ 
         reply: "Sparkle is currently in deep meditation (Missing API Key). Please configure the AI credentials to continue." 
       }, { status: 501 });
     }
 
-    const google = createGoogleGenerativeAI({
-      apiKey,
-    });
+    const genAI = new GoogleGenerativeAI(apiKey);
 
     // Read the knowledge base
     const kbPath = path.join(process.cwd(), 'knowledge_base.json');
@@ -47,20 +44,29 @@ export async function POST(req: Request) {
     `;
 
     const mappedHistory = (history || []).map((msg: ChatMessage) => ({
-      role: msg.role === 'model' ? 'assistant' : 'user',
-      content: msg.text || ''
+      role: msg.role === 'model' ? 'model' : 'user',
+      parts: [{ text: msg.text || '' }]
     }));
 
     console.log('Sparkle: Fetching response for:', message.slice(0, 30));
 
-    const { text } = await generateText({
-      model: google('gemini-1.5-flash'),
-      system: systemInstruction,
-      messages: [
-        ...mappedHistory,
-        { role: 'user', content: message }
-      ],
+    const model = genAI.getGenerativeModel(
+      { 
+        model: 'gemini-3.1-pro-preview',
+        systemInstruction: {
+          role: "system",
+          parts: [{ text: systemInstruction }]
+        }
+      },
+      { apiVersion: 'v1beta' }
+    );
+
+    const chat = model.startChat({
+      history: mappedHistory,
     });
+
+    const result = await chat.sendMessage([{ text: message }]);
+    const text = result.response.text();
 
     return Response.json({ reply: text });
   } catch (error: any) {
