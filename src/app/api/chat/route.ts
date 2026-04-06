@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     console.log('Sparkle: Processing message:', message.slice(0, 50));
 
     const { text } = await generateText({
-      model: google('gemini-1.5-flash'),
+      model: google('gemini-1.5-flash-latest'),
       system: systemInstruction,
       messages: [
         ...mappedHistory,
