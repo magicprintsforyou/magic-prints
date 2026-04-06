@@ -43,10 +43,15 @@ export async function POST(req: Request) {
     3. MANTEN TUS RESPUESTAS CORTAS Y CONCISAS.
     `;
 
-    const mappedHistory = (history || []).map((msg: ChatMessage) => ({
+    let mappedHistory = (history || []).map((msg: ChatMessage) => ({
       role: msg.role === 'model' ? 'model' : 'user',
       parts: [{ text: msg.text || '' }]
     }));
+
+    // Gemini strictly requires the first message in history to drop from 'user'. Drop initial 'model' messages.
+    while (mappedHistory.length > 0 && mappedHistory[0].role === 'model') {
+      mappedHistory.shift();
+    }
 
     console.log('Sparkle: Fetching response for:', message.slice(0, 30));
 
