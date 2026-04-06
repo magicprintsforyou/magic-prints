@@ -1,4 +1,4 @@
-import { google } from '@ai-sdk/google';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { generateText } from 'ai';
 import fs from 'fs';
 import path from 'path';
@@ -61,8 +61,6 @@ export async function POST(req: Request) {
         { role: 'user', content: message }
       ],
     });
-
-    return Response.json({ reply: text });
 
     return Response.json({ reply: text });
   } catch (error: any) {
