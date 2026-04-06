@@ -1,5 +1,5 @@
+import { google } from '@ai-sdk/google';
 import { generateText } from 'ai';
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import fs from 'fs';
 import path from 'path';
 import { ChatMessage } from '@/types';
