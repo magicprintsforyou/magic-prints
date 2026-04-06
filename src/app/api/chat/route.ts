@@ -4,10 +4,6 @@ import fs from 'fs';
 import path from 'path';
 import { ChatMessage } from '@/types';
 
-const google = createGoogleGenerativeAI({
-  apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
-});
-
 export async function POST(req: Request) {
   try {
     const { message, history } = await req.json();
@@ -15,11 +11,15 @@ export async function POST(req: Request) {
     const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 
     if (!apiKey) {
-      console.warn('Sparkle AI: GOOGLE_GENERATIVE_AI_API_KEY is missing from environment.');
+      console.error('CRITICAL: Sparkle AI: GOOGLE_GENERATIVE_AI_API_KEY is missing.');
       return Response.json({ 
         reply: "Sparkle is currently in deep meditation (Missing API Key). Please configure the AI credentials to continue." 
       }, { status: 501 });
     }
+
+    const google = createGoogleGenerativeAI({
+      apiKey,
+    });
 
     // Read the knowledge base
     const kbPath = path.join(process.cwd(), 'knowledge_base.json');
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       content: msg.text || ''
     }));
 
-    console.log('Sparkle: Processing message:', message.slice(0, 50));
+    console.log('Sparkle: Fetching response for:', message.slice(0, 30));
 
     const { text } = await generateText({
       model: google('gemini-1.5-flash'),
@@ -60,8 +60,9 @@ export async function POST(req: Request) {
         ...mappedHistory,
         { role: 'user', content: message }
       ],
-      temperature: 0.7,
     });
+
+    return Response.json({ reply: text });
 
     return Response.json({ reply: text });
   } catch (error: any) {
