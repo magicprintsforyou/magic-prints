@@ -57,7 +57,6 @@ export async function POST(req: Request) {
         { role: 'user', content: message }
       ],
       temperature: 0.7,
-      maxTokens: 500,
     });
 
     return Response.json({ reply: text });
