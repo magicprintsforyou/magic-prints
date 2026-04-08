@@ -135,17 +135,18 @@ export default function QuotePage() {
                 <label className="text-sm font-bold text-slate-700 block">
                   Attach Files / Inspiration
                 </label>
-                <div className="border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center hover:bg-slate-50 hover:border-[#ff2a70]/50 transition-all cursor-pointer group bg-white">
-                  <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#ff2a70]/10 transition-colors">
+                <label className="block border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center hover:bg-slate-50 hover:border-[#ff2a70]/50 transition-all cursor-pointer group bg-white relative">
+                  <input type="file" multiple accept="image/*,.pdf,.ai" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                  <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#ff2a70]/10 transition-colors pointer-events-none">
                     <Upload size={20} className="text-slate-400 group-hover:text-[#ff2a70]" />
                   </div>
-                  <p className="text-[#0f172a] font-medium mb-1">
-                    Click or drag files here
+                  <p className="text-[#0f172a] font-medium mb-1 pointer-events-none">
+                    Tap to upload or drag files here
                   </p>
-                  <p className="text-slate-500 text-sm font-light">
+                  <p className="text-slate-500 text-sm font-light pointer-events-none">
                     Inspiration photos, final art (PDF, AI, PNG). Max 50MB.
                   </p>
-                </div>
+                </label>
               </div>
 
               {/* Notes */}
