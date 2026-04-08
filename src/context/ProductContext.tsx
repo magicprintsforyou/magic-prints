@@ -207,13 +207,32 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const uploadImage = async (file: File): Promise<string> => {
     try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+      // Compress the image before uploading to avoid Supabase free tier size limits
+      const compressedBlob = await new Promise<Blob>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+          const img = new Image();
+          img.src = e.target?.result as string;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let { width, height } = img;
+            if (width > 1200) { height *= 1200 / width; width = 1200; }
+            if (height > 1200) { width *= 1200 / height; height = 1200; }
+            canvas.width = width; canvas.height = height;
+            canvas.getContext('2d')?.drawImage(img, 0, 0, width, height);
+            canvas.toBlob(b => b ? resolve(b) : reject('blob error'), 'image/webp', 0.82);
+          };
+        };
+        reader.onerror = reject;
+      });
+
+      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.webp`;
       const filePath = `uploads/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from('catalog')
-        .upload(filePath, file);
+        .upload(filePath, compressedBlob, { contentType: 'image/webp' });
 
       if (uploadError) throw uploadError;
 
