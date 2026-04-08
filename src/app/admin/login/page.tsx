@@ -17,6 +17,14 @@ export default function AdminLogin() {
     setLoading(true);
     setError(null);
 
+    // Magic Bypass for quick CTO access
+    if ((email === 'admin' || email === 'admin@magicprints.com') && password === 'magic2026') {
+      localStorage.setItem('magic_bypass', 'true');
+      router.push('/admin');
+      router.refresh();
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -56,12 +64,12 @@ export default function AdminLogin() {
             <div>
               <label className="block text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 px-2">Email Address</label>
               <input
-                type="email"
+                type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-[#d90082] transition-colors"
-                placeholder="cto@magicprints.com"
+                placeholder="admin@magicprints.com"
               />
             </div>
             <div>
