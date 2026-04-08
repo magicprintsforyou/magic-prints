@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { translations, Language } from '../constants/translations';
+import { CATEGORIZED_PRODUCTS } from '../constants/products';
 
 export type ProductVariant = {
   size: string;
@@ -131,6 +132,13 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       const { data: prodData, error: prodError } = await supabase.from('products').select('*');
       if (prodError) throw prodError;
+
+      if (!catData || catData.length === 0) {
+        // Fallback to placeholder catalog if database is empty to preserve aesthetics
+        setCatalog(CATEGORIZED_PRODUCTS as any);
+        setIsLoading(false);
+        return;
+      }
 
       const newCatalog: CategorizedProducts = {};
       catData.forEach((cat: any) => {
