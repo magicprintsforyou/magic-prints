@@ -60,7 +60,7 @@ type AppContextType = {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [catalog, setCatalog] = useState<CategorizedProducts>({});
+  const [catalog, setCatalog] = useState<CategorizedProducts>(CATEGORIZED_PRODUCTS as any);
   const [siteContent, setSiteContent] = useState<SiteContent>(translations.en);
   const [language, setLanguage] = useState<Language>('es');
   const [isLoading, setIsLoading] = useState(true);
@@ -137,17 +137,24 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       // then let database categories override or append to it
       const newCatalog: CategorizedProducts = JSON.parse(JSON.stringify(CATEGORIZED_PRODUCTS));
       catData.forEach((cat: any) => {
-        newCatalog[cat.id] = {
-          title: cat.title,
-          description: cat.description,
-          image: cat.image,
-          items: []
-        };
+        if (!newCatalog[cat.id]) {
+          newCatalog[cat.id] = {
+            title: cat.title,
+            description: cat.description,
+            image: cat.image,
+            items: []
+          };
+        } else {
+          // Update properties from DB but preserve default items
+          newCatalog[cat.id].title = cat.title || newCatalog[cat.id].title;
+          newCatalog[cat.id].description = cat.description || newCatalog[cat.id].description;
+          if (cat.image) newCatalog[cat.id].image = cat.image;
+        }
       });
 
       prodData.forEach((prod: any) => {
         if (newCatalog[prod.category_id]) {
-          newCatalog[prod.category_id].items.push({
+          const formattedProd = {
             id: prod.id,
             category: prod.category_id,
             name: prod.name,
@@ -159,7 +166,14 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
             materials: prod.materials || [],
             rush_price: prod.rush_price ? parseFloat(prod.rush_price) : undefined,
             includes: prod.includes || []
-          });
+          };
+          
+          const existingIdx = newCatalog[prod.category_id].items.findIndex(i => i.id === prod.id);
+          if (existingIdx >= 0) {
+            newCatalog[prod.category_id].items[existingIdx] = formattedProd;
+          } else {
+            newCatalog[prod.category_id].items.push(formattedProd);
+          }
         }
       });
 
