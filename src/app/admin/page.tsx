@@ -897,8 +897,17 @@ function AdminPortalContent() {
             </div>
 
             <div className="flex-grow overflow-y-auto no-scrollbar space-y-12 pr-4">
-              {Object.entries(catalog || {}).map(([catKey, catData]: [string, any]) => (
-                <div key={catKey} className="space-y-6">
+              {Object.keys(catalog || {}).length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-64 text-white/30 space-y-4">
+                  <div className="w-16 h-16 rounded-full border border-dashed border-white/20 flex items-center justify-center">
+                    <Package size={24} />
+                  </div>
+                  <p className="text-sm font-medium">Your inventory is completely empty.</p>
+                  <p className="text-xs">Create your first category and product on the left to get started!</p>
+                </div>
+              ) : (
+                Object.entries(catalog || {}).map(([catKey, catData]: [string, any]) => (
+                  <div key={catKey} className="space-y-6">
                   <div className="sticky top-0 bg-[#0f172a]/95 backdrop-blur-md py-4 z-10 border-b border-white/10 flex items-center justify-between">
                     <div>
                       <h3 className="text-lg font-black text-[#00bff3] tracking-widest uppercase">{catData.title}</h3>
@@ -955,7 +964,8 @@ function AdminPortalContent() {
                     </div>
                   )}
                 </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </section>

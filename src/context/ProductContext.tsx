@@ -69,14 +69,20 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     try {
       const { data, error } = await supabase.from('site_content').select('*');
       
-      // If table doesn't exist or error, we stick with local translations
-      if (error || !data || data.length === 0) {
+      // If error (table doesn't exist), we stick with local translations
+      if (error) {
         setSiteContent(translations[currentLang] as any);
         setIsContentConfigured(false);
         return;
       }
 
       setIsContentConfigured(true);
+
+      if (!data || data.length === 0) {
+        // Table exists but is empty, keep local but allow editing
+        setSiteContent(translations[currentLang] as any);
+        return;
+      }
 
       // Merge DB content into the translation structure
       const baseContent = JSON.parse(JSON.stringify(translations[currentLang] || translations.en));
