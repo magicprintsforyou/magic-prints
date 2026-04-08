@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, Upload, Sparkles, Save, Image as ImageIcon, CheckCircle2, Package, Tag, Layers, FolderPlus, Building2, AlertCircle, LogOut } from 'lucide-react';
+import { ArrowLeft, Upload, Sparkles, Save, Edit2, Image as ImageIcon, CheckCircle2, Package, Tag, Layers, FolderPlus, Building2, AlertCircle, LogOut } from 'lucide-react';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -112,9 +112,10 @@ function AdminPortalContent() {
     try {
       const url = await uploadImage(file);
       setter(url);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Upload failed", err);
-      alert("Failed to upload image. Please check your storage settings.");
+      const errorMsg = err?.message || err?.error_description || "Unknown storage error";
+      alert(`Failed to upload image: ${errorMsg}\n\nTechnical Tip: Ensure your 'catalog' bucket is Public and you ran the SQL policy in Supabase.`);
     } finally {
       setIsUploading(false);
     }
@@ -916,10 +917,10 @@ function AdminPortalContent() {
                     <div className="flex items-center gap-3">
                       <button 
                         onClick={() => handleEditCategory(catKey, catData)}
-                        className="p-2 transition-colors text-white/30 hover:text-blue-400 bg-white/5 rounded-lg border border-white/5"
+                        className="p-2 transition-colors text-white/30 hover:text-[#00bff3] bg-white/5 rounded-lg border border-white/5"
                         title="Edit Category"
                       >
-                        <Layers size={16} />
+                        <Edit2 size={16} />
                       </button>
                       <button 
                         onClick={() => handleDeleteCategory(catKey)}

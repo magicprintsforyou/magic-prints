@@ -242,7 +242,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       return data.publicUrl;
     } catch (err) {
-      console.error("Storage Error:", err);
+      console.error("Critical Storage Error:", err);
       throw err;
     }
   };
