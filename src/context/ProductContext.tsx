@@ -329,12 +329,12 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     try {
       const { error } = await supabase
         .from('categories')
-        .update({
+        .upsert({
+          id: categoryId,
           title: categoryData.title,
           description: categoryData.description,
           image: categoryData.image
-        })
-        .eq('id', categoryId);
+        });
 
       if (error) throw error;
       await fetchCatalog();
