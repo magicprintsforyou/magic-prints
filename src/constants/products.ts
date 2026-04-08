@@ -4,6 +4,7 @@ export const CATEGORIZED_PRODUCTS = {
   photoBoards: {
     title: "Premium Photo Boards & Panels",
     description: "Museum-grade rigid substrates for high-impact backdrops and displays.",
+    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop",
     items: [
       {
         id: "standard-photo-board",
@@ -40,6 +41,7 @@ export const CATEGORIZED_PRODUCTS = {
   props: {
     title: "Foam Board Props & Cut-outs",
     description: "Life-size figures and character props for immersive event themes.",
+    image: "https://images.unsplash.com/photo-1530103043960-ef38714abb15?q=80&w=2069&auto=format&fit=crop",
     items: [
       {
         id: "themed-props",
@@ -62,6 +64,7 @@ export const CATEGORIZED_PRODUCTS = {
   floorWraps: {
     title: "Luxury Floor Wraps",
     description: "Turn your event floor into a canvas with high-density non-slip vinyl.",
+    image: "https://images.unsplash.com/photo-1535124406821-d242453e99d3?q=80&w=2070&auto=format&fit=crop",
     items: [
       {
         id: "custom-floor-wrap",
@@ -82,6 +85,7 @@ export const CATEGORIZED_PRODUCTS = {
   themedKits: {
     title: "Signature Event Packages",
     description: "Curated kits with everything you need for a professional themed setup.",
+    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop",
     items: [
       {
         id: "essential-kit",
@@ -118,6 +122,7 @@ export const CATEGORIZED_PRODUCTS = {
   essentials: {
     title: "Event Essentials",
     description: "Professional signage and marketing materials for corporate and retail.",
+    image: "https://images.unsplash.com/photo-1558227038-0051a6d3f284?q=80&w=2070&auto=format&fit=crop",
     items: [
       {
         id: "retractable-banner",
