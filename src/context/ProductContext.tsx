@@ -207,43 +207,71 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const uploadImage = async (file: File): Promise<string> => {
     try {
-      // Compress the image before uploading to avoid Supabase free tier size limits
-      const compressedBlob = await new Promise<Blob>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e) => {
-          const img = new Image();
-          img.src = e.target?.result as string;
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            let { width, height } = img;
-            if (width > 1200) { height *= 1200 / width; width = 1200; }
-            if (height > 1200) { width *= 1200 / height; height = 1200; }
-            canvas.width = width; canvas.height = height;
-            canvas.getContext('2d')?.drawImage(img, 0, 0, width, height);
-            canvas.toBlob(b => b ? resolve(b) : reject('blob error'), 'image/webp', 0.82);
-          };
-        };
-        reader.onerror = reject;
-      });
+      console.log("Starting upload process for:", file.name, file.size);
+      
+      let uploadPayload: Blob | File = file;
+      let contentType = file.type;
 
-      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.webp`;
+      // Try compression but don't let it block the upload if it fails
+      try {
+        const compressed = await new Promise<Blob | null>((resolve) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = (e) => {
+            const img = new Image();
+            img.src = e.target?.result as string;
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              let { width, height } = img;
+              const maxDim = 1200;
+              if (width > maxDim) { height *= maxDim / width; width = maxDim; }
+              if (height > maxDim) { width *= maxDim / height; height = maxDim; }
+              canvas.width = width; canvas.height = height;
+              const ctx = canvas.getContext('2d');
+              if (!ctx) return resolve(null);
+              ctx.drawImage(img, 0, 0, width, height);
+              canvas.toBlob(b => resolve(b), 'image/webp', 0.8);
+            };
+            img.onerror = () => resolve(null);
+          };
+          reader.onerror = () => resolve(null);
+        });
+
+        if (compressed) {
+          uploadPayload = compressed;
+          contentType = 'image/webp';
+          console.log("Compression successful:", compressed.size);
+        }
+      } catch (compressionErr) {
+        console.warn("Compression failed, falling back to original file:", compressionErr);
+      }
+
+      const fileExt = contentType.split('/').pop() || 'jpg';
+      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
       const filePath = `uploads/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from('catalog')
-        .upload(filePath, compressedBlob, { contentType: 'image/webp' });
+        .upload(filePath, uploadPayload, { 
+          contentType,
+          cacheControl: '3600',
+          upsert: false 
+        });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error("Supabase Upload Error:", uploadError);
+        throw uploadError;
+      }
 
       const { data } = supabase.storage
         .from('catalog')
         .getPublicUrl(filePath);
 
       return data.publicUrl;
-    } catch (err) {
+    } catch (err: any) {
       console.error("Critical Storage Error:", err);
-      throw err;
+      // Ensure we throw a friendly error message if it's a known Supabase structure
+      throw new Error(err?.message || err?.error_description || "Upload failed. Check your connection or Supabase policies.");
     }
   };
 
