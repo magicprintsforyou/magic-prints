@@ -273,7 +273,6 @@ function AdminPortalContent() {
         <div>
           <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#ff2a70] tracking-tighter uppercase mb-2 flex items-center gap-3">
             <Sparkles className="text-[#d90082]" /> Magic Prints Admin
-            <span className="text-[10px] bg-green-500/20 text-green-400 px-3 py-1 rounded-full border border-green-500/20 font-black tracking-widest animate-pulse">Build v2.1 - Storage Repair</span>
           </h1>
           <p className="text-white/60">Global Content Management System (CMS)</p>
         </div>
