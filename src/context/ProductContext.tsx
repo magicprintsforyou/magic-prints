@@ -269,15 +269,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       if (uploadError) {
         console.error("Supabase Upload Error:", uploadError);
-        // If it's a 404, the bucket likely doesn't exist
-        if ((uploadError as any).status === 404 || uploadError.message?.includes('not found')) {
-          throw new Error(`Bucket '${bucket}' not found. Please create it in Supabase Storage and set it to Public.`);
-        }
-        // If it's a 403, it's likely a policy issue
-        if ((uploadError as any).status === 403 || uploadError.message?.includes('Permission denied')) {
-          throw new Error(`Permission denied. Ensure your '${bucket}' bucket has Public 'Insert' policies enabled.`);
-        }
-        throw uploadError;
+        throw new Error(`RAW_SUPABASE_ERROR: ` + JSON.stringify(uploadError));
       }
 
       const { data } = supabase.storage
