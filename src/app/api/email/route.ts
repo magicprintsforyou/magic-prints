@@ -3,7 +3,18 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
+    const apiKey = process.env.RESEND_API_KEY;
+    
+    // Diagnostic Check: Is the API Key missing or a dummy?
+    if (!apiKey || apiKey === 're_dummy_key') {
+      console.error('CRITICAL: RESEND_API_KEY is missing in environment variables.');
+      return NextResponse.json({ 
+        error: 'Servicio de email no configurado. Por favor añade RESEND_API_KEY en el panel de Vercel.',
+        diagnostic: 'MISSING_API_KEY'
+      }, { status: 500 });
+    }
+
+    const resend = new Resend(apiKey);
     const body = await req.json();
     const { name, email, phone, company, eventDate, location, needs, notes, fileUrls } = body;
 

@@ -148,19 +148,26 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
           // Update properties from DB but preserve default items
           newCatalog[cat.id].title = cat.title || newCatalog[cat.id].title;
           newCatalog[cat.id].description = cat.description || newCatalog[cat.id].description;
-          if (cat.image) newCatalog[cat.id].image = cat.image;
+          // Failsafe: only overwrite image if DB has a valid URL
+          if (cat.image && cat.image.trim() !== "") {
+            newCatalog[cat.id].image = cat.image;
+          }
         }
       });
 
       prodData.forEach((prod: any) => {
         if (newCatalog[prod.category_id]) {
+          // Find if this product exists in the local mockup first
+          const existingLocal = newCatalog[prod.category_id].items.find(i => i.id === prod.id);
+          
           const formattedProd = {
             id: prod.id,
             category: prod.category_id,
             name: prod.name,
             description: prod.description,
             price: prod.price ? parseFloat(prod.price) : undefined,
-            image: prod.image,
+            // Failsafe: Use DB image if available, else keep local placeholder
+            image: (prod.image && prod.image.trim() !== "") ? prod.image : (existingLocal?.image || ""),
             themes: prod.themes || [],
             variants: prod.variants || [],
             materials: prod.materials || [],
