@@ -106,17 +106,7 @@ export async function POST(req: Request) {
       });
     }
 
-    if (adminEmail.error) {
-      console.error('Resend Admin Email Error:', adminEmail.error);
-      throw new Error(`Admin Email Error: ${adminEmail.error.message}`);
-    }
-
-    if (clientEmail.error) {
-      console.error('Resend Client Email Error:', clientEmail.error);
-      // We don't throw here to avoid failing the whole request if only the client email fails
-    }
-
-    return NextResponse.json({ success: true, adminEmailId: adminEmail.data?.id, clientEmailId: clientEmail.data?.id });
+    return NextResponse.json({ success: true, adminEmailId, clientEmailId });
   } catch (error: any) {
     console.error('Email API Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
