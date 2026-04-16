@@ -4,21 +4,70 @@ import { useState } from 'react';
 import { Upload, Sparkles, Calendar, MapPin, Building2, User, Mail, Phone, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
-import { useLanguage } from '../../context/ProductContext';
+import { useProducts } from '../../context/ProductContext';
 
 export default function QuotePage() {
-  const { t } = useLanguage();
+  const { t, uploadImage } = useProducts();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSelectedFiles(Array.from(e.target.files));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setUploadProgress(0);
+    
+    // Get form data
+    const formData = new FormData(e.target as HTMLFormElement);
+    
+    try {
+      // 1. Upload files first
+      const fileUrls: string[] = [];
+      for (let i = 0; i < selectedFiles.length; i++) {
+        setUploadProgress(Math.round(((i + 1) / selectedFiles.length) * 100));
+        const url = await uploadImage(selectedFiles[i], 'designs');
+        fileUrls.push(url);
+      }
+
+      const data = {
+        name: formData.get('name'),
+        company: formData.get('company'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        eventDate: formData.get('eventDate'),
+        location: formData.get('location'),
+        needs: formData.getAll('needs'),
+        notes: formData.get('notes'),
+        fileUrls, // Send the uploaded links
+      };
+
+      // 2. Send Email
+      const response = await fetch('/api/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) throw new Error('Failed to send email');
+      
       setSuccess(true);
-    }, 2000);
+      setSelectedFiles([]);
+    } catch (error: any) {
+      console.error('Submission error:', error);
+      alert(error.message || 'Hubo un error al enviar tu solicitud. Por favor intenta de nuevo.');
+    } finally {
+      setIsSubmitting(false);
+      setUploadProgress(0);
+    }
   };
 
   return (
@@ -77,25 +126,25 @@ export default function QuotePage() {
                   <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
                     <User size={14} /> Full Name
                   </label>
-                  <input required type="text" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="e.g. Jane Doe" />
+                  <input required name="name" type="text" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="e.g. Jane Doe" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
                     <Building2 size={14} /> Company / Agency
                   </label>
-                  <input type="text" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="Optional" />
+                  <input name="company" type="text" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="Optional" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
                     <Mail size={14} /> Email Address
                   </label>
-                  <input required type="email" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="hello@company.com" />
+                  <input required name="email" type="email" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="hello@company.com" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
                     <Phone size={14} /> Phone (WhatsApp)
                   </label>
-                  <input required type="tel" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="+1 (555) 000-0000" />
+                  <input required name="phone" type="tel" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="+1 (555) 000-0000" />
                 </div>
               </div>
 
@@ -105,13 +154,13 @@ export default function QuotePage() {
                   <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
                     <Calendar size={14} /> Event Date
                   </label>
-                  <input required type="date" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" />
+                  <input required name="eventDate" type="date" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
                     <MapPin size={14} /> Zip Code / Event Location
                   </label>
-                  <input required type="text" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="For shipping or installation" />
+                  <input required name="location" type="text" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="For shipping or installation" />
                 </div>
               </div>
 
@@ -123,7 +172,7 @@ export default function QuotePage() {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {['Dance Floors', 'Backdrops', 'Cylinder Wraps', 'Pedestals', 'Round Signs', 'Banners', 'Corporate Merch', 'Other'].map(item => (
                     <label key={item} className="flex items-center gap-2 p-3 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                      <input type="checkbox" className="w-4 h-4 text-[#ff2a70] border-slate-300 rounded focus:ring-[#ff2a70]" />
+                      <input type="checkbox" name="needs" value={item} className="w-4 h-4 text-[#ff2a70] border-slate-300 rounded focus:ring-[#ff2a70]" />
                       <span className="text-sm text-slate-700 font-medium">{item}</span>
                     </label>
                   ))}
@@ -135,18 +184,45 @@ export default function QuotePage() {
                 <label className="text-sm font-bold text-slate-700 block">
                   Attach Files / Inspiration
                 </label>
-                <label className="block border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center hover:bg-slate-50 hover:border-[#ff2a70]/50 transition-all cursor-pointer group bg-white relative">
-                  <input type="file" multiple accept="image/*,.pdf,.ai" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                  <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#ff2a70]/10 transition-colors pointer-events-none">
-                    <Upload size={20} className="text-slate-400 group-hover:text-[#ff2a70]" />
-                  </div>
-                  <p className="text-[#0f172a] font-medium mb-1 pointer-events-none">
-                    Tap to upload or drag files here
-                  </p>
-                  <p className="text-slate-500 text-sm font-light pointer-events-none">
-                    Inspiration photos, final art (PDF, AI, PNG). Max 50MB.
-                  </p>
-                </label>
+                <div className="space-y-4">
+                  <label className="block border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center hover:bg-slate-50 hover:border-[#ff2a70]/50 transition-all cursor-pointer group bg-white relative">
+                    <input 
+                      type="file" 
+                      multiple 
+                      onChange={handleFileChange}
+                      accept="image/*,.pdf,.ai" 
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
+                    />
+                    <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#ff2a70]/10 transition-colors pointer-events-none">
+                      <Upload size={20} className="text-slate-400 group-hover:text-[#ff2a70]" />
+                    </div>
+                    <p className="text-[#0f172a] font-medium mb-1 pointer-events-none">
+                      {selectedFiles.length > 0 ? `${selectedFiles.length} files selected` : 'Tap to upload or drag files here'}
+                    </p>
+                    <p className="text-slate-500 text-sm font-light pointer-events-none">
+                      Inspiration photos, final art (PDF, AI, PNG). Max 50MB.
+                    </p>
+                  </label>
+                  
+                  {selectedFiles.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {selectedFiles.map((file, i) => (
+                        <div key={i} className="text-xs bg-slate-100 px-3 py-1 rounded-full text-slate-600 flex items-center gap-2">
+                          <span className="truncate max-w-[150px]">{file.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {isSubmitting && uploadProgress > 0 && (
+                    <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                      <div 
+                        className="bg-gradient-to-r from-[#ff2a70] to-[#00f2fe] h-full transition-all duration-300"
+                        style={{ width: `${uploadProgress}%` }}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Notes */}
@@ -154,7 +230,7 @@ export default function QuotePage() {
                 <label className="text-sm font-bold text-slate-700 block">
                   Additional Details / Measurements
                 </label>
-                <textarea rows={4} className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all resize-none" placeholder="Enter exact measurements if known, special requirements, etc..."></textarea>
+                <textarea name="notes" rows={4} className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all resize-none" placeholder="Enter exact measurements if known, special requirements, etc..."></textarea>
               </div>
 
               {/* Submit Button */}

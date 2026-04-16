@@ -3,18 +3,68 @@
 import { useState } from 'react';
 import { Upload, Sparkles, Calendar, MapPin, Building2, User, Mail, Phone, ArrowRight } from 'lucide-react';
 
+import { useProducts } from '../context/ProductContext';
+
 export default function BespokeForm() {
+  const { uploadImage } = useProducts();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSelectedFiles(Array.from(e.target.files));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setUploadProgress(0);
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    
+    try {
+      // 1. Upload files first
+      const fileUrls: string[] = [];
+      for (let i = 0; i < selectedFiles.length; i++) {
+        setUploadProgress(Math.round(((i + 1) / selectedFiles.length) * 100));
+        const url = await uploadImage(selectedFiles[i], 'designs');
+        fileUrls.push(url);
+      }
+
+      const data = {
+        name: formData.get('name'),
+        company: formData.get('company'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        eventDate: formData.get('eventDate'),
+        location: formData.get('location'),
+        needs: formData.getAll('needs'),
+        notes: formData.get('notes'),
+        fileUrls,
+      };
+
+      const response = await fetch('/api/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) throw new Error('Failed to send email');
+      
       setSuccess(true);
-    }, 2000);
+      setSelectedFiles([]);
+    } catch (error: any) {
+      console.error('Submission error:', error);
+      alert(error.message || 'Hubo un error al enviar tu solicitud. Por favor intenta de nuevo.');
+    } finally {
+      setIsSubmitting(false);
+      setUploadProgress(0);
+    }
   };
 
   return (
@@ -78,19 +128,19 @@ export default function BespokeForm() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-white/80 flex items-center gap-2"><User size={14}/> Nombre Completo</label>
-                    <input required type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Ej. Yndira P." />
+                    <input required name="name" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Ej. Yndira P." />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Building2 size={14}/> Empresa / Agencia</label>
-                    <input type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Opcional" />
+                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Building2 size={14}/> Empresa / Agency</label>
+                    <input name="company" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Opcional" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Mail size={14}/> Correo Electrónico</label>
-                    <input required type="email" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="hello@empresa.com" />
+                    <input required name="email" type="email" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="hello@empresa.com" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Phone size={14}/> Teléfono (WhatsApp)</label>
-                    <input required type="tel" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="+1 (555) 000-0000" />
+                    <input required name="phone" type="tel" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="+1 (555) 000-0000" />
                   </div>
                 </div>
 
@@ -100,11 +150,11 @@ export default function BespokeForm() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Calendar size={14}/> Fecha del Evento</label>
-                    <input required type="date" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white/60 focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" />
+                    <input required name="eventDate" type="date" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white/60 focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-white/80 flex items-center gap-2"><MapPin size={14}/> Zip Code / Venue</label>
-                    <input required type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Para envío o pickup" />
+                    <input required name="location" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Para envío o pickup" />
                   </div>
                 </div>
 
@@ -116,7 +166,7 @@ export default function BespokeForm() {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {['Floor Wrap', 'Backdrop Boards', 'Cylinder Covers', 'Custom Cut-outs', 'Circle Signs', 'Banners', 'Corporate Merch', 'Otro'].map(item => (
                       <label key={item} className="flex items-center gap-2 p-3 border border-white/10 rounded-xl cursor-pointer hover:bg-white/5 transition-colors">
-                        <input type="checkbox" className="w-4 h-4 text-[#ff2a70] border-slate-600 rounded bg-[#0f172a] focus:ring-[#ff2a70]" />
+                        <input type="checkbox" name="needs" value={item} className="w-4 h-4 text-[#ff2a70] border-slate-600 rounded bg-[#0f172a] focus:ring-[#ff2a70]" />
                         <span className="text-sm text-white/80 font-medium">{item}</span>
                       </label>
                     ))}
@@ -126,19 +176,49 @@ export default function BespokeForm() {
                 {/* File Upload Zone */}
                 <div className="space-y-2 pt-4 border-t border-white/10">
                   <label className="text-sm font-bold text-white/80 block">Adjuntar Archivos / Inspiración</label>
-                  <div className="border-2 border-dashed border-white/20 rounded-2xl p-8 text-center hover:bg-white/5 hover:border-[#ff2a70]/50 transition-all cursor-pointer group bg-black/20">
+                  <div className="space-y-4">
+                  <div className="border-2 border-dashed border-white/20 rounded-2xl p-8 text-center hover:bg-white/5 hover:border-[#ff2a70]/50 transition-all cursor-pointer group bg-black/20 relative">
+                    <input 
+                      type="file" 
+                      multiple 
+                      onChange={handleFileChange}
+                      accept="image/*,.pdf,.ai" 
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
+                    />
                     <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#ff2a70]/20 transition-colors">
                       <Upload size={20} className="text-white/40 group-hover:text-[#ff2a70]" />
                     </div>
-                    <p className="text-white font-medium mb-1">Haz clic o arrastra tus archivos aquí</p>
+                    <p className="text-white font-medium mb-1">
+                      {selectedFiles.length > 0 ? `${selectedFiles.length} archivos seleccionados` : 'Haz clic o arrastra tus archivos aquí'}
+                    </p>
                     <p className="text-white/40 text-sm font-light">Fotos de inspiración, artes finales (PDF, AI, PNG). Máx 50MB.</p>
                   </div>
+
+                  {selectedFiles.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {selectedFiles.map((file, i) => (
+                        <div key={i} className="text-xs bg-white/10 px-3 py-1 rounded-full text-white/60 flex items-center gap-2">
+                          <span className="truncate max-w-[150px]">{file.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {isSubmitting && uploadProgress > 0 && (
+                    <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                      <div 
+                        className="bg-gradient-to-r from-[#ff2a70] to-[#00f2fe] h-full transition-all duration-300"
+                        style={{ width: `${uploadProgress}%` }}
+                      />
+                    </div>
+                  )}
+                </div>
                 </div>
 
                 {/* Notes */}
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-white/80 block">Cuéntanos más sobre tu visión mágica...</label>
-                  <textarea rows={4} className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all resize-none italic placeholder:text-white/30" placeholder="Ingresa las medidas exactas si las tienes, requerimientos especiales de instalación, etc..."></textarea>
+                  <textarea name="notes" rows={4} className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all resize-none italic placeholder:text-white/30" placeholder="Ingresa las medidas exactas si las tienes, requerimientos especiales de instalación, etc..."></textarea>
                 </div>
 
                 {/* Submit Button */}

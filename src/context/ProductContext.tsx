@@ -53,7 +53,7 @@ type AppContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
   updateContentValue: (section: string, key: string, en: string, es: string) => Promise<void>;
-  uploadImage: (file: File) => Promise<string>;
+  uploadImage: (file: File, bucket?: string) => Promise<string>;
   isContentConfigured: boolean;
 };
 
@@ -205,53 +205,55 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  const uploadImage = async (file: File): Promise<string> => {
+  const uploadImage = async (file: File, bucket: string = 'catalog'): Promise<string> => {
     try {
-      console.log("Starting upload process for:", file.name, file.size);
+      console.log(`Starting upload process for: ${file.name} to bucket: ${bucket}`);
       
       let uploadPayload: Blob | File = file;
       let contentType = file.type;
 
-      // Try compression but don't let it block the upload if it fails
-      try {
-        const compressed = await new Promise<Blob | null>((resolve) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = (e) => {
-            const img = new Image();
-            img.src = e.target?.result as string;
-            img.onload = () => {
-              const canvas = document.createElement('canvas');
-              let { width, height } = img;
-              const maxDim = 1200;
-              if (width > maxDim) { height *= maxDim / width; width = maxDim; }
-              if (height > maxDim) { width *= maxDim / height; height = maxDim; }
-              canvas.width = width; canvas.height = height;
-              const ctx = canvas.getContext('2d');
-              if (!ctx) return resolve(null);
-              ctx.drawImage(img, 0, 0, width, height);
-              canvas.toBlob(b => resolve(b), 'image/webp', 0.8);
+      // Try compression for images but don't let it block the upload if it fails
+      if (file.type.startsWith('image/')) {
+        try {
+          const compressed = await new Promise<Blob | null>((resolve) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+              const img = new Image();
+              img.src = e.target?.result as string;
+              img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let { width, height } = img;
+                const maxDim = 1200;
+                if (width > maxDim) { height *= maxDim / width; width = maxDim; }
+                if (height > maxDim) { width *= maxDim / height; height = maxDim; }
+                canvas.width = width; canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return resolve(null);
+                ctx.drawImage(img, 0, 0, width, height);
+                canvas.toBlob(b => resolve(b), 'image/webp', 0.8);
+              };
+              img.onerror = () => resolve(null);
             };
-            img.onerror = () => resolve(null);
-          };
-          reader.onerror = () => resolve(null);
-        });
+            reader.onerror = () => resolve(null);
+          });
 
-        if (compressed) {
-          uploadPayload = compressed;
-          contentType = 'image/webp';
-          console.log("Compression successful:", compressed.size);
+          if (compressed) {
+            uploadPayload = compressed;
+            contentType = 'image/webp';
+            console.log("Compression successful:", compressed.size);
+          }
+        } catch (compressionErr) {
+          console.warn("Compression failed, falling back to original file:", compressionErr);
         }
-      } catch (compressionErr) {
-        console.warn("Compression failed, falling back to original file:", compressionErr);
       }
 
-      const fileExt = contentType.split('/').pop() || 'jpg';
+      const fileExt = contentType.split('/').pop() || 'file';
       const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-      const filePath = `uploads/${fileName}`;
+      const filePath = bucket === 'catalog' ? `uploads/${fileName}` : `requests/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('catalog')
+        .from(bucket)
         .upload(filePath, uploadPayload, { 
           contentType,
           cacheControl: '3600',
@@ -260,18 +262,27 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       if (uploadError) {
         console.error("Supabase Upload Error:", uploadError);
+        // If it's a 404, the bucket likely doesn't exist
+        if ((uploadError as any).status === 404 || uploadError.message?.includes('not found')) {
+          throw new Error(`Bucket '${bucket}' not found. Please create it in Supabase Storage and set it to Public.`);
+        }
+        // If it's a 403, it's likely a policy issue
+        if ((uploadError as any).status === 403 || uploadError.message?.includes('Permission denied')) {
+          throw new Error(`Permission denied. Ensure your '${bucket}' bucket has Public 'Insert' policies enabled.`);
+        }
         throw uploadError;
       }
 
       const { data } = supabase.storage
-        .from('catalog')
+        .from(bucket)
         .getPublicUrl(filePath);
 
       return data.publicUrl;
     } catch (err: any) {
       console.error("Critical Storage Error:", err);
-      // Ensure we throw a friendly error message if it's a known Supabase structure
-      throw new Error(err?.message || err?.error_description || "Upload failed. Check your connection or Supabase policies.");
+      // Ensure we throw a friendly error message
+      const msg = err?.message || err?.error_description || "Upload failed. Check your connection or Supabase policies.";
+      throw new Error(msg);
     }
   };
 

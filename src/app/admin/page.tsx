@@ -115,7 +115,9 @@ function AdminPortalContent() {
     } catch (err: any) {
       console.error("Upload failed", err);
       const errorMsg = err?.message || err?.error_description || "Unknown storage error";
-      alert(`Failed to upload image: ${errorMsg}\n\nTechnical Tip: Ensure your 'catalog' bucket is Public and you ran the SQL policy in Supabase.`);
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+      const projectId = supabaseUrl.split('//')[1]?.split('.')[0] || "unknown";
+      alert(`Failed to upload image: ${errorMsg}\n\nProject ID: ${projectId}\n\nTechnical Tip: Ensure your 'catalog' bucket is Public in the Supabase Dashboard AND THAT YOU ARE IN THE CORRECT PROJECT: ${projectId}`);
     } finally {
       setIsUploading(false);
     }
@@ -274,7 +276,10 @@ function AdminPortalContent() {
           <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#ff2a70] tracking-tighter uppercase mb-2 flex items-center gap-3">
             <Sparkles className="text-[#d90082]" /> Magic Prints Admin
           </h1>
-          <p className="text-white/60">Global Content Management System (CMS)</p>
+          <div className="flex items-center gap-2">
+            <p className="text-white/60">Global Content Management System (CMS)</p>
+            <span className="text-[9px] bg-white/5 text-white/30 px-2 py-0.5 rounded-md border border-white/10 font-mono">Project: {(process.env.NEXT_PUBLIC_SUPABASE_URL || "").split('//')[1]?.split('.')[0]}</span>
+          </div>
         </div>
 
         <div className="flex items-center gap-4">
