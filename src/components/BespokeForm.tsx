@@ -30,7 +30,7 @@ export default function BespokeForm() {
       const fileUrls: string[] = [];
       for (let i = 0; i < selectedFiles.length; i++) {
         setUploadProgress(Math.round(((i + 1) / selectedFiles.length) * 100));
-        const url = await uploadImage(selectedFiles[i], 'designs');
+        const url = await uploadImage(selectedFiles[i], 'client-assets');
         fileUrls.push(url);
       }
 
