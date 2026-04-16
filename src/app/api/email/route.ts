@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     // 1. Send Email to Admin (Magic Prints Team)
     const adminEmail = await resend.emails.send({
       from: 'Magic Prints <onboarding@resend.dev>', // Change to verified domain later
-      to: process.env.ADMIN_EMAIL || 'info@magicprintsforyou.com',
+      to: process.env.ADMIN_EMAIL || 'magicprintsforyou@gmail.com',
       subject: `✨ New Quote Request: ${name}`,
       html: `
         <div style="font-family: sans-serif; padding: 20px; color: #333;">
@@ -63,7 +63,6 @@ export async function POST(req: Request) {
     });
 
     // 3. Add to Audience (Marketing Automation)
-    // Note: requires a valid Audience ID in Resend
     if (process.env.RESEND_AUDIENCE_ID) {
       await resend.contacts.create({
         email,
@@ -72,6 +71,16 @@ export async function POST(req: Request) {
         unsubscribed: false,
         audienceId: process.env.RESEND_AUDIENCE_ID,
       });
+    }
+
+    if (adminEmail.error) {
+      console.error('Resend Admin Email Error:', adminEmail.error);
+      throw new Error(`Admin Email Error: ${adminEmail.error.message}`);
+    }
+
+    if (clientEmail.error) {
+      console.error('Resend Client Email Error:', clientEmail.error);
+      // We don't throw here to avoid failing the whole request if only the client email fails
     }
 
     return NextResponse.json({ success: true, adminEmailId: adminEmail.data?.id, clientEmailId: clientEmail.data?.id });
