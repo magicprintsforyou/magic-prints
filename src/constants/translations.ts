@@ -3,10 +3,10 @@ export type Language = 'en' | 'es';
 export const translations = {
     en: {
         common: {
-            admin: "Admin",
-            quote: "Get Quote",
-            whatsapp: "WhatsApp",
-            slogan: "Transforming ordinary spaces into museum-grade experiences.",
+            admin: "Admin Studio",
+            quote: "Instant Quote",
+            whatsapp: "WhatsApp VIP Line",
+            slogan: "By Event Planners, For Event Planners. Museum-grade prints delivered & installed at your venue.",
         },
         nav: {
             home: 'HOME',
@@ -14,15 +14,16 @@ export const translations = {
             products: 'CATALOG',
             corporate: 'CORPORATE',
             quote: 'GET A QUOTE',
-            admin: 'ADMIN',
+            inspire: 'AI VENUE MOCKUP',
+            admin: 'ADMIN PORTAL',
         },
         hero: {
-            welcome: 'Welcome to the',
-            title: 'HIGH-IMPACT PRINTING &',
-            title_highlight: 'PROFESSIONAL INSTALLATION',
-            subtitle: 'Where Premium Craftsmanship Meets Flawless Event Execution.',
-            cta_primary: 'START YOUR PROJECT',
-            cta_secondary: 'VIEW CATALOG',
+            welcome: 'By Event Planners, For Event Planners',
+            title: 'HIGH-IMPACT EVENT PRINTS &',
+            title_highlight: 'ON-SITE VENUE INSTALLATION',
+            subtitle: 'Eliminate setup stress. We print, deliver, and professionally install museum-grade backdrops, floor wraps, and signage directly at your venue in record time.',
+            cta_primary: 'TRY AI VENUE MOCKUP',
+            cta_secondary: 'EXPLORE CATALOG',
             backgroundImages: [
                 "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2000",
                 "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=2000",
@@ -30,170 +31,133 @@ export const translations = {
             ]
         },
         process: {
-            badge: "THE MAGIC WORKFLOW",
-            title: "From Concept to Strike",
-            step1_title: "Curate Your Vision",
-            step1_desc: "Select from our signature solutions or challenge us with a bespoke production.",
-            step2_title: "Precision Design",
-            step2_desc: "Detailed digital mockups ensure that every inch of your layout is flawless.",
-            step3_title: "Elite Production",
-            step3_desc: "High-density printing and white-glove installation at your chosen venue.",
+            badge: "WHITE-GLOVE VENUE LOGISTICS",
+            title: "From Concept to Venue Strike",
+            step1_title: "1. Planners-to-Planners Intake",
+            step1_desc: "We understand your setup windows, venue restrictions, and tight execution deadlines.",
+            step2_title: "2. Vector & Color Accuracy Audit",
+            step2_desc: "Micro-level proofing of CMYK profiles, bleed lines, and resolution to ensure 100% color match.",
+            step3_title: "3. White-Glove On-Site Setup",
+            step3_desc: "Our technical crew delivers, installs, and secures your prints directly at the event space.",
         },
         testimonials: {
-            badge: "TESTIMONIALS",
-            title: "Trusted by Elite Planners",
+            badge: "EVENT DESIGNER REVIEWS",
+            title: "Trusted by Top Event Planners",
             author1: "Sarah J.",
-            role1: "Lead Event Designer",
-            text1: "\"Magic Prints is my secret weapon. Their museum-grade quality and reliability under pressure are simply unmatched.\"",
+            role1: "Lead Luxury Wedding Planner",
+            text1: "Having a printing partner who is ALSO an event planner is a total game-changer. They handle venue installation seamlessly, saving my team 3+ hours of setup time on event day!",
             author2: "Michael R.",
-            role2: "Executive Planner",
-            text2: "\"The floor graphics redefined the space. Stunningly sharp, safe, and truly bespoke. Excellence in every detail.\"",
+            role2: "Corporate Gala Producer",
+            text2: "The floor wraps and stage backdrops turned heads all night. Flawless 100% color match, zero wrinkles, and lightning-fast installation.",
             author3: "Elena G.",
-            role3: "Marketing Director",
-            text3: "\"They don't just print; they bring brands to life. Professional, fast, and remarkably high-impact.\"",
+            role3: "Brand Activation Director",
+            text3: "They don't just print; they own the execution. Their 24-48h rush capability saved our launch party when our previous vendor bailed.",
         },
         footer: {
             quickLinks: 'Quick Access',
-            contact: 'Inquiries',
-            hours: 'Studio Hours',
-            rights: '© 2026 MAGIC PRINTS. ALL RIGHTS RESERVED.',
-            designed: 'CRAFTED WITH PRECISION IN TEXAS',
+            contact: 'VIP Inquiries',
+            hours: 'Studio & Setup Hours',
+            rights: 'Ac 2026 MAGIC PRINTS. ALL RIGHTS RESERVED.',
+            designed: 'CRAFTED WITH PRECISION FOR EVENT PLANNERS',
             email: 'sales@magicprintsforyou.com',
             address: '1600 Industrial Ct, Arlington, TX 76011',
-            whatsapp_msg: 'Direct WhatsApp Line'
+            whatsapp_msg: 'Direct Planner Line'
         },
         quote: {
-            dream: 'You Visualize.',
-            print: 'We Materialize.',
-            desc: 'Handling a large-scale production? Our VIP logistics team ensures a bespoke quote and a flawless plan in record time.',
-            express: 'Record Turnaround (24-48h)',
-            expressDesc: 'In the high-stakes world of events, we set the standard for speed without compromise.',
+            dream: 'Are Past Vendors Delivering Late?',
+            print: 'Get a Zero-Risk Quote & Setup Plan',
+            desc: 'Tell us about your event venue and date. Our VIP logistics crew will deliver a custom print & white-glove installation proposal in record time.',
+            express: 'Record Turnaround (24-48h + Venue Setup)',
+            expressDesc: 'In the high-stakes world of live events, we set the standard for speed, precision, and zero-headache execution.',
         },
         about: {
-            experience: '8+ Years of Excellence',
+            experience: '8+ Years of Live Event Excellence',
             history: 'The Magic Behind the Prints',
-            slogan: 'Curating the World\'s Most Iconic Event Impressions.',
+            slogan: 'Created By Event Planners, For Event Planners.',
             image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800",
             mission_title: "THE MISSION",
-            mission_desc: "To provide the event industry with uncompromising printing standards that turn ambitious ideas into tangible magic.",
-            mission_icon: "🎯",
+            mission_desc: "To empower event designers with uncompromising print standards, seamless venue installation, and stress-free execution.",
+            mission_icon: "dYZ_",
             vision_title: "THE VISION",
-            vision_desc: "To be the global benchmark for luxury event aesthetics and technical execution.",
-            vision_icon: "👁️",
+            vision_desc: "To be the premier event printing and installation partner nationwide for luxury planners.",
+            vision_icon: "dY`?",
             bio: [
-                "With over 8 years as an Event Planner, I have a deep obsession with the details that define a truly premium event experience.",
-                "I founded this studio after realizing that 'good enough' wasn't an option for the industry's elite planners. I wanted a partner that understood precision as much as I did.",
-                "Today, we are the trusted choice for the city's most ambitious designers. We deliver personalized service, rapid execution, and a print standard that simply sets a higher bar."
+                "With over 8 years as an active Event Planner, I know firsthand the anxiety of waiting on print shipments and scrambling to install heavy backdrops hours before doors open.",
+                "I founded Magic Prints to solve that exact pain. We aren't just a printer—we are your production co-pilot who delivers, sets up, and installs every piece directly at your venue.",
+                "Today, we are the secret weapon for top planners. We combine high-density print technology with white-glove installation so you can focus on your client, not setup stress."
             ]
         },
         corporate: {
-            badge: "Enterprise & Productions",
+            badge: "Enterprise & Event Productions",
             title: "High-Impact",
-            title_highlight: "Brand Environments",
-            subtitle: "We architect immersive corporate spaces with professional-grade print technology and massive scale.",
-            cta_primary: "BOOK CONSULTATION",
+            title_highlight: "Brand Environments & On-Site Setup",
+            subtitle: "We architect and install immersive corporate spaces with professional-grade print technology and white-glove setup crew.",
+            cta_primary: "BOOK PLANNER CONSULTATION",
             cta_secondary: "TECHNICAL PORTFOLIO",
             hero_image: "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop",
             pilar1_title: "Precision Engineering",
-            pilar1_desc: "High-density polymers and UV-resistant finishes for maximum impact.",
-            pilar2_title: "Production Speed",
-            pilar2_desc: "Proprietary workflows designed for high-volume, time-sensitive campaigns.",
-            pilar3_title: "White-Glove Setup",
-            pilar3_desc: "Seamless, end-to-end installation by our elite technical crew.",
-            alliance_title: "The Premium Alliance",
-            alliance_quote: "Your brand is built on excellence. We ensure your physical presence reflects that standard.",
+            pilar1_desc: "High-density polymers and UV-resistant finishes for maximum visual impact.",
+            pilar2_title: "24-48h Rush Production",
+            pilar2_desc: "Proprietary workflows designed for high-volume, time-sensitive event launches.",
+            pilar3_title: "White-Glove On-Site Setup",
+            pilar3_desc: "Seamless end-to-end venue installation by our elite technical crew.",
+            alliance_title: "The Planner Alliance",
+            alliance_quote: "Your reputation is built on flawless execution. We ensure your physical prints elevate that standard.",
             alliance1_title: "Total Creative Direction",
-            alliance1_desc: "Integrated planning with Yndira Magic for a cohesive journey from concept to strike.",
+            alliance1_desc: "Integrated planning for a cohesive journey from initial design proof to venue strike.",
             alliance2_title: "Bespoke Fabrication",
-            alliance2_desc: "From architectural wraps to custom-built signage. We materialize the impossible.",
-            form_title: "Strategic Inquiry",
+            alliance2_desc: "From architectural floor wraps to custom acrylic signage, we materialize your vision.",
+            form_title: "Strategic Planner Inquiry",
             tech_specs_title: "Technical Prowess",
             tech_specs_subtitle: "Micron-level accuracy in every square inch.",
-            success_stories_title: "Signature Projects",
-            success_stories_subtitle: "Large-scale deployments delivered with zero-error philosophy.",
+            success_stories_title: "Signature Event Deployments",
+            success_stories_subtitle: "Large-scale event deployments delivered with a zero-error philosophy.",
             services: [
                 {
-                    title: "Event Signage",
-                    desc: "Museum-grade welcome boards and seating charts.",
+                    title: "Event Signage & Wayfinding",
+                    desc: "Museum-grade welcome boards, directional signs, and seating charts.",
                     icon: "Layout",
                     image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop"
                 },
                 {
-                    title: "Luxury Vinyls",
-                    desc: "Non-slip dance floor wraps and wall murals.",
-                    icon: "Gem",
-                    image: "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?q=80&w=2070&auto=format&fit=crop"
-                },
-                {
-                    title: "Brand Activations",
-                    desc: "High-impact visual branding for corporate scales.",
-                    icon: "Zap",
-                    image: "https://images.unsplash.com/photo-1551818255-e6e10975bc17?q=80&w=2070&auto=format&fit=crop"
+                    title: "Seamless Stage Backdrops",
+                    desc: "Wrinkle-free high-density fabric and rigid press walls.",
+                    icon: "Layers",
+                    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2000"
                 }
             ],
             success_stories: [
                 {
-                    title: "Corporate Gala 2025",
-                    client: "Fortune 500 Tech",
-                    results: "2000+ custom prints installed in 12 hours.",
-                    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop"
-                },
-                {
-                    title: "Product Launch",
-                    client: "Luxury Auto Brand",
-                    results: "Seamless floor-to-wall vinyl integration.",
-                    img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop"
+                    title: "Gala Activation Wrap",
+                    metric: "100% Color Match",
+                    desc: "Over 4,000 sq ft of custom vinyl floor wraps and backdrop installation."
                 }
             ]
         },
         products: {
-            badge: "EDUCATION & MATERIALS",
-            title: "The Science of",
-            title_highlight: "Premium Impressions",
-            subtitle: "We use only the highest-grade substrates to ensure your vision is translated with absolute fidelity.",
-            categories: {
-                rigid: {
-                    title: "Rigid Substrates",
-                    items: [
-                        { name: "Coroplast", desc: "Lightweight, weather-resistant fluted plastic. Perfect for yard signs, temporary outdoor directional, and event wayfinding." },
-                        { name: "Foam Board", desc: "Premium smooth surface for high-resolution graphics. The industry standard for indoor signage, presentations, and lightweight displays." },
-                        { name: "Sintra (PVC)", desc: "Durable, professional-grade rigid PVC. Ideal for long-term exhibits, high-traffic signage, and permanent brand features." }
-                    ]
-                },
-                flexible: {
-                    title: "Flexible & Large Format",
-                    items: [
-                        { name: "Vinyl Banners", desc: "High-durability mesh or solid vinyl. Scrim-reinforced for massive outdoor backdrops and stage banners." },
-                        { name: "Retractable Banners", desc: "Professional, portable impact. Ultra-smooth non-curl vinyl in premium aluminum shells for trade shows and lobbies." },
-                        { name: "Floor Graphics", desc: "Slip-resistant, high-adhesive vinyl. Transform any surface into a brand narrative with museum-grade durability." }
-                    ]
-                },
-                essentials: {
-                    title: "Event Essentials",
-                    items: [
-                        { name: "Luxury Menus", desc: "Bespoke finishes on ultra-thick stock. From acrylic-etched layouts to soft-touch high-GSM papers." },
-                        { name: "Business Cards", desc: "The first handshake. Available in silk-lamination, spot UV, and architectural cardstocks." },
-                        { name: "Bespoke Stationery", desc: "Cohesive brand environments start with the smallest details. Envelopes, programs, and custom invitations." }
-                    ]
-                }
-            }
+            badge: "LUXURY EVENT SOLUTIONS",
+            title: "PREMIUM PRINT CATALOG",
+            title_highlight: "FOR EVENT PLANNERS",
+            subtitle: "Curated Solutions for High-Stakes Live Events",
+            search_placeholder: "Search vinyl, backdrops, signage...",
+            all_categories: "ALL PRODUCTS",
+            request_custom: "Request Custom Size & Material",
         },
         ai: {
-            sparkle_intro: "Welcome. I'm Sparkle ✨. Ready to define the visual language of your next production?",
-            sparkle_typing: "Architecting a response...",
-            placeholder: "How can we assist your vision?",
-            error_sparkle: "A brief technical flicker. Shall we try that thought again?",
-            error_interrupt: "The connection fluctuated. Let's resume the magic.",
-            assistant_title: "Sparkle AI",
-            assistant_subtitle: "Consultant Designer"
+            sparkle_intro: "Hi! I'm Sparkle, your Senior Event Production Concierge. How can I help with your venue installation or print specs today?",
+            assistant_title: "Sparkle AI Concierge",
+            assistant_subtitle: "24/7 Event Production Assistant",
+            placeholder: "Ask about venue installation, CMYK bleed, rush 24h setup...",
+            error_interrupt: "Connection interrupted. Please try again.",
+            error_sparkle: "Sparkle experienced a temporary flicker."
         }
     },
     es: {
         common: {
-            admin: "Admin",
-            quote: "Solicitar Presupuesto",
-            whatsapp: "WhatsApp",
-            slogan: "Transformando espacios ordinarios en experiencias de grado museo.",
+            admin: "Estudio Admin",
+            quote: "Cotización al Instante",
+            whatsapp: "Línea VIP WhatsApp",
+            slogan: "De Event Planners para Event Planners. Impresiones e instalación directa en tu venue.",
         },
         nav: {
             home: 'INICIO',
@@ -201,15 +165,16 @@ export const translations = {
             products: 'CATÁLOGO',
             corporate: 'CORPORATIVO',
             quote: 'COTIZAR',
-            admin: 'ADMIN',
+            inspire: 'MOCKUP IA VENUE',
+            admin: 'PORTAL ADMIN',
         },
         hero: {
-            welcome: 'Bienvenido a',
-            title: 'IMPRESIÓN DE ALTO IMPACTO E',
-            title_highlight: 'INSTALACIÓN PROFESIONAL',
-            subtitle: 'Donde la Artesanía Premium se Une a la Ejecución Impecable de Eventos.',
-            cta_primary: 'INICIA TU PROYECTO',
-            cta_secondary: 'VER CATÁLOGO',
+            welcome: 'De Event Planners para Event Planners',
+            title: 'IMPRESIONES DE ALTO IMPACTO E',
+            title_highlight: 'INSTALACIÓN DIRECTA EN VENUE',
+            subtitle: 'Elimina el estrés del montaje. Imprimimos, entregamos e instalamos profesionalmente tus backdrops, vinilos de piso y señalética directamente en tu evento.',
+            cta_primary: 'PROBAR MOCKUP IA DE VENUE',
+            cta_secondary: 'VER CATÁLOGO DE MATERIALES',
             backgroundImages: [
                 "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2000",
                 "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=2000",
@@ -217,162 +182,125 @@ export const translations = {
             ]
         },
         process: {
-            badge: "EL FLUJO MÁGICO",
-            title: "Del Concepto al Montaje",
-            step1_title: "Cura Tu Visión",
-            step1_desc: "Selecciona de nuestras soluciones insignia o rétanos con una producción a medida.",
-            step2_title: "Diseño de Precisión",
-            step2_desc: "Nuestros bocetos digitales detallados aseguran que cada pulgada sea impecable.",
-            step3_title: "Producción de Élite",
-            step3_desc: "Impresión de alta densidad y montaje de guante blanco en tu recinto.",
+            badge: "LOGÍSTICA DE EVENTO BLANCO-GUANTE",
+            title: "Del Concepto al Montaje Final",
+            step1_title: "1. Consulta de Planner a Planner",
+            step1_desc: "Entendemos tus horarios de montaje en el venue, restricciones de sala y tiempos límite de ejecución.",
+            step2_title: "2. Auditoría de Color y Vectores",
+            step2_desc: "Revisión técnica de perfiles CMYK, sangrados y resolución para coincidencia de color al 100%.",
+            step3_title: "3. Instalación Profesional en Venue",
+            step3_desc: "Nuestro equipo técnico entrega, monta y asegura tus impresiones directamente en el salón de eventos.",
         },
         testimonials: {
-            badge: "TESTIMONIOS",
-            title: "La Confianza de Planners de Élite",
+            badge: "OPINIONES DE EVENT PLANNERS",
+            title: "La Confianza de los Mejores Diseñadores",
             author1: "Sarah J.",
-            role1: "Diseñadora Principal de Eventos",
-            text1: "\"Magic Prints es mi arma secreta. Su calidad grado museo e impecable entrega bajo presión son inigualables.\"",
+            role1: "Directora de Bodas de Lujo",
+            text1: "Tener un proveedor de impresión que TAMBIÉN sea event planner cambia todo. Se encargan de la instalación en el venue a la perfección, ahorrándole a mi equipo más de 3 horas de estrés el día del evento.",
             author2: "Michael R.",
-            role2: "Planner Ejecutivo",
-            text2: "\"Los floor wraps redefinieron el espacio. Súper nítidos, seguros y fabricados a medida. Excelencia en cada detalle.\"",
+            role2: "Productor de Galas Corporativas",
+            text2: "Los vinilos de piso y backdrops de escenario se robaron la noche. Colores idénticos al diseño, sin arrugas y con una velocidad de montaje impecable.",
             author3: "Elena G.",
-            role3: "Directora de Marketing",
-            text3: "\"No solo imprimen; le dan vida a tu marca. Profesionales, rápidos y con un impacto visual increíble.\"",
+            role3: "Directora de Activaciones de Marca",
+            text3: "No solo imprimen; se adueñan de la ejecución. Su servicio exprés de 24-48h salvó nuestro lanzamiento cuando otro proveedor falló.",
         },
         footer: {
-            quickLinks: 'Acceso Rápido',
-            contact: 'Consultas',
-            hours: 'Horarios del Studio',
-            rights: '© 2026 MAGIC PRINTS. TODOS LOS DERECHOS RESERVADOS.',
-            designed: 'DISEÑADO CON PRECISIÓN EN TEXAS',
+            quickLinks: 'Accesos Rápidos',
+            contact: 'Consultas VIP',
+            hours: 'Horarios de Estudio y Montaje',
+            rights: 'Ac 2026 MAGIC PRINTS. TODOS LOS DERECHOS RESERVADOS.',
+            designed: 'DISEÑADO CON PRECISIÓN PARA EVENT PLANNERS',
             email: 'sales@magicprintsforyou.com',
             address: '1600 Industrial Ct, Arlington, TX 76011',
-            whatsapp_msg: 'Línea Directa de WhatsApp'
+            whatsapp_msg: 'Línea Directa de Planners'
         },
         quote: {
-            dream: 'Tú lo Visualizas.',
-            print: 'Nosotros lo Materializamos.',
-            desc: '¿Manejando una producción a gran escala? Nuestro equipo VIP de logística asegura una cotización a medida y un plan impecable en tiempo récord.',
-            express: 'Entrega Récord (24-48h)',
-            expressDesc: 'En el acelerado mundo de los eventos, establecemos el estándar de velocidad sin comprometer calidad.',
+            dream: '¿Frustrado con Imprentas que Fallan?',
+            print: 'Cotización NEPQ Sin Riesgo',
+            desc: 'Cuéntanos sobre tu evento y fecha. Nuestro equipo te entregará una propuesta personalizada con garantía de color e instalación en venue.',
+            express: 'Entrega Exprés Garantizada (24-48h + Montaje)',
+            expressDesc: 'En eventos en vivo no hay margen de error. Cumplimos tiempos exactos o ajustamos el costo.',
         },
         about: {
-            experience: '8+ Años de Excelencia',
+            experience: 'Más de 8 Años en Eventos en Vivo',
             history: 'La Magia Detrás de las Impresiones',
-            slogan: 'Curando las Impresiones de Eventos más Icónicas del Mundo.',
+            slogan: 'Creado por Event Planners, para Event Planners.',
             image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800",
             mission_title: "LA MISIÓN",
-            mission_desc: "Proveer a la industria de eventos con estándares de impresión inflexibles que convierten ideas ambiciosas en magia tangible.",
-            mission_icon: "🎯",
+            mission_desc: "Brindar a la industria de eventos estándares de impresión sin concesiones e instalación impecable en venue.",
+            mission_icon: "dYZ_",
             vision_title: "LA VISIÓN",
-            vision_desc: "Ser el referente global de estética y ejecución técnica en eventos de lujo.",
-            vision_icon: "👁️",
+            vision_desc: "Ser el socio técnico principal de impresión e instalación para organizadores de eventos de lujo a nivel nacional.",
+            vision_icon: "dY`?",
             bio: [
-                "Como Event Planner con más de 8 años de experiencia, entiendo lo vitales que son las impresiones de alta calidad para crear un evento verdaderamente elevado.",
-                "Después de trabajar con múltiples proveedores y no encontrar el nivel de servicio y calidad impecable que mis clientes merecían, decidí crear mi propia imprenta, diseñada para apoyar a los planners más exigentes.",
-                "Hoy tengo el privilegio de trabajar con los mejores planificadores de la ciudad. Somos conocidos por nuestro servicio personalizado, entrega rápida e instalación profesional que establece un estándar muy superior."
+                "Con más de 8 años como organizadora activa de eventos, conozco de primera mano la ansiedad de esperar paquetes de impresión y correr para montar backdrops pesados horas antes de abrir puertas.",
+                "Fundé Magic Prints para resolver exactamente ese dolor. No somos solo una imprenta: somos tu co-piloto de producción que entrega, arma e instala cada pieza directamente en tu venue.",
+                "Hoy somos el arma secreta de los mejores organizadores de eventos. Combinamos tecnología de impresión de alta densidad con instalación profesional para que te enfoques en tu cliente."
             ]
         },
         corporate: {
-            badge: "Empresas & Producciones",
-            title: "Entornos de Marca",
-            title_highlight: "de Alto Impacto",
-            subtitle: "Arquitectamos espacios corporativos inmersivos con tecnología de impresión profesional y escala masiva.",
-            cta_primary: "AGENDAR CONSULTA",
+            badge: "Empresas y Producciones de Eventos",
+            title: "Ambientes de Marca",
+            title_highlight: "e Instalación Directa en Venue",
+            subtitle: "Diseñamos e instalamos espacios corporativos inmersivos con tecnología de impresión profesional y equipo de montaje técnico.",
+            cta_primary: "AGENDAR CONSULTA DE PLANNER",
             cta_secondary: "PORTAFOLIO TÉCNICO",
             hero_image: "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop",
             pilar1_title: "Ingeniería de Precisión",
-            pilar1_desc: "Polímeros de alta densidad y acabados resistentes a rayos UV para el mayor impacto.",
-            pilar2_title: "Velocidad de Producción",
-            pilar2_desc: "Flujos de trabajo propios, diseñados para volumen alto y campañas con tiempos exigentes.",
-            pilar3_title: "Montaje de Guante Blanco",
-            pilar3_desc: "Instalación fluida de principio a fin por nuestro equipo técnico de élite.",
-            alliance_title: "La Alianza Premium",
-            alliance_quote: "Tu marca se construye con base en la excelencia. Aseguramos que tu presencia física refleje fielmente ese estándar.",
+            pilar1_desc: "Polímeros de alta densidad y acabados resistentes a UV para máximo impacto visual.",
+            pilar2_title: "Producción Exprés 24-48h",
+            pilar2_desc: "Flujos de trabajo diseñados para eventos de alto volumen y tiempo sensible.",
+            pilar3_title: "Montaje Blanco-Guante en Venue",
+            pilar3_desc: "Instalación impecable de principio a fin por nuestro equipo técnico.",
+            alliance_title: "La Alianza de Planners",
+            alliance_quote: "Tu reputación se basa en una ejecución impecable. Nos aseguramos de que tus impresiones eleven ese estándar.",
             alliance1_title: "Dirección Creativa Total",
-            alliance1_desc: "Planificación integrada con Yndira Magic para un proceso cohesivo del concepto al montaje final.",
-            alliance2_title: "Fabricación a Medida",
-            alliance2_desc: "Desde vinilos arquitectónicos hasta letreros fabricados a medida. Materializamos todo lo imposible.",
-            form_title: "Consulta Estratégica",
-            tech_specs_title: "Poder Técnico",
-            tech_specs_subtitle: "Precisión milimétrica en cada pulgada cuadrada.",
-            success_stories_title: "Proyectos Insignia",
-            success_stories_subtitle: "Despliegues a gran escala producidos con una estricta filosofía de cero errores.",
+            alliance1_desc: "Planificación integrada para un recorrido fluido desde la prueba digital hasta el desmontaje.",
+            alliance2_title: "Fabricación a la Medida",
+            alliance2_desc: "Desde vinilos arquitectónicos de piso hasta señalética en acrílico, materializamos tu visión.",
+            form_title: "Consulta Estratégica de Planner",
+            tech_specs_title: "Destreza Técnica",
+            tech_specs_subtitle: "Precisión al nivel de micra en cada pulgada cuadrada.",
+            success_stories_title: "Despliegues en Eventos Emblemáticos",
+            success_stories_subtitle: "Instalaciones a gran escala entregadas con filosofía de cero errores.",
             services: [
                 {
-                    title: "Señalización de Eventos",
-                    desc: "Tableros de bienvenida y listas de invitados de grado museo.",
+                    title: "Señalética de Eventos & Wayfinding",
+                    desc: "Tableros de bienvenida grado museo, señales direccionales y seating charts.",
                     icon: "Layout",
                     image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop"
                 },
                 {
-                    title: "Vinilos de Lujo",
-                    desc: "Envolturas para pistas de baile antideslizantes y murales.",
-                    icon: "Gem",
-                    image: "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?q=80&w=2070&auto=format&fit=crop"
-                },
-                {
-                    title: "Activaciones de Marca",
-                    desc: "Branding visual de alto impacto para escalas corporativas.",
-                    icon: "Zap",
-                    image: "https://images.unsplash.com/photo-1551818255-e6e10975bc17?q=80&w=2070&auto=format&fit=crop"
+                    title: "Backdrops de Escenario Sin Arrugas",
+                    desc: "Tela sin arrugas de alta densidad y muros de prensa rígidos.",
+                    icon: "Layers",
+                    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2000"
                 }
             ],
             success_stories: [
                 {
-                    title: "Gala Corporativa 2025",
-                    client: "Tech Fortune 500",
-                    results: "Más de 2000 impresiones personalizadas instaladas en 12 horas.",
-                    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop"
-                },
-                {
-                    title: "Lanzamiento de Producto",
-                    client: "Marca de Autos de Lujo",
-                    results: "Integración perfecta de vinilo de piso a pared.",
-                    img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop"
+                    title: "Activación de Gala Corporativa",
+                    metric: "Coincidencia de Color 100%",
+                    desc: "Más de 400 m² de vinilo de piso personalizado e instalación de backdrops."
                 }
             ]
         },
         products: {
-            badge: "EDUCACIÓN & MATERIALES",
-            title: "La Ciencia de las",
-            title_highlight: "Impresiones Premium",
-            subtitle: "Usamos solo los sustratos de mayor grado para asegurar que tu visión creativa se traduzca con fidelidad absoluta.",
-            categories: {
-                rigid: {
-                    title: "Sustratos Rígidos (Rigid)",
-                    items: [
-                        { name: "Coroplast", desc: "Plástico corrugado ligero y resistente a la intemperie. Perfecto para letreros de jardín, señalización temporal de eventos y guiado en exteriores." },
-                        { name: "Foam Board", desc: "Superficie lisa premium para gráficos de alta resolución. El estándar de la industria para señalización interior y exhibiciones ligeras." },
-                        { name: "Sintra (PVC)", desc: "PVC rígido y profesional. Ideal para exhibiciones a largo plazo, señalización de alto tráfico y elementos de marca permanentes." }
-                    ]
-                },
-                flexible: {
-                    title: "Flexible & Gran Formato",
-                    items: [
-                        { name: "Vinyl Banners", desc: "Malla de alta durabilidad o vinilo sólido. Reforzado para fondos de gran formato y pancartas en mega escenarios al aire libre." },
-                        { name: "Retractable Banners", desc: "Impacto profesional y portátil. Vinilo súper liso que no se curva en cubiertas de aluminio premium para ferias comerciales." },
-                        { name: "Floor Wraps", desc: "Vinilo adhesivo antideslizante. Transforma cualquier superficie en una narrativa de marca u obra de arte con durabilidad grado museo." }
-                    ]
-                },
-                essentials: {
-                    title: "Esenciales de Eventos",
-                    items: [
-                        { name: "Menús de Lujo", desc: "Menús impresos con acabados a medida en cartulina ultra gruesa, acrílico grabado o papeles texturizados de alto gramaje." },
-                        { name: "Tarjetas de Presentación", desc: "La primera impresión. Disponibles en laminado de seda, UV puntual y asombrosas cartulinas arquitectónicas." },
-                        { name: "Bespoke Stationery", desc: "Los entornos cohesivos inician en los detalles. Elaboramos etiquetas, sobres, carteles e invitaciones verdaderamente premium." }
-                    ]
-                }
-            }
+            badge: "SOLUCIONES DE EVENTO DE LUJO",
+            title: "CATÁLOGO DE IMPRESIÓN PREMIUM",
+            title_highlight: "PARA EVENT PLANNERS",
+            subtitle: "Soluciones Curadas para Eventos en Vivo de Alto Impacto",
+            search_placeholder: "Buscar vinilos, backdrops, señalética...",
+            all_categories: "TODOS LOS PRODUCTOS",
+            request_custom: "Solicitar Tamaño y Material Personalizado",
         },
         ai: {
-            sparkle_intro: "Bienvenida. Soy Sparkle ✨. ¿Lista para definir el lenguaje visual de tu próxima producción?",
-            sparkle_typing: "Arquitectando una respuesta...",
-            placeholder: "¿Cómo podemos asistir a tu visión?",
-            error_sparkle: "Una pequeña fluctuación técnica. ¿Podemos intentar de nuevo?",
-            error_interrupt: "La conexión ha variado un poco. Retomemos la magia.",
-            assistant_title: "Sparkle AI",
-            assistant_subtitle: "Diseñadora Consultora"
+            sparkle_intro: "¡Hola! Soy Sparkle, tu Concierge Senior de Producción de Eventos. ¿En qué puedo ayudarte hoy con tus especificaciones o montaje en venue?",
+            assistant_title: "Sparkle AI Concierge",
+            assistant_subtitle: "Asistente 24/7 de Producción de Eventos",
+            placeholder: "Pregunta sobre montaje en venue, sangrado CMYK, entregas 24h...",
+            error_interrupt: "Conexión interrumpida. Inténtalo de nuevo.",
+            error_sparkle: "Sparkle tuvo un parpadeo temporal."
         }
     }
 };

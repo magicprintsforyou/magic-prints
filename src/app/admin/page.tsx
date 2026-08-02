@@ -103,6 +103,35 @@ function AdminPortalContent() {
 
   // Upload State
   const [isUploading, setIsUploading] = useState(false);
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false);
+
+  const handleAIGenerate = async () => {
+    if (!name) return;
+    setIsGeneratingAI(true);
+    try {
+      const response = await fetch('/admin/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ baseName: name })
+      });
+      if (!response.ok) {
+        throw new Error('AI Generation failed');
+      }
+      const data = await response.json();
+      if (data.name) setName(data.name);
+      if (data.category) setCategory(data.category);
+      if (data.description) setDescription(data.description);
+      if (data.themes) setTags(data.themes.join(', '));
+      if (data.materials) setMaterials(data.materials.join(', '));
+      if (data.rushPrice) setRushPrice(data.rushPrice.toString());
+      if (data.variants) setVariants(data.variants);
+    } catch (err) {
+      console.error(err);
+      alert('Error al autocompletar con IA. Inténtalo de nuevo.');
+    } finally {
+      setIsGeneratingAI(false);
+    }
+  };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, setter: (val: string) => void) => {
     const file = e.target.files?.[0];
@@ -368,14 +397,25 @@ function AdminPortalContent() {
                   {/* Product Name */}
                   <div>
                     <label className="block text-xs font-black text-white/40 uppercase tracking-widest mb-3">Product Name</label>
-                    <input
-                      required
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Barbie Dreamhouse Backdrop"
-                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white font-bold focus:outline-none focus:border-[#d90082] transition-colors"
-                    />
+                    <div className="flex gap-3">
+                      <input
+                        required
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="e.g. Barbie Dreamhouse Backdrop"
+                        className="flex-grow bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white font-bold focus:outline-none focus:border-[#d90082] transition-colors"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAIGenerate}
+                        disabled={isGeneratingAI || !name}
+                        className="px-6 bg-gradient-to-r from-[#d90082] to-[#ff2a70] text-white font-black text-[10px] uppercase tracking-widest rounded-xl hover:shadow-[0_0_20px_rgba(217,0,130,0.4)] disabled:opacity-40 disabled:pointer-events-none transition-all flex items-center gap-2 cursor-pointer shrink-0"
+                      >
+                        <Sparkles size={14} className={isGeneratingAI ? 'animate-spin' : ''} />
+                        {isGeneratingAI ? 'Generando...' : 'Auto-Completar con IA'}
+                      </button>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">

@@ -1,4 +1,5 @@
 "use client";
+import AIInspirationMockup from '@/components/AIInspirationMockup';
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
@@ -91,6 +92,7 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="max-w-7xl mx-auto px-6"><AIInspirationMockup /></div>
       {/* The Magic Process */}
       <section className="py-32 bg-[#0A0212] px-6 rounded-t-[50px] md:rounded-t-[100px] rounded-b-[100px] relative overflow-hidden shadow-2xl z-20 border-t border-b border-white/5">
         <div className="absolute top-0 right-0 p-20 opacity-5 text-[200px] select-none pointer-events-none">✨</div>

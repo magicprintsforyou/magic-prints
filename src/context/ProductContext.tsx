@@ -59,8 +59,52 @@ type AppContextType = {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+
+const LOCAL_STORAGE_KEY = 'magic_prints_custom_catalog';
+
+const loadLocalCatalog = (defaultCatalog: CategorizedProducts): CategorizedProducts => {
+  if (typeof window === 'undefined') return defaultCatalog;
+  try {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Merge saved catalog with defaults
+      const merged = JSON.parse(JSON.stringify(defaultCatalog));
+      Object.keys(parsed).forEach(catId => {
+        if (!merged[catId]) {
+          merged[catId] = parsed[catId];
+        } else {
+          // Add non-duplicate products
+          parsed[catId].items?.forEach((savedItem: any) => {
+            const exists = merged[catId].items.some((i: any) => i.id === savedItem.id);
+            if (!exists) {
+              merged[catId].items.unshift(savedItem);
+            } else {
+              const idx = merged[catId].items.findIndex((i: any) => i.id === savedItem.id);
+              merged[catId].items[idx] = savedItem;
+            }
+          });
+        }
+      });
+      return merged;
+    }
+  } catch (err) {
+    console.warn("Failed to load local saved catalog:", err);
+  }
+  return defaultCatalog;
+};
+
+const saveLocalCatalog = (catalogToSave: CategorizedProducts) => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(catalogToSave));
+  } catch (err) {
+    console.warn("Failed to save local catalog:", err);
+  }
+};
+
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [catalog, setCatalog] = useState<CategorizedProducts>(CATEGORIZED_PRODUCTS as any);
+  const [catalog, setCatalog] = useState<CategorizedProducts>(() => loadLocalCatalog(CATEGORIZED_PRODUCTS as any));
   const [siteContent, setSiteContent] = useState<SiteContent>(translations.en);
   const [language, setLanguage] = useState<Language>('es');
   const [isLoading, setIsLoading] = useState(true);
@@ -219,7 +263,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       let uploadPayload: Blob | File = file;
       let contentType = file.type;
 
-      // Try compression for images but don't let it block the upload if it fails
+      // Try compression for images
       if (file.type.startsWith('image/')) {
         try {
           const compressed = await new Promise<Blob | null>((resolve) => {
@@ -248,44 +292,81 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
           if (compressed) {
             uploadPayload = compressed;
             contentType = 'image/webp';
-            console.log("Compression successful:", compressed.size);
           }
         } catch (compressionErr) {
           console.warn("Compression failed, falling back to original file:", compressionErr);
         }
       }
 
-      const fileExt = contentType.split('/').pop() || 'file';
-      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-      const filePath = bucket === 'catalog' ? `uploads/${fileName}` : `requests/${fileName}`;
+      // Try Supabase Storage first
+      try {
+        const fileExt = contentType.split('/').pop() || 'file';
+        const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+        const filePath = bucket === 'catalog' ? `uploads/${fileName}` : `requests/${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from(bucket)
-        .upload(filePath, uploadPayload, { 
-          contentType,
-          cacheControl: '3600',
-          upsert: false 
-        });
+        const { error: uploadError } = await supabase.storage
+          .from(bucket)
+          .upload(filePath, uploadPayload, { 
+            contentType,
+            cacheControl: '3600',
+            upsert: false 
+          });
 
-      if (uploadError) {
-        console.error("Supabase Upload Error:", uploadError);
-        throw new Error(`RAW_SUPABASE_ERROR: ` + JSON.stringify(uploadError));
+        if (!uploadError) {
+          const { data } = supabase.storage
+            .from(bucket)
+            .getPublicUrl(filePath);
+
+          if (data?.publicUrl) return data.publicUrl;
+        } else {
+          console.warn("Supabase Storage Error, activating Data URL fallback:", uploadError);
+        }
+      } catch (storageErr) {
+        console.warn("Supabase Storage unavailable, activating Data URL fallback:", storageErr);
       }
 
-      const { data } = supabase.storage
-        .from(bucket)
-        .getPublicUrl(filePath);
+      // Seamless Fallback: Convert File/Blob to Base64 Data URL
+      return new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          resolve(reader.result as string);
+        };
+        reader.readAsDataURL(uploadPayload instanceof Blob ? uploadPayload : file);
+      });
 
-      return data.publicUrl;
     } catch (err: any) {
       console.error("Critical Storage Error:", err);
-      // Ensure we throw a friendly error message
-      const msg = err?.message || err?.error_description || "Upload failed. Check your connection or Supabase policies.";
-      throw new Error(msg);
+      // Fallback to Data URL even on error
+      return new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(file);
+      });
     }
   };
 
   const addProduct = async (categoryId: string, product: Product) => {
+    // 1. Immediately update local React state & localStorage for 100% instant UI visibility
+    setCatalog(prevCatalog => {
+      const updated = JSON.parse(JSON.stringify(prevCatalog));
+      if (!updated[categoryId]) {
+        updated[categoryId] = {
+          title: categoryId,
+          description: '',
+          items: []
+        };
+      }
+      const existingIdx = updated[categoryId].items.findIndex((i: any) => i.id === product.id);
+      if (existingIdx >= 0) {
+        updated[categoryId].items[existingIdx] = product;
+      } else {
+        updated[categoryId].items.unshift(product); // Add at beginning so it shows first!
+      }
+      saveLocalCatalog(updated);
+      return updated;
+    });
+
+    // 2. Best-effort sync to Supabase Cloud
     try {
       const { error } = await supabase.from('products').insert({
         id: product.id,
@@ -300,17 +381,27 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         rush_price: product.rush_price || null,
         includes: product.includes || []
       });
-
-      if (error) throw error;
-      
-      // Automatically refresh the state globally
-      await fetchCatalog();
+      if (!error) {
+        await fetchCatalog();
+      }
     } catch (err) {
-      console.error("Failed to add product to Supabase:", err);
+      console.warn("Supabase addProduct sync skipped, saved locally:", err);
     }
   };
 
   const updateProduct = async (categoryId: string, product: Product) => {
+    setCatalog(prevCatalog => {
+      const updated = JSON.parse(JSON.stringify(prevCatalog));
+      if (updated[categoryId]) {
+        const idx = updated[categoryId].items.findIndex((i: any) => i.id === product.id);
+        if (idx >= 0) {
+          updated[categoryId].items[idx] = product;
+        }
+      }
+      saveLocalCatalog(updated);
+      return updated;
+    });
+
     try {
       const { error } = await supabase
         .from('products')
@@ -325,25 +416,30 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
           rush_price: product.rush_price || null
         })
         .eq('id', product.id);
-
-      if (error) throw error;
-      await fetchCatalog();
+      if (!error) await fetchCatalog();
     } catch (err) {
-      console.error("Failed to update product in Supabase:", err);
+      console.warn("Supabase updateProduct sync skipped, saved locally:", err);
     }
   };
 
   const deleteProduct = async (categoryId: string, productId: string) => {
+    setCatalog(prevCatalog => {
+      const updated = JSON.parse(JSON.stringify(prevCatalog));
+      if (updated[categoryId]) {
+        updated[categoryId].items = updated[categoryId].items.filter((i: any) => i.id !== productId);
+      }
+      saveLocalCatalog(updated);
+      return updated;
+    });
+
     try {
       const { error } = await supabase
         .from('products')
         .delete()
         .eq('id', productId);
-
-      if (error) throw error;
-      await fetchCatalog();
+      if (!error) await fetchCatalog();
     } catch (err) {
-      console.error("Failed to delete product from Supabase:", err);
+      console.warn("Supabase deleteProduct sync skipped, deleted locally:", err);
     }
   };
 

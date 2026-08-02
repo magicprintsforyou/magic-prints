@@ -8,43 +8,65 @@ const google = createGoogleGenerativeAI({
 
 export async function POST(req: Request) {
   try {
-    const { baseName, price, turnaround, language = 'en' } = await req.json();
+    const { baseName } = await req.json();
 
-    // Prompt del Agente (El "Cerebro Comercial") adaptado para generación de descripciones B2B
+    if (!baseName) {
+      return new Response(JSON.stringify({ error: 'Base name is required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const systemPrompt = `
-      You are the "VIP Copywriter" for Magic Prints, a premium large-scale event printing company (B2B).
-      Your task is to take a basic product name and price, and transform it into a "Museum-Grade" SALES DESCRIPTION.
-      
-      TONE AND PERSONALITY:
-      - Premium, Elite, Bespoke, Subtle urgency.
-      - Address Event Planners and Corporate Organizers.
-      - Never use cheap words like "economical" or "cheap". Use "Investment", "Unmatched Value".
-      - Highlight that we are the "secret print shop behind the scenes" and have super fast times (Express/Rush).
-      
-      OUTPUT FORMAT (Use MarkDown):
-      1. Impactful Title (e.g. 🌟 [Enhanced Name] - Visual Impact Guaranteed)
-      2. Short persuasive opening paragraph (The Planner's pain + Our Magic Solution).
-      3. Bulleted list with "Museum-grade features" (e.g. Anti-glare finish, ultra-resistant seamless vinyl, etc).
-      4. Call to Action (CTA) focused on Event Planners indicating the turnaround time (${turnaround === '24h' ? '24h Rush' : '1-3 days Standard'}).
-      
-      ${language === 'es' ? 'CRITICAL INSTRUCTION: THE ENTIRE OUTPUT MUST BE TRANSLATED TO SPANISH.' : 'The output must be in English.'}
-    `;
+You are the VIP Production Copywriter and Catalog Architect for Magic Prints, a premium B2B event printing company.
+Your task is to take a raw product name entered by the user, and generate a fully completed, high-quality, professional product entry for our catalog.
+
+You must classify the product into one of our 5 exact categories:
+1. 'photoBoards' - Premium Photo Boards, rigid substrates, acrylic signages, welcome signs, PVC Sintra boards, backdrops.
+2. 'props' - Foam Board Props & Cut-outs, life-size figures, character standees, giant prop letters.
+3. 'floorWraps' - Luxury Floor Wraps, dance floor vinyl covers, non-slip floor mats.
+4. 'themedKits' - Signature Event Packages/Suites (combinations of multiple items like backdrops + props).
+5. 'essentials' - Event Essentials, retractable banners, rollups, step and repeats, table covers, seating charts, stationery.
+
+You must output a single, valid JSON object with the following fields:
+{
+  "name": "An enhanced, elegant product name in Spanish (e.g. 'Letrero de Bienvenida de Lujo en Acrílico')",
+  "category": "One of these exact strings: 'photoBoards', 'props', 'floorWraps', 'themedKits', 'essentials'",
+  "description": "A museum-grade sales description in Markdown format. Emphasize fast turnaround, premium materials, and elite B2B quality. Written in Spanish.",
+  "themes": ["array of 3-4 lowercase themes/tags in Spanish suitable for filtering, e.g., 'boda', 'corporativo', 'cumpleaños'"],
+  "materials": ["array of 2-3 material options in Spanish, e.g., 'Acrílico Cristal 3mm', 'Vinilo UV Mate'"],
+  "rushPrice": 45.0,
+  "variants": [
+    { "size": "Recommended Size 1 (e.g. 24 x 36 in)", "price": 120.00 },
+    { "size": "Recommended Size 2 (e.g. 30 x 40 in)", "price": 160.00 },
+    { "size": "Recommended Size 3 (e.g. 36 x 48 in)", "price": 210.00 }
+  ]
+}
+
+CRITICAL RULES:
+- The JSON object must be fully valid.
+- All textual values (name, description, themes, materials, variants/sizes) MUST BE IN SPANISH.
+- Do NOT include any markdown code block formatting (like \`\`\`json ... \`\`\`), backticks, or any text before or after the JSON object. Output ONLY the raw JSON string starting with { and ending with }.
+`;
 
     const result = await generateText({
-      model: google('models/gemini-2.5-flash'), // Gemini 2.5 Flash para generación rápida y económica
+      model: google('models/gemini-2.5-flash'),
       system: systemPrompt,
-      prompt: `Generate the premium B2B description for this new catalog product:
-        - Base Name provided by the CEO: "${baseName}"
-        - Base Investment (Price): $${price}
-        - Production Time: ${turnaround === '24h' ? '24 Hours Elite Rush' : '1-3 Days (Standard)'}`,
+      prompt: `Generate a catalog product structure for: "${baseName}"`,
     });
 
-    return new Response(JSON.stringify({ text: result.text }), {
-      headers: { 'Content-Type': 'application/json' },
+    const rawText = result.text.trim();
+    // Clean up any markdown blocks if the model ignored instructions
+    const jsonString = rawText.replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
+
+    const parsedData = JSON.parse(jsonString);
+
+    return new Response(JSON.stringify(parsedData), {
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error generating AI text:', error);
-    return new Response(JSON.stringify({ error: 'Failed to generate content' }), {
+    return new Response(JSON.stringify({ error: 'Failed to generate content', details: error?.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
