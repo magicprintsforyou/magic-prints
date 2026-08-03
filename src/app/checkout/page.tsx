@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ShoppingBag, ChevronRight, User, Mail, Phone, Calendar, MapPin, Truck, Clock, Tag, Sparkles } from 'lucide-react';
+import { ShoppingBag, ChevronRight, User, Mail, Phone, Calendar, MapPin, Truck, Clock, Tag, Sparkles, Paperclip, X } from 'lucide-react';
 import { useLanguage, useProducts } from '@/context/ProductContext';
 
 export default function CheckoutPage() {
@@ -25,6 +25,19 @@ export default function CheckoutPage() {
   // Promo Code validation
   const [promoApplied, setPromoApplied] = useState(false);
   const [discountValue, setDiscountValue] = useState(0);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      const combined = [...selectedFiles, ...files].slice(0, 10);
+      setSelectedFiles(combined);
+    }
+  };
+
+  const removeFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+  };
 
   const applyPromo = () => {
     if (promoCode.trim().length > 2) {
@@ -53,37 +66,49 @@ export default function CheckoutPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const payload = {
-      name,
-      email,
-      phone,
-      eventDate,
-      deliveryMethod,
-      shippingAddress: (deliveryMethod === 'delivery' || deliveryMethod === 'shipping') ? shippingAddress : 'Store Pickup / Arlington DFW',
-      promoCode: promoApplied ? promoCode : 'None',
-      notes,
-      cart,
-      cartTotal,
-      discountApplied: finalDiscount,
-      finalTotal,
-      needs: cart.map(item => item.product.name), // standard compatibility fallback
-    };
-
     try {
+      // 1. Upload artwork files if any (using base64 embed approach - no server needed)
+      const fileUrls: string[] = [];
+      // For now we embed file names; they are referenced in the email body
+      // (Full file upload requires a storage service configured separately)
+      const fileNames = selectedFiles.map(f => f.name).join(', ');
+
+      // 2. Send order email
+      const payload = {
+        name,
+        email,
+        phone,
+        eventDate,
+        deliveryMethod,
+        shippingAddress: (deliveryMethod === 'delivery' || deliveryMethod === 'shipping') ? shippingAddress : 'Store Pickup / Arlington DFW',
+        promoCode: promoApplied ? promoCode : 'None',
+        notes: notes + (fileNames ? `\n\nArchivos de Arte / Artwork Files: ${fileNames}` : ''),
+        cart,
+        cartTotal,
+        discountApplied: finalDiscount,
+        finalTotal,
+        needs: cart.map(item => item.product.name),
+        fileUrls,
+      };
+
       const res = await fetch('/api/email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
 
-      if (!res.ok) throw new Error('Failed to send order');
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result?.details || result?.error || 'Failed to send order');
+      }
       
       setSuccess(true);
       clearCart();
     } catch (err: any) {
+      console.error('Checkout error:', err);
       alert(language === 'en' 
-        ? 'There was an error sending your order. Please try again.' 
-        : 'Hubo un error al enviar tu orden. Por favor intenta de nuevo.');
+        ? `Error: ${err.message || 'There was an error sending your order. Please try again.'}` 
+        : `Error: ${err.message || 'Hubo un error al enviar tu orden. Por favor intenta de nuevo.'}`);
     } finally {
       setIsSubmitting(false);
     }
