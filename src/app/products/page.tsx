@@ -10,7 +10,7 @@ import ProductCard from '../../components/ProductCard';
 import ProductModal from '../../components/ProductModal';
 
 const ProductsPage = () => {
-  const { catalog } = useProducts();
+  const { catalog, addToCart } = useProducts();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTheme, setActiveTheme] = useState<string | null>(null);
@@ -266,8 +266,7 @@ const ProductsPage = () => {
           isOpen={!!selectedProduct} 
           onClose={() => setSelectedProduct(null)} 
           onAddToCart={(product, config) => {
-             // Later we can integrate this directly into a cart context
-             console.log("Adding to quote: ", product.name, config);
+             addToCart(product, config);
              setSelectedProduct(null);
           }}
         />

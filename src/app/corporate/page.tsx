@@ -12,7 +12,7 @@ import { useLanguage } from "@/context/ProductContext";
 
 export default function CorporatePage() {
   const { t } = useLanguage();
-  const { catalog } = useProducts();
+  const { catalog, addToCart } = useProducts();
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
 
   const iconMap : Record<string, React.ReactNode> = {
@@ -253,7 +253,7 @@ export default function CorporatePage() {
           isOpen={!!selectedProduct} 
           onClose={() => setSelectedProduct(null)} 
           onAddToCart={(product: any, config: any) => {
-             console.log("Corporate B2B Quote requested: ", product.name, config);
+             addToCart(product, config);
              setSelectedProduct(null);
           }}
         />

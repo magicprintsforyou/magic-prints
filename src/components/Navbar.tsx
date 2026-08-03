@@ -3,15 +3,17 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import Logo from './Logo';
-import { useLanguage } from '../context/ProductContext';
+import { useLanguage, useProducts } from '../context/ProductContext';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const [logoClicks, setLogoClicks] = useState(0);
   const pathname = usePathname();
   const router = useRouter();
   const { t, language, setLanguage } = useLanguage();
+  const { cart, removeFromCart, cartTotal } = useProducts();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -105,12 +107,18 @@ const Navbar = () => {
             </button>
 
             <button
-              className={`hidden md:flex relative w-10 h-10 md:w-12 md:h-12 rounded-full items-center justify-center transition-all ${showBackground ? 'bg-[#41137e] text-white shadow-lg' : 'bg-white/10 text-white backdrop-blur-md border border-white/20'
+              onClick={() => setCartOpen(true)}
+              className={`flex relative w-10 h-10 md:w-12 md:h-12 rounded-full items-center justify-center transition-all ${showBackground ? 'bg-[#41137e] text-white shadow-lg' : 'bg-white/10 text-white backdrop-blur-md border border-white/20'
                 } hover:scale-110`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
+              {cart.length > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#cc004e] text-white text-[9px] font-black rounded-full flex items-center justify-center border border-white animate-pulse">
+                  {cart.reduce((total, item) => total + item.quantity, 0)}
+                </span>
+              )}
             </button>
 
             {/* Mobile Menu Toggle */}
@@ -150,6 +158,98 @@ const Navbar = () => {
         </div>
       )}
     </nav>
+
+      {/* Cart Drawer Backdrop */}
+      {cartOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] flex justify-end animate-in fade-in duration-300">
+          {/* Drawer content */}
+          <div className="w-full max-w-md bg-white h-full shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300 text-slate-800">
+            {/* Header */}
+            <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-8 h-8 rounded-full bg-[#d90082]/10 flex items-center justify-center text-[#d90082]">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                </span>
+                <h3 className="text-lg font-black uppercase tracking-tight text-[#41137e]">
+                  {language === 'en' ? 'Your Quote Cart' : 'Tu Carrito de Cotización'}
+                </h3>
+              </div>
+              <button 
+                onClick={() => setCartOpen(false)}
+                className="w-8 h-8 rounded-full bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors font-bold text-sm"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Scrollable list */}
+            <div className="flex-grow overflow-y-auto p-6 space-y-6">
+              {cart.length === 0 ? (
+                <div className="text-center py-20">
+                  <p className="text-slate-400 italic">
+                    {language === 'en' ? 'Your cart is empty' : 'Tu carrito está vacío'}
+                  </p>
+                </div>
+              ) : (
+                cart.map((item, idx) => (
+                  <div key={item.id} className="flex gap-4 border-b border-slate-100 pb-6">
+                    <img src={item.product.image} className="w-20 h-20 rounded-xl object-cover border border-slate-100" alt={item.product.name} />
+                    <div className="flex-grow">
+                      <h4 className="font-bold text-slate-700 leading-tight mb-1">{item.product.name}</h4>
+                      <p className="text-xs text-slate-400 font-medium">
+                        Size: {item.config?.variant?.size || 'Default'} | Mat: {item.config?.material}
+                      </p>
+                      {item.config?.isRushOrder && (
+                        <span className="inline-block mt-1 text-[8px] bg-red-100 text-red-600 font-bold uppercase px-2 py-0.5 rounded">
+                          Rush Order
+                        </span>
+                      )}
+                      <div className="flex items-center justify-between mt-3">
+                        <span className="text-xs text-slate-400 font-medium">
+                          Qty: {item.quantity}
+                        </span>
+                        <div className="flex items-center gap-3">
+                          <span className="font-black text-[#00bff3]">${(item.price * item.quantity).toFixed(2)}</span>
+                          <button 
+                            onClick={() => removeFromCart(item.id)}
+                            className="text-xs text-red-500 font-bold hover:underline"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="p-6 border-t border-slate-100 space-y-4 bg-slate-50/50">
+              <div className="flex items-center justify-between text-lg font-black uppercase tracking-tight text-[#41137e]">
+                <span>Total Estimado:</span>
+                <span>${cartTotal.toFixed(2)}</span>
+              </div>
+              <button
+                disabled={cart.length === 0}
+                onClick={() => {
+                  setCartOpen(false);
+                  router.push('/quote');
+                }}
+                className={`w-full py-4 text-center rounded-full font-black text-xs tracking-widest uppercase transition-all shadow-lg ${
+                  cart.length === 0 
+                  ? 'bg-slate-200 text-slate-400 cursor-not-allowed' 
+                  : 'bg-[#d90082] text-white hover:bg-[#ff2a70] hover:scale-[1.02]'
+                }`}
+              >
+                {language === 'en' ? 'Proceed to Quote' : 'Proceder a Cotización'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

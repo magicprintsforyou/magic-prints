@@ -6,7 +6,7 @@ import { Upload, Sparkles, Calendar, MapPin, Building2, User, Mail, Phone, Arrow
 import { useProducts } from '../context/ProductContext';
 
 export default function BespokeForm() {
-  const { uploadImage } = useProducts();
+  const { uploadImage, cart, cartTotal, clearCart } = useProducts();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -52,6 +52,8 @@ export default function BespokeForm() {
         needs: formData.getAll('needs'),
         notes: formData.get('notes'),
         fileUrls,
+        cart,
+        cartTotal,
       };
 
       const response = await fetch('/api/email', {
@@ -65,6 +67,7 @@ export default function BespokeForm() {
       if (!response.ok) throw new Error('Failed to send email');
       
       setSuccess(true);
+      clearCart();
       setSelectedFiles([]);
     } catch (error: any) {
       console.error('Submission error:', error);
@@ -140,6 +143,42 @@ export default function BespokeForm() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
+                {cart && cart.length > 0 && (
+                  <div className="mb-8 p-6 bg-white/5 border border-white/10 rounded-3xl shadow-xl">
+                    <h3 className="text-lg font-black text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+                      <span className="w-8 h-8 rounded-full bg-[#d90082]/10 flex items-center justify-center text-[#d90082]">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                      </span>
+                      Resumen de Cotización / Configured Products
+                    </h3>
+                    <div className="space-y-3">
+                      {cart.map(item => (
+                        <div key={item.id} className="flex gap-4 items-center justify-between border-b border-white/5 pb-3 text-xs">
+                          <div className="flex items-center gap-3">
+                            <img src={item.product.image} className="w-10 h-10 rounded-lg object-cover border border-white/5" alt={item.product.name} />
+                            <div>
+                              <h4 className="font-bold text-white">{item.product.name}</h4>
+                              <p className="text-white/40 mt-0.5">
+                                Size: {item.config?.variant?.size || 'Default'} | Mat: {item.config?.material}
+                                {item.config?.isRushOrder && " | Rush"}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <span className="text-white/50">Qty: {item.quantity}</span>
+                            <span className="font-black text-[#00bff3] ml-3">${(item.price * item.quantity).toFixed(2)}</span>
+                          </div>
+                        </div>
+                      ))}
+                      <div className="flex justify-between items-center pt-3 text-sm font-black uppercase text-[#d90082]">
+                        <span>Total Estimado / Estimated Total:</span>
+                        <span>${cartTotal.toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <h2 className="text-2xl font-black text-white mb-2">1. Detalles del Cliente</h2>
                 
                 {/* Row 1: Contact Info */}

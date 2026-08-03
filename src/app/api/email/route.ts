@@ -16,7 +16,39 @@ export async function POST(req: Request) {
 
     const resend = new Resend(apiKey);
     const body = await req.json();
-    const { name, email, phone, company, eventDate, location, budget, promoCode, needs, notes, fileUrls } = body;
+    const { name, email, phone, company, eventDate, location, budget, promoCode, needs, notes, fileUrls, cart, cartTotal } = body;
+
+    let cartHtml = '';
+    if (Array.isArray(cart) && cart.length > 0) {
+      cartHtml = `
+        <h3 style="color: #41137e; border-bottom: 2px solid #41137e; padding-bottom: 5px; margin-top: 25px;">Detalles de la Orden / Cart Items</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px;">
+          <thead>
+            <tr style="background-color: #f3f4f6; text-align: left; font-size: 12px; font-weight: bold;">
+              <th style="padding: 10px; border: 1px solid #e5e7eb;">Producto</th>
+              <th style="padding: 10px; border: 1px solid #e5e7eb;">Configuración</th>
+              <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">Cantidad</th>
+              <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${cart.map((item: any) => `
+              <tr style="font-size: 13px;">
+                <td style="padding: 10px; border: 1px solid #e5e7eb; font-weight: bold;">${item.product.name}</td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb; font-size: 11px; color: #4b5563;">
+                  Size: ${item.config?.variant?.size || 'Default'}<br>
+                  Material: ${item.config?.material || 'N/A'}<br>
+                  Rush: ${item.config?.isRushOrder ? 'Sí / Yes' : 'No'}
+                </td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">${item.quantity}</td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right; font-weight: bold;">$${(item.price * item.quantity).toFixed(2)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        <p style="font-size: 18px; font-weight: bold; text-align: right; color: #cc004e;">Total Estimado: $${cartTotal?.toFixed(2)}</p>
+      `;
+    }
 
     if (!email || !name) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -45,6 +77,7 @@ export async function POST(req: Request) {
             <p><strong>Código de Vendedor / Promo Code:</strong> ${promoCode || 'Ninguno / None'}</p>
             <p><strong>Needs:</strong> ${Array.isArray(needs) ? needs.join(', ') : needs}</p>
             <p><strong>Notes:</strong> ${notes || 'No extra notes'}</p>
+            ${cartHtml}
             
             ${fileUrls && fileUrls.length > 0 ? `
               <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; border: 1px solid #ddd;">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { supabase } from '../lib/supabase';
 import { translations, Language } from '../constants/translations';
 import { CATEGORIZED_PRODUCTS } from '../constants/products';
@@ -22,6 +22,19 @@ export type Product = {
   rush_price?: number;
   price?: number;
   includes?: string[];
+};
+
+export type CartItem = {
+  id: string;
+  product: Product;
+  config: {
+    variant?: ProductVariant;
+    material: string;
+    isRushOrder: boolean;
+    fileUploaded?: boolean;
+  };
+  quantity: number;
+  price: number;
 };
 
 export type CategoryData = {
@@ -55,6 +68,13 @@ type AppContextType = {
   updateContentValue: (section: string, key: string, en: string, es: string) => Promise<void>;
   uploadImage: (file: File, bucket?: string) => Promise<string>;
   isContentConfigured: boolean;
+
+  // Cart
+  cart: CartItem[];
+  addToCart: (product: Product, config: any) => void;
+  removeFromCart: (itemId: string) => void;
+  clearCart: () => void;
+  cartTotal: number;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -104,6 +124,56 @@ const saveLocalCatalog = (catalogToSave: CategorizedProducts) => {
 };
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const saved = localStorage.getItem('magic_prints_cart');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('magic_prints_cart', JSON.stringify(cart));
+    }
+  }, [cart]);
+
+  const addToCart = useCallback((product: Product, config: any) => {
+    setCart(prev => {
+      const itemId = `${product.id}-${config.variant?.size || 'default'}-${config.material}-${config.isRushOrder ? 'rush' : 'standard'}`;
+      const existing = prev.find(item => item.id === itemId);
+      
+      const basePrice = config.variant?.price || product.price || 0;
+      const rushSurcharge = config.isRushOrder ? (product.rush_price || 40) : 0;
+      const unitPrice = basePrice + rushSurcharge;
+
+      if (existing) {
+        return prev.map(item => item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item);
+      }
+      
+      return [...prev, {
+        id: itemId,
+        product,
+        config,
+        quantity: 1,
+        price: unitPrice
+      }];
+    });
+  }, []);
+
+  const removeFromCart = useCallback((itemId: string) => {
+    setCart(prev => prev.filter(item => item.id !== itemId));
+  }, []);
+
+  const clearCart = useCallback(() => {
+    setCart([]);
+  }, []);
+
+  const cartTotal = useMemo(() => {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  }, [cart]);
   const [catalog, setCatalog] = useState<CategorizedProducts>(() => loadLocalCatalog(CATEGORIZED_PRODUCTS as any));
   const [siteContent, setSiteContent] = useState<SiteContent>(translations.en);
   const [language, setLanguage] = useState<Language>('es');
@@ -519,7 +589,12 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       updateContentValue,
       uploadImage,
       isLoading,
-      isContentConfigured
+      isContentConfigured,
+      cart,
+      addToCart,
+      removeFromCart,
+      clearCart,
+      cartTotal
     }}>
       {children}
     </AppContext.Provider>
