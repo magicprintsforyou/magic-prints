@@ -42,7 +42,9 @@ const Navbar = () => {
     { label: t?.nav?.home || 'HOME', href: '/' },
     { label: t?.nav?.eventShop || 'SHOP BY EVENT', href: '/events' },
     { label: t?.nav?.productShop || 'SHOP BY PRODUCT', href: '/products' },
-    { label: t?.nav?.business || 'BUSINESS PRINTING', href: '/business' },
+    { label: t?.nav?.corporate || 'CORPORATE', href: '/corporate' },
+    { label: t?.nav?.history || 'OUR STORY', href: '/our-story' },
+    { label: t?.nav?.blog || 'BLOG', href: '/blog' },
     { label: t?.nav?.quote || 'CUSTOM QUOTE', href: '/quote' },
   ];
 
