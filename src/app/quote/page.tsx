@@ -15,7 +15,13 @@ export default function QuotePage() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setSelectedFiles(Array.from(e.target.files));
+      const files = Array.from(e.target.files);
+      if (files.length > 10) {
+        alert("Puedes subir un máximo de 10 archivos. / You can upload a maximum of 10 files.");
+        setSelectedFiles(files.slice(0, 10));
+      } else {
+        setSelectedFiles(files);
+      }
     }
   };
 
@@ -217,7 +223,7 @@ export default function QuotePage() {
                       {selectedFiles.length > 0 ? `${selectedFiles.length} files selected` : 'Tap to upload or drag files here'}
                     </p>
                     <p className="text-slate-500 text-sm font-light pointer-events-none">
-                      Inspiration photos, final art (PDF, AI, PNG). Max 50MB.
+                      Inspiration photos, final art (PDF, AI, PNG). Max 10 files / 50MB.
                     </p>
                   </label>
                   

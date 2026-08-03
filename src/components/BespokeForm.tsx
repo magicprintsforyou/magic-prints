@@ -14,7 +14,13 @@ export default function BespokeForm() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setSelectedFiles(Array.from(e.target.files));
+      const files = Array.from(e.target.files);
+      if (files.length > 10) {
+        alert("Puedes subir un máximo de 10 archivos. / You can upload a maximum of 10 files.");
+        setSelectedFiles(files.slice(0, 10));
+      } else {
+        setSelectedFiles(files);
+      }
     }
   };
 
@@ -212,7 +218,7 @@ export default function BespokeForm() {
                     <p className="text-white font-medium mb-1">
                       {selectedFiles.length > 0 ? `${selectedFiles.length} archivos seleccionados` : 'Haz clic o arrastra tus archivos aquí'}
                     </p>
-                    <p className="text-white/40 text-sm font-light">Fotos de inspiración, artes finales (PDF, AI, PNG). Máx 50MB.</p>
+                    <p className="text-white/40 text-sm font-light">Fotos de inspiración, artes finales. Máx 10 archivos / 50MB.</p>
                   </div>
 
                   {selectedFiles.length > 0 && (
