@@ -236,7 +236,7 @@ const Navbar = () => {
                 disabled={cart.length === 0}
                 onClick={() => {
                   setCartOpen(false);
-                  router.push('/quote');
+                  router.push('/checkout');
                 }}
                 className={`w-full py-4 text-center rounded-full font-black text-xs tracking-widest uppercase transition-all shadow-lg ${
                   cart.length === 0 

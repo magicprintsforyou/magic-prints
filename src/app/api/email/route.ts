@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
     const resend = new Resend(apiKey);
     const body = await req.json();
-    const { name, email, phone, company, eventDate, location, budget, promoCode, needs, notes, fileUrls, cart, cartTotal } = body;
+    const { name, email, phone, company, eventDate, location, budget, promoCode, needs, notes, fileUrls, cart, cartTotal, deliveryMethod, shippingAddress, discountApplied, finalTotal } = body;
 
     let cartHtml = '';
     if (Array.isArray(cart) && cart.length > 0) {
@@ -46,7 +46,17 @@ export async function POST(req: Request) {
             `).join('')}
           </tbody>
         </table>
-        <p style="font-size: 18px; font-weight: bold; text-align: right; color: #cc004e;">Total Estimado: $${cartTotal?.toFixed(2)}</p>
+        
+        <div style="text-align: right; font-size: 14px; color: #374151; line-height: 1.6;">
+          <p><strong>Subtotal:</strong> $${cartTotal?.toFixed(2)}</p>
+          ${discountApplied > 0 ? `<p style="color: #10b981;"><strong>Descuento (5%):</strong> -$${discountApplied?.toFixed(2)}</p>` : ''}
+          <p style="font-size: 18px; font-weight: bold; color: #cc004e; margin-top: 10px;">Total Estimado: $${(finalTotal || cartTotal)?.toFixed(2)}</p>
+        </div>
+
+        <div style="margin-top: 25px; padding: 15px; background: #f9fafb; border-radius: 10px; border: 1px solid #e5e7eb;">
+          <p><strong>Método de Entrega / Fulfillment:</strong> ${deliveryMethod || 'Pickup / Custom'}</p>
+          <p><strong>Dirección de Entrega / Address:</strong> ${shippingAddress || 'N/A'}</p>
+        </div>
       `;
     }
 
