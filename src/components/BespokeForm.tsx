@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Upload, Sparkles, Calendar, MapPin, Building2, User, Mail, Phone, ArrowRight } from 'lucide-react';
+import { Upload, Sparkles, Calendar, MapPin, Building2, User, Mail, Phone, ArrowRight, Tag } from 'lucide-react';
 
 import { useProducts } from '../context/ProductContext';
 
@@ -48,6 +48,7 @@ export default function BespokeForm() {
         eventDate: formData.get('eventDate'),
         location: formData.get('location'),
         budget: formData.get('budget'),
+        promoCode: formData.get('promoCode'),
         needs: formData.getAll('needs'),
         notes: formData.get('notes'),
         fileUrls,
@@ -182,6 +183,10 @@ export default function BespokeForm() {
                       <option value="medio_5000_10000">$5,000 - $10,000 USD</option>
                       <option value="alto_10000_mas">Más de $10,000 USD</option>
                     </select>
+                  </div>
+                  <div className="space-y-2 col-span-1 md:col-span-2">
+                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Tag className="w-3.5 h-3.5" /> Código de Vendedor o Planner (Opcional - 5% Descuento)</label>
+                    <input name="promoCode" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Ej. SARAH5" />
                   </div>
                 </div>
 

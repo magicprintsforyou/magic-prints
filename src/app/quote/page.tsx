@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Upload, Sparkles, Calendar, MapPin, Building2, User, Mail, Phone, ArrowRight } from 'lucide-react';
+import { Upload, Sparkles, Calendar, MapPin, Building2, User, Mail, Phone, ArrowRight, Tag } from 'lucide-react';
 import Image from 'next/image';
 
 import { useProducts } from '../../context/ProductContext';
@@ -50,6 +50,7 @@ export default function QuotePage() {
         eventDate: formData.get('eventDate'),
         location: formData.get('location'),
         budget: formData.get('budget'),
+        promoCode: formData.get('promoCode'),
         needs: formData.getAll('needs'),
         notes: formData.get('notes'),
         fileUrls, // Send the uploaded links
@@ -184,6 +185,10 @@ export default function QuotePage() {
                     <option value="medio_5000_10000">$5,000 - $10,000 USD</option>
                     <option value="alto_10000_mas">Más de $10,000 USD</option>
                   </select>
+                </div>
+                <div className="space-y-2 col-span-1 md:col-span-2">
+                  <label className="text-sm font-bold text-slate-700 flex items-center gap-2"><Tag className="w-3.5 h-3.5" /> Vendor or Planner Code (Optional - 5% Discount)</label>
+                  <input name="promoCode" type="text" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="e.g. SARAH5" />
                 </div>
               </div>
 
