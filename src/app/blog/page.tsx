@@ -54,12 +54,7 @@ export default function BlogPage() {
               : 'Mantente al día con las últimas tendencias de producción de eventos, consejos de impresión y muestras de diseño.'}
           </p>
           
-          {/* AI Banner */}
-          <div className="mt-8 p-4 bg-white/5 border border-white/10 rounded-2xl max-w-md mx-auto text-xs text-gray-400 italic">
-            {language === 'en'
-              ? "✨ Our AI Event Planner is preparing automatic weekly trend posts. Stay tuned!"
-              : "✨ Nuestra Inteligencia Artificial está preparando artículos de tendencias semanales de forma automática. ¡Muy pronto!"}
-          </div>
+          
         </div>
 
         {/* Posts Grid */}
