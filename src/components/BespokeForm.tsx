@@ -41,6 +41,7 @@ export default function BespokeForm() {
         phone: formData.get('phone'),
         eventDate: formData.get('eventDate'),
         location: formData.get('location'),
+        budget: formData.get('budget'),
         needs: formData.getAll('needs'),
         notes: formData.get('notes'),
         fileUrls,
@@ -96,6 +97,16 @@ export default function BespokeForm() {
                <div>
                  <h3 className="text-xl font-bold text-white mb-2">Tiempos Express (24-48h)</h3>
                  <p className="text-white/60 font-light leading-relaxed">Sabemos que en la industria de eventos los tiempos son críticos. Contamos con turnos de producción ininterrumpida para no fallarte nunca.</p>
+               </div>
+            </div>
+
+            <div className="bg-white/5 rounded-3xl p-8 shadow-sm border border-white/10 flex gap-6 items-start hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)] transition-shadow">
+               <div className="w-16 h-16 rounded-2xl bg-[#f9a826]/10 flex items-center justify-center shrink-0">
+                <Sparkles className="text-[#f9a826]" size={32} />
+               </div>
+               <div>
+                 <h3 className="text-xl font-bold text-white mb-2">Cumpleaños y Baby Showers Grandes</h3>
+                 <p className="text-white/60 font-light leading-relaxed">También producimos decoraciones completas para eventos sociales premium. Nuestros paquetes de producción completa para cumpleaños y baby showers a gran escala comienzan desde <strong>$2,500 USD</strong>.</p>
                </div>
             </div>
           </div>
@@ -155,6 +166,16 @@ export default function BespokeForm() {
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-white/80 flex items-center gap-2"><MapPin size={14}/> Zip Code / Venue</label>
                     <input required name="location" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Para envío o pickup" />
+                  </div>
+                  <div className="space-y-2 col-span-1 md:col-span-2">
+                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Sparkles size={14}/> Presupuesto Estimado / Budget</label>
+                    <select required name="budget" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all cursor-pointer">
+                      <option value="" disabled selected>Selecciona tu rango de presupuesto...</option>
+                      <option value="bajo_2500">Menos de $2,500 USD</option>
+                      <option value="social_2500_5000">$2,500 - $5,000 USD (Recomendado para Cumpleaños & Baby Showers grandes)</option>
+                      <option value="medio_5000_10000">$5,000 - $10,000 USD</option>
+                      <option value="alto_10000_mas">Más de $10,000 USD</option>
+                    </select>
                   </div>
                 </div>
 

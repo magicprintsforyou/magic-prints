@@ -36,19 +36,18 @@ export default function QuotePage() {
         fileUrls.push(url);
       }
 
-      const data = {
+            const data = {
         name: formData.get('name'),
         company: formData.get('company'),
         email: formData.get('email'),
         phone: formData.get('phone'),
         eventDate: formData.get('eventDate'),
         location: formData.get('location'),
+        budget: formData.get('budget'),
         needs: formData.getAll('needs'),
         notes: formData.get('notes'),
         fileUrls, // Send the uploaded links
-      };
-
-      // 2. Send Email
+      };// 2. Send Email
       const response = await fetch('/api/email', {
         method: 'POST',
         headers: {
@@ -92,9 +91,17 @@ export default function QuotePage() {
           <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.3em] text-[#00f2fe] drop-shadow-[0_0_10px_rgba(0,242,254,0.3)]">
             <Sparkles size={20} /> {t?.quote?.express || 'Record Turnaround (24-48h)'}
           </div>
-        </div>
-
-        {/* Right Side: Dynamic Form */}
+        
+          <div className="mt-8 p-6 bg-white/5 border border-white/10 rounded-2xl">
+            <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+              <Sparkles className="text-[#f9a826] animate-pulse" size={18} /> 
+              Cumpleaños y Baby Showers Grandes
+            </h4>
+            <p className="text-white/60 text-sm font-light leading-relaxed">
+              También producimos decoraciones completas para eventos sociales premium. Nuestros paquetes de producción completa para cumpleaños y baby showers a gran escala comienzan desde <strong>$2,500 USD</strong>.
+            </p>
+          </div>
+        </div>{/* Right Side: Dynamic Form */}
         <div className="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_20px_60px_rgba(15,23,42,0.08)] border border-slate-100 relative overflow-hidden">
 
           {/* Decorative Glow */}
@@ -161,6 +168,16 @@ export default function QuotePage() {
                     <MapPin size={14} /> Zip Code / Event Location
                   </label>
                   <input required name="location" type="text" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="For shipping or installation" />
+                </div>
+                <div className="space-y-2 col-span-1 md:col-span-2">
+                  <label className="text-sm font-bold text-slate-700 flex items-center gap-2"><Sparkles size={14}/> Presupuesto Estimado / Budget</label>
+                  <select required name="budget" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all cursor-pointer">
+                    <option value="" disabled selected>Selecciona tu rango de presupuesto...</option>
+                    <option value="bajo_2500">Menos de $2,500 USD</option>
+                    <option value="social_2500_5000">$2,500 - $5,000 USD (Recomendado para Cumpleaños & Baby Showers grandes)</option>
+                    <option value="medio_5000_10000">$5,000 - $10,000 USD</option>
+                    <option value="alto_10000_mas">Más de $10,000 USD</option>
+                  </select>
                 </div>
               </div>
 

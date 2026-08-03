@@ -89,18 +89,18 @@ export const translations = {
         },
         corporate: {
             badge: "Enterprise & Event Productions",
-            title: "High-Impact",
-            title_highlight: "Brand Environments & On-Site Setup",
-            subtitle: "We architect and install immersive corporate spaces with professional-grade print technology and white-glove setup crew.",
+            title: "Full Venue Decor",
+            title_highlight: "Corporate Events & Prints",
+            subtitle: "We design, print, and install complete brand experiences for corporate events. From custom signage, flyers, bar/table branding, and giant photo boards, to professional balloon decor and partner vendor management.",
             cta_primary: "BOOK PLANNER CONSULTATION",
             cta_secondary: "TECHNICAL PORTFOLIO",
             hero_image: "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop",
             pilar1_title: "Precision Engineering",
-            pilar1_desc: "High-density polymers and UV-resistant finishes for maximum visual impact.",
+            pilar1_desc: "High-density polymers, custom-designed flyers, and custom bar/table labels.",
             pilar2_title: "24-48h Rush Production",
             pilar2_desc: "Proprietary workflows designed for high-volume, time-sensitive event launches.",
             pilar3_title: "White-Glove On-Site Setup",
-            pilar3_desc: "Seamless end-to-end venue installation by our elite technical crew.",
+            pilar3_desc: "Seamless end-to-end venue installation including balloon decor by our technical crew.",
             alliance_title: "The Planner Alliance",
             alliance_quote: "Your reputation is built on flawless execution. We ensure your physical prints elevate that standard.",
             alliance1_title: "Total Creative Direction",
@@ -114,16 +114,22 @@ export const translations = {
             success_stories_subtitle: "Large-scale event deployments delivered with a zero-error philosophy.",
             services: [
                 {
-                    title: "Event Signage & Wayfinding",
-                    desc: "Museum-grade welcome boards, directional signs, and seating charts.",
+                    title: "Bespoke Signs & Flyers",
+                    desc: "Museum-grade welcome boards, directional wayfinding, custom-made flyers, and brand collateral.",
                     icon: "Layout",
                     image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop"
                 },
                 {
-                    title: "Seamless Stage Backdrops",
-                    desc: "Wrinkle-free high-density fabric and rigid press walls.",
+                    title: "Giant Photo Boards & Backdrops",
+                    desc: "Wrinkle-free high-density fabric, rigid press walls, and giant branded company photo boards.",
                     icon: "Layers",
                     image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2000"
+                },
+                {
+                    title: "Custom Bars & Balloon Decor",
+                    desc: "Custom labels to personalize bars and tables, balloon design, and coordination with other premium vendors.",
+                    icon: "Zap",
+                    image: "https://images.unsplash.com/photo-1530103043960-ef38714abb15?q=80&w=2069"
                 }
             ],
             success_stories: [
@@ -240,18 +246,18 @@ export const translations = {
         },
         corporate: {
             badge: "Empresas y Producciones de Eventos",
-            title: "Ambientes de Marca",
-            title_highlight: "e Instalación Directa en Venue",
-            subtitle: "Diseñamos e instalamos espacios corporativos inmersivos con tecnología de impresión profesional y equipo de montaje técnico.",
+            title: "Decoración Completa",
+            title_highlight: "de Eventos y Branding",
+            subtitle: "Diseñamos, imprimimos e instalamos la decoración y branding completo de eventos corporativos. Desde señalética personalizada, flyers, etiquetas para personalizar barras y mesas, y photo boards gigantes de la empresa, hasta decoración con globos y coordinación de otros proveedores.",
             cta_primary: "AGENDAR CONSULTA DE PLANNER",
             cta_secondary: "PORTAFOLIO TÉCNICO",
             hero_image: "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop",
             pilar1_title: "Ingeniería de Precisión",
-            pilar1_desc: "Polímeros de alta densidad y acabados resistentes a UV para máximo impacto visual.",
+            pilar1_desc: "Polímeros de alta densidad, flyers de alta gama y etiquetas personalizadas para barras o mesas.",
             pilar2_title: "Producción Exprés 24-48h",
             pilar2_desc: "Flujos de trabajo diseñados para eventos de alto volumen y tiempo sensible.",
             pilar3_title: "Montaje Blanco-Guante en Venue",
-            pilar3_desc: "Instalación impecable de principio a fin por nuestro equipo técnico.",
+            pilar3_desc: "Instalación impecable de principio a fin, incluyendo globos, por nuestro equipo técnico.",
             alliance_title: "La Alianza de Planners",
             alliance_quote: "Tu reputación se basa en una ejecución impecable. Nos aseguramos de que tus impresiones eleven ese estándar.",
             alliance1_title: "Dirección Creativa Total",
@@ -265,16 +271,22 @@ export const translations = {
             success_stories_subtitle: "Instalaciones a gran escala entregadas con filosofía de cero errores.",
             services: [
                 {
-                    title: "Señalética de Eventos & Wayfinding",
-                    desc: "Tableros de bienvenida grado museo, señales direccionales y seating charts.",
+                    title: "Señalética Premium y Flyers",
+                    desc: "Tableros de bienvenida grado museo, señales direccionales, flyers de alta gama y papelería corporativa.",
                     icon: "Layout",
                     image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop"
                 },
                 {
-                    title: "Backdrops de Escenario Sin Arrugas",
-                    desc: "Tela sin arrugas de alta densidad y muros de prensa rígidos.",
+                    title: "Photo Boards Gigantes y Backdrops",
+                    desc: "Paneles fotográficos gigantes de la empresa, muros de prensa rígidos de grado museo y telas sin arrugas.",
                     icon: "Layers",
                     image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2000"
+                },
+                {
+                    title: "Decoración Completa y Globos",
+                    desc: "Etiquetas personalizadas para barras o mesas, decoración con globos a medida y alianzas/coordinación con otros proveedores.",
+                    icon: "Zap",
+                    image: "https://images.unsplash.com/photo-1530103043960-ef38714abb15?q=80&w=2069"
                 }
             ],
             success_stories: [
@@ -285,6 +297,7 @@ export const translations = {
                 }
             ]
         },
+        
         products: {
             badge: "SOLUCIONES DE EVENTO DE LUJO",
             title: "CATÁLOGO DE IMPRESIÓN PREMIUM",

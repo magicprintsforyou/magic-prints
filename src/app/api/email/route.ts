@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
     const resend = new Resend(apiKey);
     const body = await req.json();
-    const { name, email, phone, company, eventDate, location, needs, notes, fileUrls } = body;
+    const { name, email, phone, company, eventDate, location, budget, needs, notes, fileUrls } = body;
 
     if (!email || !name) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -41,6 +41,7 @@ export async function POST(req: Request) {
             <hr />
             <p style="background: #fff4f9; padding: 10px; border-radius: 5px;"><strong>Event Date:</strong> ${eventDate}</p>
             <p><strong>Location:</strong> ${location}</p>
+            <p><strong>Presupuesto / Budget:</strong> ${budget || 'N/A'}</p>
             <p><strong>Needs:</strong> ${Array.isArray(needs) ? needs.join(', ') : needs}</p>
             <p><strong>Notes:</strong> ${notes || 'No extra notes'}</p>
             
