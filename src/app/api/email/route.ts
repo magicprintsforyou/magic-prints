@@ -71,7 +71,7 @@ export async function POST(req: Request) {
     try {
       const adminResponse = await resend.emails.send({
         from: 'Magic Prints <onboarding@resend.dev>',
-        to: process.env.ADMIN_EMAIL || 'magicprintsforyou@gmail.com',
+        to: process.env.ADMIN_EMAIL || 'info@magicprintsforyou.com',
         subject: `✨ New Quote Request: ${name}`,
         html: `
           <div style="font-family: sans-serif; padding: 20px; color: #333;">
