@@ -10,12 +10,22 @@ export const translations = {
         },
         nav: {
             home: 'HOME',
+            eventShop: 'SHOP BY EVENT',
+            productShop: 'SHOP BY PRODUCT',
+            business: 'BUSINESS PRINTING',
+            quote: 'CUSTOM QUOTE',
             history: 'OUR STORY',
             products: 'CATALOG',
             corporate: 'CORPORATE',
-            quote: 'GET A QUOTE',
             inspire: 'AI VENUE MOCKUP',
             admin: 'ADMIN PORTAL',
+        },
+        announcement: "Custom printing in DFW | Pickup in 3-4 business days | Local delivery | UPS shipping | Fast Print available",
+        homePaths: {
+            eventTitle: "Shop by Event",
+            eventDesc: "Planning an event? Choose your occasion, theme, and coordinate matching items.",
+            productTitle: "Shop by Product",
+            productDesc: "Know exactly what you need? Browse flyers, shirts, cups, boxes, banners, and decals."
         },
         hero: {
             welcome: 'By Event Planners, For Event Planners',
@@ -167,12 +177,22 @@ export const translations = {
         },
         nav: {
             home: 'INICIO',
+            eventShop: 'COMPRA POR EVENTO',
+            productShop: 'COMPRA POR PRODUCTO',
+            business: 'IMPRESIÓN COMERCIAL',
+            quote: 'COTIZACIÓN VIP',
             history: 'NUESTRA HISTORIA',
             products: 'CATÁLOGO',
             corporate: 'CORPORATIVO',
-            quote: 'COTIZAR',
             inspire: 'MOCKUP IA VENUE',
             admin: 'PORTAL ADMIN',
+        },
+        announcement: "Impresiones personalizadas en DFW | Pickup en 3-4 días hábiles | Delivery local | Envío UPS | Fast Print disponible",
+        homePaths: {
+            eventTitle: "Comprar por Evento",
+            eventDesc: "¿Estás organizando un evento? Elige la ocasión, temática y coordina artículos combinados.",
+            productTitle: "Comprar por Producto",
+            productDesc: "¿Ya sabes qué necesitas? Explora flyers, camisas, vasos, cajas, banners y stickers."
         },
         hero: {
             welcome: 'De Event Planners para Event Planners',

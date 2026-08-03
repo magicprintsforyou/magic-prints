@@ -40,15 +40,20 @@ const Navbar = () => {
 
   const navLinks = [
     { label: t?.nav?.home || 'HOME', href: '/' },
-    { label: t?.nav?.history || 'OUR STORY', href: '/our-story' },
-    { label: t?.nav?.products || 'CATALOG', href: '/products' },
-    { label: t?.nav?.corporate || 'CORPORATE', href: '/corporate' },
-    { label: t?.nav?.quote || 'GET A QUOTE', href: '/quote' },
+    { label: t?.nav?.eventShop || 'SHOP BY EVENT', href: '/events' },
+    { label: t?.nav?.productShop || 'SHOP BY PRODUCT', href: '/products' },
+    { label: t?.nav?.business || 'BUSINESS PRINTING', href: '/business' },
+    { label: t?.nav?.quote || 'CUSTOM QUOTE', href: '/quote' },
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[110] transition-all duration-500 ${showBackground ? 'py-2 glass-effect shadow-xl border-b border-purple-50' : 'py-4 bg-transparent'
-      }`}>
+    <div className="fixed top-0 left-0 right-0 z-[110]">
+      {/* Announcement Bar */}
+      <div className="bg-gradient-to-r from-[#cc004e] via-[#d90082] to-[#41137e] text-white text-[9px] md:text-[11px] font-black tracking-[0.2em] text-center py-2.5 px-4 shadow-md uppercase">
+        {t?.announcement || "Custom printing in DFW | Pickup in 3-4 business days | Local delivery | UPS shipping | Fast Print available"}
+      </div>
+      <nav className={`transition-all duration-500 ${showBackground ? 'py-2 glass-effect shadow-xl border-b border-purple-50' : 'py-4 bg-transparent'
+        }`}>
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex justify-between items-center gap-4">
           {/* Logo Container */}
@@ -143,6 +148,7 @@ const Navbar = () => {
         </div>
       )}
     </nav>
+    </div>
   );
 };
 
