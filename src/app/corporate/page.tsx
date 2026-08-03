@@ -63,9 +63,9 @@ export default function CorporatePage() {
             <Link href="#enquire" className="group bg-[#cc004e] text-white px-10 py-5 rounded-full font-black tracking-widest uppercase text-sm hover:scale-105 hover:bg-[#ff2a70] transition-all flex items-center justify-center gap-3 shadow-[0_10px_40px_rgba(204,0,78,0.4)]">
               {t?.corporate?.cta_primary || 'Enquire Now'} <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>
-            <button className="bg-white/5 text-white border border-white/10 px-10 py-5 rounded-full font-black tracking-widest uppercase text-sm hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3 backdrop-blur-md">
-              {t?.corporate?.cta_secondary || 'Our Work'} <ChevronRight size={18} />
-            </button>
+            <Link href="/products" className="bg-white/5 text-white border border-white/10 px-10 py-5 rounded-full font-black tracking-widest uppercase text-sm hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3 backdrop-blur-md">
+              {t?.corporate?.cta_secondary || 'Explore Catalog'} <ChevronRight size={18} />
+            </Link>
           </div>
         </div>
       </section>
