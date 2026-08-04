@@ -115,19 +115,47 @@ export async function POST(req: Request) {
     }
 
     // 2. Send Confirmation Email to Client - BEST EFFORT
-    // This often fails in Resend Trial if the domain is not verified.
+    // NOTE: This only works once domain is verified in Resend.
+    // Until then it only sends if client email = account owner email.
     try {
       const clientResponse = await resend.emails.send({
         from: 'Magic Prints <onboarding@resend.dev>',
         to: email,
-        subject: 'Magic is on its way! ✨',
+        subject: '\u2728 Magic Prints \u2014 Recibimos tu orden / We received your order',
         html: `
-          <div style="font-family: sans-serif; padding: 40px; text-align: center; background-color: #0f172a; color: white; border-radius: 20px;">
-            <h1 style="color: #ff2a70; font-size: 32px;">Hello ${name}!</h1>
-            <p style="font-size: 18px; color: #cbd5e1;">Your vision is being materialized.</p>
-            <div style="margin: 40px 0; border-top: 1px solid #334155; padding-top: 40px;">
-              <p style="color: #94a3b8;">We've received your request for <strong>${Array.isArray(needs) ? needs.join(', ') : needs}</strong>.</p>
-              <p style="color: #94a3b8;">Our VIP team is already working on your bespoke quote. Expect a response within 24 business hours.</p>
+          <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; background: #0a0212; color: white; border-radius: 20px; overflow: hidden;">
+            <div style="background: linear-gradient(135deg, #cc004e, #41137e); padding: 40px; text-align: center;">
+              <h1 style="margin: 0; font-size: 26px; font-weight: 900; letter-spacing: 2px; color: white; text-transform: uppercase;">\u2728 MAGIC PRINTS</h1>
+              <p style="margin: 6px 0 0; color: rgba(255,255,255,0.7); font-size: 12px;">magicprintsforyou.net</p>
+            </div>
+            <div style="padding: 40px;">
+              <h2 style="color: #ffcc00; font-size: 22px; margin-top: 0;">\u00a1Hola ${name}! / Hello ${name}!</h2>
+              <p style="color: #cbd5e1; font-size: 15px; line-height: 1.7;">
+                <strong style="color: white;">Recibimos tu orden exitosamente.</strong><br>
+                We successfully received your order.
+              </p>
+              <p style="color: #94a3b8; font-size: 14px; line-height: 1.7;">
+                Nuestro equipo verificar\u00e1 disponibilidad y te enviar\u00e1 un <strong style="color: #ffcc00;">link de pago seguro</strong> en menos de 24 horas por este correo o WhatsApp.<br><br>
+                Our team will verify availability and send you a <strong style="color: #ffcc00;">secure payment link</strong> within 24 hours via email or WhatsApp.
+              </p>
+              <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; margin: 24px 0;">
+                <h3 style="color: #d90082; margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Resumen / Summary</h3>
+                <p style="color: #94a3b8; margin: 4px 0; font-size: 13px;"><strong style="color: white;">Fecha del Evento / Event Date:</strong> ${eventDate || 'N/A'}</p>
+                <p style="color: #94a3b8; margin: 4px 0; font-size: 13px;"><strong style="color: white;">Entrega / Fulfillment:</strong> ${deliveryMethod || 'Pickup'}</p>
+                ${(finalTotal || cartTotal) ? '<p style="color: #ffcc00; margin: 10px 0 0; font-size: 15px; font-weight: bold;">Total Estimado: $' + ((finalTotal || cartTotal)).toFixed(2) + '</p>' : ''}
+              </div>
+              <div style="border-left: 4px solid #d90082; padding-left: 20px; margin: 20px 0;">
+                <p style="color: white; font-weight: bold; margin: 0 0 8px; font-size: 14px;">\u00bfQu\u00e9 sigue? / What's next?</p>
+                <ol style="color: #94a3b8; font-size: 13px; line-height: 1.8; margin: 0; padding-left: 16px;">
+                  <li>Verificamos disponibilidad / We verify availability</li>
+                  <li>Te enviamos el link de pago / We send your payment link</li>
+                  <li>Confirmamos producci\u00f3n y entrega / We confirm production & delivery</li>
+                </ol>
+              </div>
+              <p style="color: #475569; font-size: 12px; margin-top: 24px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
+                Preguntas: sales@magicprintsforyou.com | WhatsApp disponible<br>
+                1600 Industrial Ct, Arlington, TX 76011
+              </p>
             </div>
           </div>
         `,
@@ -140,7 +168,7 @@ export async function POST(req: Request) {
       console.error('Client confirmation failed but lead was saved:', clientErr);
     }
 
-    // 3. Add to Audience (Marketing Automation)
+        // 3. Add to Audience (Marketing Automation)
     if (process.env.RESEND_AUDIENCE_ID) {
       await resend.contacts.create({
         email,
