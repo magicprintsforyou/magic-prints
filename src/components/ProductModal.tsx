@@ -14,7 +14,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(product.variants && product.variants.length > 0 ? product.variants[0] : null);
   const [material, setMaterial] = useState<string>(product.materials?.[0] || 'Foamboard');
   const [isRushOrder, setIsRushOrder] = useState<boolean>(false);
-  const [fileUploaded, setFileUploaded] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   // Fallback base price if no variants exist
   const basePrice = selectedVariant?.price || product.price || 0;
@@ -131,18 +131,29 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
               {/* File Upload Mandatory */}
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Print Artwork (Required)</label>
-                <button 
-                  onClick={() => setFileUploaded(true)}
-                  className={`w-full border-2 border-dashed rounded-2xl px-6 py-8 flex flex-col items-center justify-center transition-all ${
-                    fileUploaded 
+                <label 
+                  className={`w-full border-2 border-dashed rounded-2xl px-6 py-8 flex flex-col items-center justify-center transition-all cursor-pointer relative ${
+                    selectedFile 
                     ? 'border-[#00bff3] bg-[#00bff3]/5 text-[#00bff3]' 
                     : 'border-slate-200 bg-slate-50 text-slate-500 hover:border-[#d90082] hover:text-[#d90082]'
                   }`}
                 >
+                  <input 
+                    type="file" 
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        setSelectedFile(e.target.files[0]);
+                      }
+                    }}
+                    accept=".pdf,.ai,.psd,.jpg,.jpeg,.png,.eps"
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
                   <Upload size={28} className="mb-3" />
-                  <span className="font-bold">{fileUploaded ? 'Artwork Ready!' : 'Upload Your File'}</span>
+                  <span className="font-bold truncate max-w-[200px]">
+                    {selectedFile ? selectedFile.name : 'Upload Your File'}
+                  </span>
                   <span className="text-xs font-medium opacity-70 mt-1">.PDF, .AI, .PSD, .JPG (High Res)</span>
-                </button>
+                </label>
               </div>
 
               {/* Rush Order Toggle */}
@@ -176,16 +187,21 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
                </div>
                <button 
                 className={`flex-grow py-5 text-white rounded-full font-black text-sm tracking-widest uppercase transition-all shadow-xl flex items-center justify-center gap-2 ${
-                  fileUploaded ? 'bg-[#d90082] hover:bg-[#ff2a70] hover:scale-105 active:scale-95' : 'bg-slate-300 cursor-not-allowed'
+                  selectedFile ? 'bg-[#d90082] hover:bg-[#ff2a70] hover:scale-105 active:scale-95' : 'bg-slate-300 cursor-not-allowed'
                 }`}
                 onClick={() => {
-                  if (fileUploaded && onAddToCart) {
-                    onAddToCart(product, { variant: selectedVariant, material, isRushOrder });
+                  if (selectedFile && onAddToCart) {
+                    onAddToCart(product, { 
+                      variant: selectedVariant, 
+                      material, 
+                      isRushOrder,
+                      artworkName: selectedFile.name 
+                    });
                     onClose();
                   }
                 }}
               >
-                {fileUploaded ? 'Finalize Quote' : 'Upload File First'}
+                {selectedFile ? 'Finalize Quote' : 'Upload File First'}
               </button>
             </div>
 

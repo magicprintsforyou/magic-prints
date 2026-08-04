@@ -200,6 +200,11 @@ const Navbar = () => {
                       <h4 className="font-bold text-slate-700 leading-tight mb-1">{item.product.name}</h4>
                       <p className="text-xs text-slate-400 font-medium">
                         Size: {item.config?.variant?.size || 'Default'} | Mat: {item.config?.material}
+                        {(item.config as any)?.artworkName && (
+                          <div className="text-[10px] text-slate-500 mt-1 italic truncate max-w-[200px]">
+                            File: {(item.config as any).artworkName}
+                          </div>
+                        )}
                       </p>
                       {item.config?.isRushOrder && (
                         <span className="inline-block mt-1 text-[8px] bg-red-100 text-red-600 font-bold uppercase px-2 py-0.5 rounded">
