@@ -70,7 +70,7 @@ export async function POST(req: Request) {
     // 1. Send Email to Admin (Magic Prints Team) - MISSION CRITICAL
     try {
       const adminResponse = await resend.emails.send({
-        from: 'Magic Prints <onboarding@resend.dev>',
+        from: 'Magic Prints <noreply@magicprintsforyou.com>',
         to: 'info@magicprintsforyou.com',
         subject: `✨ New Quote Request: ${name}`,
         html: `
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
     // Until then it only sends if client email = account owner email.
     try {
       const clientResponse = await resend.emails.send({
-        from: 'Magic Prints <onboarding@resend.dev>',
+        from: 'Magic Prints <noreply@magicprintsforyou.com>',
         to: email,
         subject: '\u2728 Magic Prints \u2014 Recibimos tu orden / We received your order',
         html: `
