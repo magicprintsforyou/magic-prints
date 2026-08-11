@@ -18,7 +18,9 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
 
   // Fallback base price if no variants exist
   const basePrice = selectedVariant?.price || product.price || 0;
-  const rushSurcharge = product.rush_price || 30;
+  const rushSurcharge = product.rush_price !== undefined ? product.rush_price : 30;
+  const rushLabel = (product as any).rush_label || 'Rush Order Delivery';
+  const rushDesc = (product as any).rush_desc || 'Skip the line. Ships faster.';
   const totalPrice = basePrice + (isRushOrder ? rushSurcharge : 0);
 
   if (!isOpen) return null;
@@ -168,8 +170,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
                     <Clock size={20} />
                   </div>
                   <div>
-                    <h4 className={`font-bold ${isRushOrder ? 'text-[#ff2a70]' : 'text-slate-700'}`}>Rush Order Delivery</h4>
-                    <p className="text-xs font-medium text-slate-400">Skip the line. Ships faster.</p>
+                    <h4 className={`font-bold ${isRushOrder ? 'text-[#ff2a70]' : 'text-slate-700'}`}>{rushLabel}</h4>
+                    <p className="text-xs font-medium text-slate-400">{rushDesc}</p>
                   </div>
                 </div>
                 <div className={`font-black tracking-tight ${isRushOrder ? 'text-[#ff2a70]' : 'text-slate-400'}`}>

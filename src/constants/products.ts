@@ -48,6 +48,26 @@ export const CATEGORIZED_PRODUCTS = {
           { size: "7ft x 4ft Panel", price: 140.00 },
           { size: "8ft x 4ft Panel", price: 180.00 },
         ]
+      },
+      {
+        id: "step-repeat-backdrop",
+        name: "Step & Repeat Backdrop (Media Wall)",
+        category: "Backdrop",
+        image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2000",
+        description: "Premium polyester fabric or heavy-duty vinyl media wall with repeating logos. Matte finish prevents photo reflections. Includes free 5-7 day shipping.",
+        themes: ["corporate", "wedding", "quinceanera", "birthday", "expo"],
+        materials: ["Premium Polyester Fabric", "Heavy-Duty 13oz Matte Vinyl"],
+        variants: [
+          { size: "8ft x 8ft (Banner Only)", price: 195.00 },
+          { size: "8ft x 8ft (Banner + Stand)", price: 295.00 },
+          { size: "10ft x 8ft (Banner Only)", price: 245.00 },
+          { size: "10ft x 8ft (Banner + Stand)", price: 345.00 },
+          { size: "10ft x 10ft (Banner Only)", price: 295.00 },
+          { size: "10ft x 10ft (Banner + Stand)", price: 415.00 }
+        ],
+        rush_price: 60.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
       }
     ]
   },
