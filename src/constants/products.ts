@@ -53,7 +53,7 @@ export const CATEGORIZED_PRODUCTS = {
         id: "step-repeat-backdrop",
         name: "Step & Repeat Backdrop (Media Wall)",
         category: "Backdrop",
-        image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2000",
+        image: "/images/products/step_repeat_backdrop.png",
         description: "Premium polyester fabric or heavy-duty vinyl media wall with repeating logos. Matte finish prevents photo reflections. Includes free 5-7 day shipping.",
         themes: ["corporate", "wedding", "quinceanera", "birthday", "expo"],
         materials: ["Premium Polyester Fabric", "Heavy-Duty 13oz Matte Vinyl"],
@@ -192,34 +192,88 @@ export const CATEGORIZED_PRODUCTS = {
     ]
   },
   essentials: {
-    title: "Event Essentials",
-    description: "Professional signage and marketing materials for corporate and retail.",
+    title: "Event Essentials & Banner Stands",
+    description: "Professional banner displays, retractable stands, and premium signage. Standard 5-7 day shipping included.",
     image: "https://images.unsplash.com/photo-1558227038-0051a6d3f284?q=80&w=2070&auto=format&fit=crop",
     items: [
       {
-        id: "luxury-welcome-sign",
-        name: "Luxury Event Welcome Sign",
-        category: "Signage",
-        image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2000",
-        description: "Bespoke acrylic or foam board welcome board with UV print and custom vinyl lettering.",
-        themes: ["wedding", "corporate", "quinceanera", "birthday"],
+        id: "standard-retractable",
+        name: "Standard Retractable Banner",
+        category: "Essentials",
+        image: "/images/products/standard_retractable.png",
+        description: "Economic and compact retractable banner stand. Easy assembly, perfect for exhibitions and store entryways. Includes free 5-7 day shipping.",
+        themes: ["corporate", "expo", "retail", "wedding"],
+        materials: ["13oz Matte Vinyl", "Premium Block-out Fabric"],
         variants: [
-          { size: "24 in. x 36 in.", price: 120.00 },
-          { size: "30 in. x 40 in.", price: 160.00 },
-          { size: "36 in. x 48 in.", price: 210.00 },
-        ]
+          { size: "33 in. x 81 in. (Standard)", price: 137.50 },
+          { size: "47 in. x 81 in. (Grand)", price: 280.00 }
+        ],
+        rush_price: 45.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
       },
       {
-        id: "retractable-banner",
-        name: "Retractable Banner",
+        id: "deluxe-retractable",
+        name: "Deluxe Retractable Banner",
         category: "Essentials",
-        image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop",
-        description: "Premium block-out vinyl display with heavy-duty stand and carry bag.",
+        image: "/images/products/deluxe_retractable.png",
+        description: "Upgraded heavy-duty retractable banner hardware with a stylish wide base. Available in single or double-sided print. Includes free 5-7 day shipping.",
         themes: ["corporate", "expo", "retail"],
+        materials: ["13oz Matte Vinyl", "Premium Block-out Fabric"],
         variants: [
-          { size: "Standard 33x81in", price: 165.00 },
-          { size: "Grand 48x81in", price: 295.00 }
-        ]
+          { size: "33 in. x 81 in. (Single Sided)", price: 206.00 },
+          { size: "33 in. x 81 in. (Double Sided)", price: 509.00 }
+        ],
+        rush_price: 55.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "tension-fabric-stand",
+        name: "Tension Fabric Banner Stand",
+        category: "Essentials",
+        image: "/images/products/tension_fabric_stand.png",
+        description: "Premium heavy-duty stand with a stretch fabric sleeve. Washable, dye-sublimated double-sided graphics for a seamless look. Includes free 5-7 day shipping.",
+        themes: ["corporate", "expo", "retail"],
+        materials: ["Stretch Fabric Sleeve"],
+        variants: [
+          { size: "36 in. x 90 in.", price: 357.50 },
+          { size: "48 in. x 90 in.", price: 412.50 }
+        ],
+        rush_price: 70.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "x-stand-banner",
+        name: "X-Frame Banner Stand",
+        category: "Essentials",
+        image: "/images/products/x_stand.png",
+        description: "Ultra lightweight and economical banner stand. Features a flexible tripod mechanism for easy graphic changes. Includes free 5-7 day shipping.",
+        themes: ["corporate", "expo", "retail", "birthday"],
+        materials: ["13oz Matte Vinyl"],
+        variants: [
+          { size: "24 in. x 63 in. (Standard)", price: 75.50 },
+          { size: "32 in. x 71 in. (Large)", price: 103.00 }
+        ],
+        rush_price: 25.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "table-top-banner",
+        name: "Table-Top Banner Stand (Mini)",
+        category: "Essentials",
+        image: "/images/products/table_top_banner.png",
+        description: "Mini retractable banner stand, perfect for registration desks, POS checkouts, restaurant menus, and table displays. Includes free 5-7 day shipping.",
+        themes: ["corporate", "expo", "retail", "wedding"],
+        materials: ["13oz Matte Vinyl"],
+        variants: [
+          { size: "11.5 in. x 17.5 in. (Mini)", price: 55.00 }
+        ],
+        rush_price: 15.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
       }
     ]
   }
