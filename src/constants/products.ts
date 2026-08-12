@@ -68,6 +68,54 @@ export const CATEGORIZED_PRODUCTS = {
         rush_price: 60.00,
         rush_label: "Express 2-Day Shipping",
         rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "non-lit-seg-display",
+        name: "Non-Lit SEG Fabric Display",
+        category: "Backdrop",
+        image: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?q=80&w=2069&auto=format&fit=crop",
+        description: "Slim profile aluminum frame with silicone edge fabric graphics (SEG). Easy slide-in installation, wrinkle-free tension fabric. Standard 5-7 day shipping included.",
+        themes: ["corporate", "expo", "retail"],
+        materials: ["9oz Tension Fabric"],
+        variants: [
+          { size: "3ft (Non-Lit Slim Frame)", price: 275.00 },
+          { size: "10ft (Non-Lit Slim Frame)", price: 825.00 },
+          { size: "20ft (Non-Lit Slim Frame)", price: 1620.00 }
+        ],
+        rush_price: 150.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "slim-backlit-seg",
+        name: "Slim Backlit SEG LED Display",
+        category: "Backdrop",
+        image: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop",
+        description: "Ultra-thin aluminum light box with internal LED illumination. Seamless silicone edge fabric graphics (SEG) glow beautifully. Standard 5-7 day shipping included.",
+        themes: ["corporate", "expo", "retail"],
+        materials: ["LED Backlit Tension Fabric"],
+        variants: [
+          { size: "10ft (Backlit Slim Frame)", price: 2250.00 }
+        ],
+        rush_price: 250.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "backlit-seg-popup",
+        name: "Backlit SEG LED Popup Display",
+        category: "Backdrop",
+        image: "https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=2070&auto=format&fit=crop",
+        description: "Illuminated popup frame with graphics extending to the edges. Tool-free assembly with quick-connect LED bars. Standard 5-7 day shipping included.",
+        themes: ["corporate", "expo", "retail"],
+        materials: ["LED Backlit Tension Fabric"],
+        variants: [
+          { size: "8ft SEG Backlit Popup", price: 2169.00 },
+          { size: "10ft SEG Backlit Popup", price: 2750.00 }
+        ],
+        rush_price: 300.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
       }
     ]
   },
