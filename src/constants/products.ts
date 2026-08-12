@@ -58,12 +58,12 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "wedding", "quinceanera", "birthday", "expo"],
         materials: ["Premium Polyester Fabric", "Heavy-Duty 13oz Matte Vinyl"],
         variants: [
-          { size: "8ft x 8ft (Banner Only)", price: 195.00 },
-          { size: "8ft x 8ft (Banner + Stand)", price: 295.00 },
-          { size: "10ft x 8ft (Banner Only)", price: 245.00 },
-          { size: "10ft x 8ft (Banner + Stand)", price: 345.00 },
-          { size: "10ft x 10ft (Banner Only)", price: 295.00 },
-          { size: "10ft x 10ft (Banner + Stand)", price: 415.00 }
+          { size: "8ft x 8ft (Banner Only)", price: 264.00 },
+          { size: "8ft x 8ft (Banner + Stand)", price: 464.75 },
+          { size: "10ft x 8ft (Banner Only)", price: 330.00 },
+          { size: "10ft x 8ft (Banner + Stand)", price: 492.25 },
+          { size: "10ft x 10ft (Banner Only)", price: 387.50 },
+          { size: "10ft x 10ft (Banner + Stand)", price: 550.00 }
         ],
         rush_price: 60.00,
         rush_label: "Express 2-Day Shipping",
