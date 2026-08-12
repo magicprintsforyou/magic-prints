@@ -193,7 +193,7 @@ export const CATEGORIZED_PRODUCTS = {
   },
   essentials: {
     title: "Event Essentials & Banner Stands",
-    description: "Professional banner displays, retractable stands, and premium signage. Standard 5-7 day shipping included.",
+    description: "Professional banner displays, retractable stands, custom advertising flags, and premium signage. Standard 5-7 day shipping included.",
     image: "https://images.unsplash.com/photo-1558227038-0051a6d3f284?q=80&w=2070&auto=format&fit=crop",
     items: [
       {
@@ -270,6 +270,109 @@ export const CATEGORIZED_PRODUCTS = {
         materials: ["13oz Matte Vinyl"],
         variants: [
           { size: "11.5 in. x 17.5 in. (Mini)", price: 55.00 }
+        ],
+        rush_price: 15.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "feather-angled-flag",
+        name: "Feather Angled Flag",
+        category: "Flags",
+        image: "/images/products/feather_angled_flag.png",
+        description: "Premium angled feather flag for high visibility indoor and outdoor branding. Includes ground spike or cross base options. Standard 5-7 day shipping included.",
+        themes: ["corporate", "expo", "retail"],
+        materials: ["Premium Polyester Fabric"],
+        variants: [
+          { size: "Small 9 ft.", price: 164.00 },
+          { size: "Medium 10.5 ft.", price: 164.00 },
+          { size: "Large 14 ft. (Popular)", price: 175.00 },
+          { size: "X-Large 18 ft.", price: 220.00 }
+        ],
+        rush_price: 35.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "feather-convex-flag",
+        name: "Feather Convex Flag",
+        category: "Flags",
+        image: "/images/products/feather_convex_flag.png",
+        description: "Sleek convex bottom feather flag designed to stand out. Ideal for retail stores and outdoor corporate events. Standard 5-7 day shipping included.",
+        themes: ["corporate", "expo", "retail"],
+        materials: ["Premium Polyester Fabric"],
+        variants: [
+          { size: "Small 9 ft.", price: 164.00 },
+          { size: "Medium 10.5 ft.", price: 164.00 },
+          { size: "Large 14 ft.", price: 175.00 },
+          { size: "X-Large 18 ft.", price: 220.00 }
+        ],
+        rush_price: 35.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "teardrop-flag",
+        name: "Teardrop Advertising Flag",
+        category: "Flags",
+        image: "/images/products/teardrop_flag.png",
+        description: "Distinctive teardrop shape keeps the flag taut even in light wind. High-impact visibility for festivals, markets, and shopfronts. Standard 5-7 day shipping included.",
+        themes: ["corporate", "expo", "retail"],
+        materials: ["Premium Polyester Fabric"],
+        variants: [
+          { size: "Small 7 ft.", price: 164.00 },
+          { size: "Medium 9 ft.", price: 164.00 },
+          { size: "Large 11.2 ft.", price: 175.00 },
+          { size: "X-Large 13.5 ft.", price: 220.00 }
+        ],
+        rush_price: 35.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "rectangle-flag",
+        name: "Rectangle Advertising Flag",
+        category: "Flags",
+        image: "/images/products/rectangle_flag.png",
+        description: "Large rectangular fabric flag offering maximum print space for company logos and messaging. Complete with hardware and stand. Standard 5-7 day shipping included.",
+        themes: ["corporate", "expo", "retail"],
+        materials: ["Premium Polyester Fabric"],
+        variants: [
+          { size: "Small 8.5 ft.", price: 257.00 },
+          { size: "Medium 11.8 ft.", price: 286.00 },
+          { size: "Large 15 ft.", price: 315.00 }
+        ],
+        rush_price: 45.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "econo-feather-flag",
+        name: "Econo Feather Flag (16ft)",
+        category: "Flags",
+        image: "/images/products/econo_feather_flag.png",
+        description: "Economical outdoor feather flag. Single-sided print that flutters gracefully in the wind. Includes ground spike stand. Standard 5-7 day shipping included.",
+        themes: ["corporate", "expo", "retail"],
+        materials: ["Premium Polyester Fabric"],
+        variants: [
+          { size: "One Size 16 ft.", price: 190.00 }
+        ],
+        rush_price: 30.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "custom-pole-flag",
+        name: "Custom Pole Flag",
+        category: "Flags",
+        image: "/images/products/custom_pole_flag.png",
+        description: "Double-sided or single-sided custom flag with grommet strips for standard flagpole installations. Full color high-definition prints. Standard 5-7 day shipping included.",
+        themes: ["corporate", "expo", "retail", "wedding"],
+        materials: ["Premium Polyester Fabric"],
+        variants: [
+          { size: "3ft x 2ft", price: 49.50 },
+          { size: "5ft x 3ft", price: 124.00 },
+          { size: "6ft x 4ft", price: 198.00 }
         ],
         rush_price: 15.00,
         rush_label: "Express 2-Day Shipping",
