@@ -90,7 +90,7 @@ export const CATEGORIZED_PRODUCTS = {
         id: "slim-backlit-seg",
         name: "Slim Backlit SEG LED Display",
         category: "Backdrop",
-        image: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop",
+        image: "/images/products/slim_backlit_seg.jpg",
         description: "Ultra-thin aluminum light box with internal LED illumination. Seamless silicone edge fabric graphics (SEG) glow beautifully. Standard 5-7 day shipping included. / Caja de luz de aluminio ultra delgada con iluminación LED interna. Gráficos de tela SEG con brillo espectacular. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["LED Backlit Tension Fabric"],
