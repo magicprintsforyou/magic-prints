@@ -53,11 +53,11 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
           </button>
 
           {/* Image Section */}
-          <div className="w-full md:w-1/2 relative h-64 md:h-auto shrink-0 bg-slate-100">
+          <div className="w-full md:w-1/2 relative h-[350px] md:h-auto bg-slate-50 flex items-center justify-center p-8 shrink-0">
             <img 
               src={product.image} 
               alt={product.name} 
-              className="w-full h-full object-cover"
+              className="max-w-full max-h-full object-contain"
             />
             <div className="absolute top-6 left-6">
               <span className="px-4 py-2 bg-white/90 backdrop-blur-md text-[10px] font-black tracking-[0.2em] rounded-full text-[#41137e] uppercase shadow-sm">

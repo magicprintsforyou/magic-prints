@@ -11,13 +11,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
   return (
     <div className="group bg-white rounded-[40px] border border-gray-50 overflow-hidden hover:shadow-[0_40px_100px_-30px_rgba(0,0,0,0.1)] transition-all duration-700 transform hover:-translate-y-4">
       <div 
-        className="relative h-[500px] overflow-hidden cursor-pointer"
+        className="relative aspect-square bg-slate-50 flex items-center justify-center overflow-hidden cursor-pointer p-6"
         onClick={() => onViewDetails && onViewDetails(product)}
       >
         <img 
           src={product.image} 
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2s] ease-out"
+          className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-[2s] ease-out"
         />
         <div className="absolute top-10 right-10">
           <span className="px-6 py-2 bg-white/90 backdrop-blur-md text-[9px] font-black tracking-[0.3em] rounded-full text-black shadow-xl uppercase border border-white/50">
