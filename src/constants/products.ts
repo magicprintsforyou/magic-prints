@@ -116,6 +116,23 @@ export const CATEGORIZED_PRODUCTS = {
         rush_price: 300.00,
         rush_label: "Express 2-Day Shipping",
         rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
+      },
+      {
+        id: "curved-tension-fabric",
+        name: "Curved Tension Fabric Display",
+        category: "Backdrop",
+        image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2070&auto=format&fit=crop",
+        description: "Premium curved aluminum tube frame with a pillowcase stretch fabric graphic. Easy tool-free assembly, travel bag included. Standard 5-7 day shipping included. / Estructura curva premium de tubos de aluminio con gráfico de tela elástica tipo funda. Armado rápido sin herramientas y bolsa de viaje incluida. Envío estándar gratis (5-7 días).",
+        themes: ["corporate", "expo", "wedding"],
+        materials: ["8.8 oz. Tension Fabric"],
+        variants: [
+          { size: "6ft Curved Display (Frame + Graphic)", price: 482.60 },
+          { size: "8ft Curved Display (Frame + Graphic)", price: 627.00 },
+          { size: "10ft Curved Display (Frame + Graphic)", price: 652.60 }
+        ],
+        rush_price: 90.00,
+        rush_label: "Express 2-Day Shipping",
+        rush_desc: "Deliver in 2 business days instead of standard 5-7 days."
       }
     ]
   },
