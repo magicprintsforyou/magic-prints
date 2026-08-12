@@ -11,7 +11,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
   return (
     <div className="group bg-white rounded-[40px] border border-gray-50 overflow-hidden hover:shadow-[0_40px_100px_-30px_rgba(0,0,0,0.1)] transition-all duration-700 transform hover:-translate-y-4">
       <div 
-        className="relative aspect-square bg-slate-50 flex items-center justify-center overflow-hidden cursor-pointer p-6"
+        className="relative aspect-square bg-slate-50 flex items-center justify-center overflow-hidden cursor-pointer p-2"
         onClick={() => onViewDetails && onViewDetails(product)}
       >
         <img 
@@ -33,29 +33,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
         </div>
       </div>
       
-      <div className="p-12">
-        <div className="mb-6">
+      <div className="p-6">
+        <div className="mb-4">
           <h3 
-            className="text-3xl font-black text-[#41137e] leading-none mb-3 cursor-pointer hover:text-[#d90082] transition-colors tracking-tighter"
+            className="text-xl font-black text-[#41137e] leading-tight mb-1 cursor-pointer hover:text-[#d90082] transition-colors tracking-tighter line-clamp-1"
             onClick={() => onViewDetails && onViewDetails(product)}
           >
             {product.name}
           </h3>
-          <p className="text-gray-400 font-medium text-sm">Museum-Grade Experience</p>
+          <p className="text-gray-400 font-semibold text-[10px]">Museum-Grade Experience</p>
         </div>
         
-        <p className="text-gray-400 font-medium text-sm line-clamp-2 mb-10 leading-relaxed italic">
+        <p className="text-gray-400 font-medium text-xs line-clamp-2 mb-6 leading-relaxed italic">
           "{product.description}"
         </p>
         
-        <div className="flex items-center justify-between pt-8 border-t border-gray-50">
+        <div className="flex items-center justify-between pt-4 border-t border-gray-50">
            <div className="flex flex-col">
-              <span className="text-[9px] font-black text-gray-300 tracking-[0.4em] uppercase mb-1">Starting From</span>
-              <span className="text-3xl font-black text-[#00bff3] tracking-tighter">${(product.price || (product.variants?.[0]?.price || 0)).toFixed(0)}</span>
+              <span className="text-[8px] font-black text-gray-300 tracking-[0.3em] uppercase mb-0.5">Starting From</span>
+              <span className="text-2xl font-black text-[#00bff3] tracking-tighter">${(product.price || (product.variants?.[0]?.price || 0)).toFixed(0)}</span>
            </div>
            <button 
             onClick={() => onAddToCart && onAddToCart(product)}
-            className="px-8 py-5 bg-[#41137e] text-white rounded-full font-black text-[10px] tracking-widest hover:bg-[#d90082] transition-all active:scale-95 duration-500 shadow-xl"
+            className="px-5 py-3.5 bg-[#41137e] text-white rounded-full font-black text-[9px] tracking-widest hover:bg-[#d90082] transition-all active:scale-95 duration-500 shadow-lg"
           >
             ADD TO QUOTE
           </button>
