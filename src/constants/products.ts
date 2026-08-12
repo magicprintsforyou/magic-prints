@@ -121,7 +121,7 @@ export const CATEGORIZED_PRODUCTS = {
         id: "curved-tension-fabric",
         name: "Curved Tension Fabric Display",
         category: "Backdrop",
-        image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2070&auto=format&fit=crop",
+        image: "/images/products/curved_tension_fabric.png",
         description: "Premium curved aluminum tube frame with a pillowcase stretch fabric graphic. Easy tool-free assembly, travel bag included. Standard 5-7 day shipping included. / Estructura curva premium de tubos de aluminio con gráfico de tela elástica tipo funda. Armado rápido sin herramientas y bolsa de viaje incluida. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "wedding"],
         materials: ["8.8 oz. Tension Fabric"],
