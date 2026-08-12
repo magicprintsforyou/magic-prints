@@ -54,7 +54,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Step & Repeat Backdrop (Media Wall)",
         category: "Backdrop",
         image: "/images/products/step_repeat_backdrop.png",
-        description: "Premium polyester fabric or heavy-duty vinyl media wall with repeating logos. Matte finish prevents photo reflections. Includes free 5-7 day shipping.",
+        description: "Premium polyester fabric or heavy-duty vinyl media wall with repeating logos. Matte finish prevents photo reflections. Includes free 5-7 day shipping. / Muro de prensa premium de tela poliéster o vinilo resistente con logos repetidos. Acabado mate antirreflejos. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "wedding", "quinceanera", "birthday", "expo"],
         materials: ["Premium Polyester Fabric", "Heavy-Duty 13oz Matte Vinyl"],
         variants: [
@@ -74,7 +74,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Non-Lit SEG Fabric Display",
         category: "Backdrop",
         image: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?q=80&w=2069&auto=format&fit=crop",
-        description: "Slim profile aluminum frame with silicone edge fabric graphics (SEG). Easy slide-in installation, wrinkle-free tension fabric. Standard 5-7 day shipping included.",
+        description: "Slim profile aluminum frame with silicone edge fabric graphics (SEG). Easy slide-in installation, wrinkle-free tension fabric. Standard 5-7 day shipping included. / Estructura de aluminio de perfil delgado con tela de borde de silicona (SEG). Instalación sin arrugas. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["9oz Tension Fabric"],
         variants: [
@@ -91,7 +91,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Slim Backlit SEG LED Display",
         category: "Backdrop",
         image: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop",
-        description: "Ultra-thin aluminum light box with internal LED illumination. Seamless silicone edge fabric graphics (SEG) glow beautifully. Standard 5-7 day shipping included.",
+        description: "Ultra-thin aluminum light box with internal LED illumination. Seamless silicone edge fabric graphics (SEG) glow beautifully. Standard 5-7 day shipping included. / Caja de luz de aluminio ultra delgada con iluminación LED interna. Gráficos de tela SEG con brillo espectacular. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["LED Backlit Tension Fabric"],
         variants: [
@@ -106,7 +106,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Backlit SEG LED Popup Display",
         category: "Backdrop",
         image: "https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=2070&auto=format&fit=crop",
-        description: "Illuminated popup frame with graphics extending to the edges. Tool-free assembly with quick-connect LED bars. Standard 5-7 day shipping included.",
+        description: "Illuminated popup frame with graphics extending to the edges. Tool-free assembly with quick-connect LED bars. Standard 5-7 day shipping included. / Estructura popup retroiluminada con LEDs de conexión rápida. Gráficos de tela que cubren los bordes. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["LED Backlit Tension Fabric"],
         variants: [
@@ -249,7 +249,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Standard Retractable Banner",
         category: "Essentials",
         image: "/images/products/standard_retractable.png",
-        description: "Economic and compact retractable banner stand. Easy assembly, perfect for exhibitions and store entryways. Includes free 5-7 day shipping.",
+        description: "Economic and compact retractable banner stand. Easy assembly, perfect for exhibitions and store entryways. Includes free 5-7 day shipping. / Banner roll-up estándar económico y compacto. Fácil armado, ideal para ferias y entradas comerciales. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail", "wedding"],
         materials: ["13oz Matte Vinyl", "Premium Block-out Fabric"],
         variants: [
@@ -265,7 +265,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Deluxe Retractable Banner",
         category: "Essentials",
         image: "/images/products/deluxe_retractable.png",
-        description: "Upgraded heavy-duty retractable banner hardware with a stylish wide base. Available in single or double-sided print. Includes free 5-7 day shipping.",
+        description: "Upgraded heavy-duty retractable banner hardware with a stylish wide base. Available in single or double-sided print. Includes free 5-7 day shipping. / Banner roll-up de lujo con base de aluminio pesada y elegante. Impresión a una o doble cara. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["13oz Matte Vinyl", "Premium Block-out Fabric"],
         variants: [
@@ -281,7 +281,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Tension Fabric Banner Stand",
         category: "Essentials",
         image: "/images/products/tension_fabric_stand.png",
-        description: "Premium heavy-duty stand with a stretch fabric sleeve. Washable, dye-sublimated double-sided graphics for a seamless look. Includes free 5-7 day shipping.",
+        description: "Premium heavy-duty stand with a stretch fabric sleeve. Washable, dye-sublimated double-sided graphics for a seamless look. Includes free 5-7 day shipping. / Estructura premium de alta resistencia con funda de tela elástica. Gráfico lavable de doble cara sin costuras. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["Stretch Fabric Sleeve"],
         variants: [
@@ -297,7 +297,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "X-Frame Banner Stand",
         category: "Essentials",
         image: "/images/products/x_stand.png",
-        description: "Ultra lightweight and economical banner stand. Features a flexible tripod mechanism for easy graphic changes. Includes free 5-7 day shipping.",
+        description: "Ultra lightweight and economical banner stand. Features a flexible tripod mechanism for easy graphic changes. Includes free 5-7 day shipping. / Banner económico con estructura de trípode en X ligera. Sistema flexible para cambiar de gráfico de forma rápida. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail", "birthday"],
         materials: ["13oz Matte Vinyl"],
         variants: [
@@ -313,7 +313,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Table-Top Banner Stand (Mini)",
         category: "Essentials",
         image: "/images/products/table_top_banner.png",
-        description: "Mini retractable banner stand, perfect for registration desks, POS checkouts, restaurant menus, and table displays. Includes free 5-7 day shipping.",
+        description: "Mini retractable banner stand, perfect for registration desks, POS checkouts, restaurant menus, and table displays. Includes free 5-7 day shipping. / Mini banner roll-up para mesa, ideal para recepciones, cajas registradoras, menús y mostradores. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail", "wedding"],
         materials: ["13oz Matte Vinyl"],
         variants: [
@@ -328,7 +328,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Feather Angled Flag",
         category: "Flags",
         image: "/images/products/feather_angled_flag.png",
-        description: "Premium angled feather flag for high visibility indoor and outdoor branding. Includes ground spike or cross base options. Standard 5-7 day shipping included.",
+        description: "Premium angled feather flag for high visibility indoor and outdoor branding. Includes ground spike or cross base options. Standard 5-7 day shipping included. / Bandera pluma angular premium para publicidad de alto impacto en interiores y exteriores. Incluye estaca para tierra o base en cruz. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
@@ -346,7 +346,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Feather Convex Flag",
         category: "Flags",
         image: "/images/products/feather_convex_flag.png",
-        description: "Sleek convex bottom feather flag designed to stand out. Ideal for retail stores and outdoor corporate events. Standard 5-7 day shipping included.",
+        description: "Sleek convex bottom feather flag designed to stand out. Ideal for retail stores and outdoor corporate events. Standard 5-7 day shipping included. / Bandera pluma convexa elegante diseñada para destacar. Ideal para tiendas y eventos corporativos al aire libre. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
@@ -364,7 +364,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Teardrop Advertising Flag",
         category: "Flags",
         image: "/images/products/teardrop_flag.png",
-        description: "Distinctive teardrop shape keeps the flag taut even in light wind. High-impact visibility for festivals, markets, and shopfronts. Standard 5-7 day shipping included.",
+        description: "Distinctive teardrop shape keeps the flag taut even in light wind. High-impact visibility for festivals, markets, and shopfronts. Standard 5-7 day shipping included. / Bandera de gota publicitaria de alta resistencia. Mantiene la tela tensada con el viento. Ideal para festivales y fachadas. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
@@ -382,7 +382,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Rectangle Advertising Flag",
         category: "Flags",
         image: "/images/products/rectangle_flag.png",
-        description: "Large rectangular fabric flag offering maximum print space for company logos and messaging. Complete with hardware and stand. Standard 5-7 day shipping included.",
+        description: "Large rectangular fabric flag offering maximum print space for company logos and messaging. Complete with hardware and stand. Standard 5-7 day shipping included. / Bandera rectangular de gran formato para máxima área de impresión de logos corporativos. Incluye estructura y base. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
@@ -399,7 +399,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Econo Feather Flag (16ft)",
         category: "Flags",
         image: "/images/products/econo_feather_flag.png",
-        description: "Economical outdoor feather flag. Single-sided print that flutters gracefully in the wind. Includes ground spike stand. Standard 5-7 day shipping included.",
+        description: "Economical outdoor feather flag. Single-sided print that flutters gracefully in the wind. Includes ground spike stand. Standard 5-7 day shipping included. / Bandera pluma económica para exteriores. Impresión a una cara que ondea con el viento. Incluye estaca para tierra. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
@@ -414,7 +414,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Custom Pole Flag",
         category: "Flags",
         image: "/images/products/custom_pole_flag.png",
-        description: "Double-sided or single-sided custom flag with grommet strips for standard flagpole installations. Full color high-definition prints. Standard 5-7 day shipping included.",
+        description: "Double-sided or single-sided custom flag with grommet strips for standard flagpole installations. Full color high-definition prints. Standard 5-7 day shipping included. / Bandera clásica para mástil con ojales metálicos. Impresión en alta definición a una o doble cara. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail", "wedding"],
         materials: ["Premium Polyester Fabric"],
         variants: [
