@@ -78,9 +78,9 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["9oz Tension Fabric"],
         variants: [
-          { size: "3ft (Non-Lit Slim Frame)", price: 275.00 },
-          { size: "10ft (Non-Lit Slim Frame)", price: 825.00 },
-          { size: "20ft (Non-Lit Slim Frame)", price: 1620.00 }
+          { size: "3ft (Non-Lit Slim Frame)", price: 219.80 },
+          { size: "10ft (Non-Lit Slim Frame)", price: 659.80 },
+          { size: "20ft (Non-Lit Slim Frame)", price: 1295.80 }
         ],
         rush_price: 150.00,
         rush_label: "Express 2-Day Shipping",
@@ -95,7 +95,7 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["LED Backlit Tension Fabric"],
         variants: [
-          { size: "10ft (Backlit Slim Frame)", price: 2250.00 }
+          { size: "10ft (Backlit Slim Frame)", price: 1799.80 }
         ],
         rush_price: 250.00,
         rush_label: "Express 2-Day Shipping",
@@ -110,8 +110,8 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["LED Backlit Tension Fabric"],
         variants: [
-          { size: "8ft SEG Backlit Popup", price: 2169.00 },
-          { size: "10ft SEG Backlit Popup", price: 2750.00 }
+          { size: "8ft SEG Backlit Popup", price: 1735.58 },
+          { size: "10ft SEG Backlit Popup", price: 2199.78 }
         ],
         rush_price: 300.00,
         rush_label: "Express 2-Day Shipping",
