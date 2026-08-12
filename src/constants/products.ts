@@ -105,7 +105,7 @@ export const CATEGORIZED_PRODUCTS = {
         id: "backlit-seg-popup",
         name: "Backlit SEG LED Popup Display",
         category: "Backdrop",
-        image: "https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=2070&auto=format&fit=crop",
+        image: "/images/products/backlit_seg_popup.jpg",
         description: "Illuminated popup frame with graphics extending to the edges. Tool-free assembly with quick-connect LED bars. Standard 5-7 day shipping included. / Estructura popup retroiluminada con LEDs de conexión rápida. Gráficos de tela que cubren los bordes. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["LED Backlit Tension Fabric"],
