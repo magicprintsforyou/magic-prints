@@ -98,7 +98,7 @@ const ProductsPage = () => {
                   {/* Background Handling */}
                   {hasImage ? (
                     <>
-                      <img src={cat.image} alt={cat.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <img src={key === 'photoBoards' ? '/images/photo-board-9856.jpg' : cat.image} alt={cat.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-500 group-hover:opacity-90" />
                       <div className="absolute inset-0 bg-[#d90082]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </>
