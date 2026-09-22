@@ -287,7 +287,7 @@ export default function Home() {
             ))}
           </div>
           <div className="mt-24 text-center">
-            <Link href="/corporate" className="inline-block px-16 py-7 bg-[#41137e] text-white rounded-full font-black text-xl hover:bg-[#d90082] transition-all shadow-[0_20px_50px_rgba(65,19,126,0.3)] hover:shadow-[0_20px_50px_rgba(217,0,130,0.4)]">{INITIAL_CONFIG.bestSellers.btnText}</Link>
+            <Link href="/products" className="inline-block px-16 py-7 bg-[#41137e] text-white rounded-full font-black text-xl hover:bg-[#d90082] transition-all shadow-[0_20px_50px_rgba(65,19,126,0.3)] hover:shadow-[0_20px_50px_rgba(217,0,130,0.4)]">{INITIAL_CONFIG.bestSellers.btnText}</Link>
           </div>
         </div>
       </section>
