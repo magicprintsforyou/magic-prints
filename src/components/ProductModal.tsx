@@ -18,7 +18,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
 
   // Fallback base price if no variants exist
   const basePrice = selectedVariant?.price || product.price || 0;
-  const rushSurcharge = product.rush_price !== undefined ? product.rush_price : 30;
+  const rushSurcharge = 40;
   const rushLabel = (product as any).rush_label || 'Rush Order Delivery';
   const rushDesc = (product as any).rush_desc || 'Skip the line. Ships faster.';
   const totalPrice = basePrice + (isRushOrder ? rushSurcharge : 0);
