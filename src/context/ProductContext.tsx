@@ -176,7 +176,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, [cart]);
   const [catalog, setCatalog] = useState<CategorizedProducts>(() => loadLocalCatalog(CATEGORIZED_PRODUCTS as any));
   const [siteContent, setSiteContent] = useState<SiteContent>(translations.en);
-  const [language, setLanguage] = useState<Language>('es');
+  const [language, setLanguage] = useState<Language>('en');
   const [isLoading, setIsLoading] = useState(true);
   const [isContentConfigured, setIsContentConfigured] = useState(false);
 
