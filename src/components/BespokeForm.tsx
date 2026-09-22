@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { Upload, Sparkles, Calendar, MapPin, Building2, User, Mail, Phone, ArrowRight, Tag } from 'lucide-react';
 
-import { useProducts } from '../context/ProductContext';
+import { useProducts, useLanguage } from '../context/ProductContext';
 
 export default function BespokeForm() {
   const { uploadImage, cart, cartTotal, clearCart } = useProducts();
+  const { language } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -71,7 +72,7 @@ export default function BespokeForm() {
       setSelectedFiles([]);
     } catch (error: any) {
       console.error('Submission error:', error);
-      alert(error.message || 'Hubo un error al enviar tu solicitud. Por favor intenta de nuevo.');
+      alert(error.message || (language === 'en' ? 'There was a problem sending your request. Please try again.' : 'Hubo un error al enviar tu solicitud. Por favor intenta de nuevo.'));
     } finally {
       setIsSubmitting(false);
       setUploadProgress(0);
@@ -91,7 +92,7 @@ export default function BespokeForm() {
             Bespoke <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff2a70] to-[#f9a826]">Quote.</span>
           </h2>
           <p className="text-white/60 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
-            ¿Planeando un evento monumental o necesitas impresiones recurrentes para tu agencia? Sube tu inspiración y nuestro equipo VIP te enviará una cotización exacta en menos de 24 horas.
+            {language === 'en' ? 'Planning an event or recurring prints for your agency? Tell us what you need and attach your inspiration. We will prepare a custom quote.' : '¿Planeando un evento monumental o necesitas impresiones recurrentes para tu agencia? Sube tu inspiración y nuestro equipo VIP te enviará una cotización exacta en menos de 24 horas.'}
           </p>
         </div>
 
@@ -105,8 +106,8 @@ export default function BespokeForm() {
                 <Calendar className="text-[#ff2a70]" size={32} />
                </div>
                <div>
-                 <h3 className="text-xl font-bold text-white mb-2">Tiempos Express (24-48h)</h3>
-                 <p className="text-white/60 font-light leading-relaxed">Sabemos que en la industria de eventos los tiempos son críticos. Contamos con turnos de producción ininterrumpida para no fallarte nunca.</p>
+                 <h3 className="text-xl font-bold text-white mb-2">{language === 'en' ? 'Rush Production (24–48h)' : 'Tiempos Express (24-48h)'}</h3>
+                 <p className="text-white/60 font-light leading-relaxed">{language === 'en' ? 'Event deadlines matter. Ask us about rush availability for your project.' : 'Sabemos que en la industria de eventos los tiempos son críticos. Contamos con turnos de producción ininterrumpida para no fallarte nunca.'}</p>
                </div>
             </div>
 
@@ -115,8 +116,8 @@ export default function BespokeForm() {
                 <Sparkles className="text-[#f9a826]" size={32} />
                </div>
                <div>
-                 <h3 className="text-xl font-bold text-white mb-2">Cumpleaños y Baby Showers Grandes</h3>
-                 <p className="text-white/60 font-light leading-relaxed">También producimos decoraciones completas para eventos sociales premium. Nuestros paquetes de producción completa para cumpleaños y baby showers a gran escala comienzan desde <strong>$2,500 USD</strong>.</p>
+                 <h3 className="text-xl font-bold text-white mb-2">{language === 'en' ? 'Large Birthdays & Baby Showers' : 'Cumpleaños y Baby Showers Grandes'}</h3>
+                 <p className="text-white/60 font-light leading-relaxed">{language === 'en' ? 'We also create complete decor packages for large birthdays and baby showers. Ask for a custom quote.' : <>También producimos decoraciones completas para eventos sociales premium. Nuestros paquetes de producción completa para cumpleaños y baby showers a gran escala comienzan desde <strong>$2,500 USD</strong>.</>}</p>
                </div>
             </div>
           </div>
@@ -132,13 +133,13 @@ export default function BespokeForm() {
                 <div className="w-24 h-24 bg-green-500/20 border border-green-500/30 rounded-full flex items-center justify-center mx-auto mb-6 text-green-400">
                   <Sparkles size={40} />
                 </div>
-                <h2 className="text-3xl font-black text-white mb-4">¡Magia en camino!</h2>
-                <p className="text-white/70 font-light text-lg mb-8">Hemos recibido tu solicitud. Nuestro equipo VIP elaborará tu cotización bespoke y te contactará en breve.</p>
+                <h2 className="text-3xl font-black text-white mb-4">{language === 'en' ? 'Your request is on its way!' : '¡Magia en camino!'}</h2>
+                <p className="text-white/70 font-light text-lg mb-8">{language === 'en' ? 'We received your request and will contact you with a custom quote.' : 'Hemos recibido tu solicitud. Nuestro equipo VIP elaborará tu cotización bespoke y te contactará en breve.'}</p>
                 <button 
                   onClick={() => setSuccess(false)}
                   className="text-[#ff2a70] font-bold hover:underline"
                 >
-                  Enviar otra solicitud
+                  {language === 'en' ? 'Send another request' : 'Enviar otra solicitud'}
                 </button>
               </div>
             ) : (
@@ -151,7 +152,7 @@ export default function BespokeForm() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
                       </span>
-                      Resumen de Cotización / Configured Products
+                      {language === 'en' ? 'Configured Products' : 'Resumen de Cotización'}
                     </h3>
                     <div className="space-y-3">
                       {cart.map(item => (
@@ -173,72 +174,72 @@ export default function BespokeForm() {
                         </div>
                       ))}
                       <div className="flex justify-between items-center pt-3 text-sm font-black uppercase text-[#d90082]">
-                        <span>Total Estimado / Estimated Total:</span>
+                        <span>{language === 'en' ? 'Estimated Total:' : 'Total Estimado:'}</span>
                         <span>${cartTotal.toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
                 )}
-                <h2 className="text-2xl font-black text-white mb-2">1. Detalles del Cliente</h2>
+                <h2 className="text-2xl font-black text-white mb-2">{language === 'en' ? '1. Contact Details' : '1. Detalles del Cliente'}</h2>
                 
                 {/* Row 1: Contact Info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><User size={14}/> Nombre Completo</label>
-                    <input required name="name" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Ej. Yndira P." />
+                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><User size={14}/> {language === 'en' ? 'Full Name' : 'Nombre Completo'}</label>
+                    <input required name="name" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder={language === 'en' ? 'e.g. Your name' : 'Ej. Yndira P.'} />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Building2 size={14}/> Empresa / Agency</label>
-                    <input name="company" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Opcional" />
+                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Building2 size={14}/> {language === 'en' ? 'Company / Agency' : 'Empresa / Agency'}</label>
+                    <input name="company" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder={language === 'en' ? 'Optional' : 'Opcional'} />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Mail size={14}/> Correo Electrónico</label>
-                    <input required name="email" type="email" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="hello@empresa.com" />
+                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Mail size={14}/> {language === 'en' ? 'Email Address' : 'Correo Electrónico'}</label>
+                    <input required name="email" type="email" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="hello@company.com" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Phone size={14}/> Teléfono (WhatsApp)</label>
+                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Phone size={14}/> {language === 'en' ? 'Phone (WhatsApp)' : 'Teléfono (WhatsApp)'}</label>
                     <input required name="phone" type="tel" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="+1 (555) 000-0000" />
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-black text-white mb-2 pt-4 border-t border-white/10">2. Información del Evento</h2>
+                <h2 className="text-2xl font-black text-white mb-2 pt-4 border-t border-white/10">{language === 'en' ? '2. Event Details' : '2. Información del Evento'}</h2>
 
                 {/* Row 2: Event Details */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Calendar size={14}/> Fecha del Evento</label>
+                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Calendar size={14}/> {language === 'en' ? 'Event Date' : 'Fecha del Evento'}</label>
                     <input required name="eventDate" type="date" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white/60 focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-white/80 flex items-center gap-2"><MapPin size={14}/> Zip Code / Venue</label>
-                    <input required name="location" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Para envío o pickup" />
+                    <input required name="location" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder={language === 'en' ? 'For delivery or pickup' : 'Para envío o pickup'} />
                   </div>
                   <div className="space-y-2 col-span-1 md:col-span-2">
-                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Sparkles size={14}/> Presupuesto Estimado / Budget</label>
+                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Sparkles size={14}/> {language === 'en' ? 'Estimated Budget' : 'Presupuesto Estimado'}</label>
                     <select required name="budget" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all cursor-pointer">
-                      <option value="" disabled selected>Selecciona tu rango de presupuesto...</option>
-                      <option value="bajo_2500">Menos de $2,500 USD</option>
-                      <option value="social_2500_5000">$2,500 - $5,000 USD (Recomendado para Cumpleaños & Baby Showers grandes)</option>
+                      <option value="" disabled selected>{language === 'en' ? 'Select your budget range...' : 'Selecciona tu rango de presupuesto...'}</option>
+                      <option value="bajo_2500">{language === 'en' ? 'Under $2,500 USD' : 'Menos de $2,500 USD'}</option>
+                      <option value="social_2500_5000">{language === 'en' ? '$2,500–$5,000 USD' : '$2,500 - $5,000 USD (Recomendado para Cumpleaños & Baby Showers grandes)'}</option>
                       <option value="medio_5000_10000">$5,000 - $10,000 USD</option>
-                      <option value="alto_10000_mas">Más de $10,000 USD</option>
+                      <option value="alto_10000_mas">{language === 'en' ? 'Over $10,000 USD' : 'Más de $10,000 USD'}</option>
                     </select>
                   </div>
                   <div className="space-y-2 col-span-1 md:col-span-2">
-                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Tag className="w-3.5 h-3.5" /> Código de Vendedor o Planner (Opcional - 5% Descuento)</label>
+                    <label className="text-sm font-bold text-white/80 flex items-center gap-2"><Tag className="w-3.5 h-3.5" /> {language === 'en' ? 'Planner Code (optional)' : 'Código de Vendedor o Planner (Opcional - 5% Descuento)'}</label>
                     <input name="promoCode" type="text" className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all" placeholder="Ej. SARAH5" />
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-black text-white mb-2 pt-4 border-t border-white/10">3. Requerimientos B2B</h2>
+                <h2 className="text-2xl font-black text-white mb-2 pt-4 border-t border-white/10">{language === 'en' ? '3. What You Need' : '3. Requerimientos B2B'}</h2>
 
                 {/* What do they need? */}
                 <div className="space-y-3">
-                  <label className="text-sm font-bold text-white/80 block">¿Qué necesitas imprimir? (Selecciona múltiples)</label>
+                  <label className="text-sm font-bold text-white/80 block">{language === 'en' ? 'What do you need printed? (Select all that apply)' : '¿Qué necesitas imprimir? (Selecciona múltiples)'}</label>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {['Floor Wrap', 'Backdrop Boards', 'Cylinder Covers', 'Custom Cut-outs', 'Circle Signs', 'Banners', 'Corporate Merch', 'Otro'].map(item => (
                       <label key={item} className="flex items-center gap-2 p-3 border border-white/10 rounded-xl cursor-pointer hover:bg-white/5 transition-colors">
                         <input type="checkbox" name="needs" value={item} className="w-4 h-4 text-[#ff2a70] border-slate-600 rounded bg-[#0f172a] focus:ring-[#ff2a70]" />
-                        <span className="text-sm text-white/80 font-medium">{item}</span>
+                        <span className="text-sm text-white/80 font-medium">{item === 'Otro' && language === 'en' ? 'Other' : item}</span>
                       </label>
                     ))}
                   </div>
@@ -246,7 +247,7 @@ export default function BespokeForm() {
 
                 {/* File Upload Zone */}
                 <div className="space-y-2 pt-4 border-t border-white/10">
-                  <label className="text-sm font-bold text-white/80 block">Adjuntar Archivos / Inspiración</label>
+                  <label className="text-sm font-bold text-white/80 block">{language === 'en' ? 'Attach Files / Inspiration' : 'Adjuntar Archivos / Inspiración'}</label>
                   <div className="space-y-4">
                   <div className="border-2 border-dashed border-white/20 rounded-2xl p-8 text-center hover:bg-white/5 hover:border-[#ff2a70]/50 transition-all cursor-pointer group bg-black/20 relative">
                     <input 
@@ -260,9 +261,9 @@ export default function BespokeForm() {
                       <Upload size={20} className="text-white/40 group-hover:text-[#ff2a70]" />
                     </div>
                     <p className="text-white font-medium mb-1">
-                      {selectedFiles.length > 0 ? `${selectedFiles.length} archivos seleccionados` : 'Haz clic o arrastra tus archivos aquí'}
+                      {selectedFiles.length > 0 ? `${selectedFiles.length} ${language === 'en' ? 'files selected' : 'archivos seleccionados'}` : (language === 'en' ? 'Click or drag files here' : 'Haz clic o arrastra tus archivos aquí')}
                     </p>
-                    <p className="text-white/40 text-sm font-light">Fotos de inspiración, artes finales. Máx 10 archivos / 50MB.</p>
+                    <p className="text-white/40 text-sm font-light">{language === 'en' ? 'Inspiration photos or print-ready artwork. Up to 10 files / 50MB.' : 'Fotos de inspiración, artes finales. Máx 10 archivos / 50MB.'}</p>
                   </div>
 
                   {selectedFiles.length > 0 && (
@@ -288,8 +289,8 @@ export default function BespokeForm() {
 
                 {/* Notes */}
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-white/80 block">Cuéntanos más sobre tu visión mágica...</label>
-                  <textarea name="notes" rows={4} className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all resize-none italic placeholder:text-white/30" placeholder="Ingresa las medidas exactas si las tienes, requerimientos especiales de instalación, etc..."></textarea>
+                  <label className="text-sm font-bold text-white/80 block">{language === 'en' ? 'Tell us more about your project...' : 'Cuéntanos más sobre tu visión mágica...'}</label>
+                  <textarea name="notes" rows={4} className="w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-[#0f172a] transition-all resize-none italic placeholder:text-white/30" placeholder={language === 'en' ? 'Include dimensions, installation needs, and other details...' : 'Ingresa las medidas exactas si las tienes, requerimientos especiales de instalación, etc...'}></textarea>
                 </div>
 
                 {/* Submit Button */}
@@ -298,10 +299,10 @@ export default function BespokeForm() {
                   disabled={isSubmitting}
                   className="w-full py-5 rounded-2xl bg-gradient-to-r from-[#cc004e] to-[#8f2d56] text-white font-black text-lg flex items-center justify-center gap-3 hover:scale-[1.02] transition-transform shadow-[0_10px_30px_rgba(204,0,78,0.3)] disabled:opacity-70 disabled:cursor-not-allowed group"
                 >
-                  {isSubmitting ? 'Procesando Magia...' : 'Solicitar Cotización VIP'}
+                  {isSubmitting ? (language === 'en' ? 'Sending...' : 'Procesando Magia...') : (language === 'en' ? 'Request a Custom Quote' : 'Solicitar Cotización VIP')}
                   {!isSubmitting && <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />}
                 </button>
-                <p className="text-xs text-center text-white/50 font-medium">Tus datos están seguros. Respuesta en menos de 24h laborables.</p>
+                <p className="text-xs text-center text-white/50 font-medium">{language === 'en' ? 'We will use your details to respond to your quote request.' : 'Tus datos están seguros. Respuesta en menos de 24h laborables.'}</p>
               </form>
             )}
           </div>
