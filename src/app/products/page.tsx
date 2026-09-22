@@ -181,6 +181,8 @@ const ProductsPage = () => {
           </p>
         </header>
 
+        {activeCategory === 'photoBoards' && <PhotoBoardsSizeGuide />}
+
         {/* Global Search Bar */}
         <div className="mb-8">
           <div className="relative max-w-2xl group">
@@ -276,3 +278,34 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
+
+function PhotoBoardsSizeGuide() {
+  const boards = [
+    { size: '5 FT', price: '$120', title: 'Welcome sign', detail: 'A clear entrance moment' },
+    { size: '6 FT', price: '$130', title: 'Photo focal point', detail: 'Great beside a dessert table' },
+    { size: '7 FT', price: '$150', title: 'Event backdrop', detail: 'More presence in photos' },
+    { size: '8 FT', price: '$160', title: 'Statement display', detail: 'Stands out in a large space' },
+  ];
+  return (
+    <section aria-labelledby="board-size-title" className="mb-14 rounded-[2rem] bg-[#faf7f4] p-5 md:p-10 border border-[#eadfe7]">
+      <p className="text-sm font-black tracking-widest text-[#6e3c69] uppercase mb-3">Photo boards & panels</p>
+      <h2 id="board-size-title" className="text-3xl md:text-5xl font-black tracking-tight text-[#261f23] mb-3">Find the right size for your event</h2>
+      <p className="text-[#685b63] text-base md:text-lg mb-8 max-w-3xl">Compare each board beside a person, then choose the impact you want.</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+        {boards.map((board, index) => (
+          <article key={board.size} className="bg-white border border-[#eadfe7] overflow-hidden flex flex-col">
+            <div role="img" aria-label={board.size + ' photo board beside a person'} className="h-72 md:h-80 bg-no-repeat" style={{ backgroundImage: "url('/images/board-size-comparison.jpg')", backgroundSize: '400% 100%', backgroundPosition: (index * 100 / 3) + '% center' }} />
+            <div className="p-5 flex flex-col grow">
+              <span className="self-start bg-[#f0e4ef] text-[#6e3c69] px-3 py-1 text-sm font-black tracking-wider">{board.size}</span>
+              <p className="text-3xl font-black text-[#261f23] mt-3">{board.price}</p>
+              <h3 className="font-black uppercase tracking-wide text-[#6e3c69] mt-2">{board.title}</h3>
+              <p className="text-[#685b63] mt-1 mb-5">{board.detail}</p>
+              <a href="/quote" className="mt-auto block bg-[#6e3c69] hover:bg-[#542d50] text-white text-center px-4 py-3 font-black text-sm uppercase tracking-wide transition-colors">Request a quote</a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p className="mt-7 text-[#685b63] text-sm md:text-base"><strong>Design service: $15-$30 extra.</strong> Images show an illustrative scale. Final dimensions, materials and installation are confirmed in your quote.</p>
+    </section>
+  );
+}
