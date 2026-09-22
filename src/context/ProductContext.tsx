@@ -146,7 +146,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       const existing = prev.find(item => item.id === itemId);
       
       const basePrice = config.variant?.price || product.price || 0;
-      const rushSurcharge = config.isRushOrder ? (product.rush_price || 40) : 0;
+      const rushSurcharge = config.isRushOrder ? 40 : 0;
       const unitPrice = basePrice + rushSurcharge;
 
       if (existing) {
