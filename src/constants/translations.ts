@@ -26,7 +26,7 @@ export const translations = {
             eventTitle: "Shop by Event",
             eventDesc: "Planning an event? Choose your occasion, theme, and coordinate matching items.",
             productTitle: "Shop by Product",
-            productDesc: "Know exactly what you need? Browse flyers, shirts, cups, boxes, banners, and decals."
+            productDesc: "Know what you need? Browse photo boards, props, floor wraps, event packages, and banners."
         },
         hero: {
             welcome: 'By Event Planners, For Event Planners',
@@ -194,7 +194,7 @@ export const translations = {
             eventTitle: "Comprar por Evento",
             eventDesc: "¿Estás organizando un evento? Elige la ocasión, temática y coordina artículos combinados.",
             productTitle: "Comprar por Producto",
-            productDesc: "¿Ya sabes qué necesitas? Explora flyers, camisas, vasos, cajas, banners y stickers."
+            productDesc: "¿Ya sabes qué necesitas? Explora paneles fotográficos, figuras, vinilos de piso, paquetes para eventos y banners."
         },
         hero: {
             welcome: 'De Event Planners para Event Planners',
