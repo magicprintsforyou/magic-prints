@@ -43,7 +43,7 @@ export default function Home() {
     const items = Object.entries(catalog)
       .filter(([key]) => key !== "b2bSigns")
       .map(([_, cat], index, categories) => cat.items?.find(item => !categories.slice(0, index).some(([__, earlier]) => earlier.items?.some(other => other.id === item.id))))
-      .filter(Boolean);
+      .filter((item): item is NonNullable<typeof item> => item !== undefined);
     return items.slice(0, 3);
   }, [catalog]);
 
