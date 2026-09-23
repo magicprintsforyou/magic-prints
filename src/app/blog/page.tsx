@@ -1,100 +1,52 @@
 "use client";
-import React from 'react';
+
 import Link from 'next/link';
-import { Sparkles, ChevronRight, Calendar, User, Clock, ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Clock, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/context/ProductContext';
+import { BLOG_POSTS, BlogLanguage } from '@/constants/blogPosts';
 
 export default function BlogPage() {
   const { language } = useLanguage();
-
-  const blogPosts = [
-    {
-      title: language === 'en' ? "5 Luxury Balloon Decor Trends for 2026" : "5 Tendencias de Decoración de Globos de Lujo para 2026",
-      excerpt: language === 'en' ? "From pastel chrome colors to organic double-stuffed arches, explore the next big things in balloon design." : "Desde colores cromo pastel hasta arcos orgánicos de doble capa, explora lo último en diseño con globos.",
-      image: "https://images.unsplash.com/photo-1530103043960-ef38714abb15?q=80&w=600",
-      date: "Aug 03, 2026",
-      author: "Yndira P.",
-      readTime: "4 min read"
-    },
-    {
-      title: language === 'en' ? "The Complete Corporate Event Printing Checklist" : "La Guía Completa de Impresión para Eventos Corporativos",
-      excerpt: language === 'en' ? "A seamless checklist detailing banners, flyers, giant photo boards, and custom table wraps." : "Una lista detallada que incluye banners, flyers, photo boards gigantes y personalización de mesas.",
-      image: "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?q=80&w=600",
-      date: "Jul 28, 2026",
-      author: "Yndira P.",
-      readTime: "6 min read"
-    },
-    {
-      title: language === 'en' ? "Why Dance Floor Wraps Will Elevate Your Wedding" : "Por Qué los Floor Wraps Elevarán por Completo tu Boda",
-      excerpt: language === 'en' ? "How custom high-density vinyl wraps transform ordinary ballroom spaces into premium branded moments." : "Cómo los vinilos personalizados de alta densidad transforman salones comunes en espacios premium.",
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600",
-      date: "Jul 20, 2026",
-      author: "Yndira P.",
-      readTime: "5 min read"
-    }
-  ];
+  const activeLanguage: BlogLanguage = language === 'es' ? 'es' : 'en';
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0A0212] text-white pt-32 pb-24 px-6 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#d90082]/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto w-full relative z-10">
-        
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d90082]/10 text-[#d90082] font-black text-xs tracking-widest uppercase mb-6 border border-[#d90082]/20">
-            <Sparkles size={14} className="animate-pulse" /> {language === 'en' ? 'Trends & Inspiration' : 'Tendencias e Inspiración'}
-          </div>
-          <h1 className="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter italic leading-none">
-            {language === 'en' ? 'Magic Blog' : 'Blog Mágico'}
+    <main className="min-h-screen bg-gradient-to-b from-[#f8f3ff] via-white to-white px-5 pb-24 pt-28 sm:px-6 sm:pt-32">
+      <div className="mx-auto max-w-7xl">
+        <header className="mx-auto mb-14 max-w-3xl text-center sm:mb-18">
+          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#d90082]/15 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-[#d90082] shadow-sm">
+            <Sparkles aria-hidden="true" size={14} />
+            {activeLanguage === 'en' ? 'Practical event print ideas' : 'Ideas prácticas para impresión de eventos'}
+          </span>
+          <h1 className="text-4xl font-black tracking-tight text-[#41137e] sm:text-6xl">
+            {activeLanguage === 'en' ? 'Ideas made for real spaces' : 'Ideas creadas para espacios reales'}
           </h1>
-          <p className="text-gray-400 text-lg md:text-xl font-light italic leading-relaxed">
-            {language === 'en' 
-              ? 'Stay updated with the latest event production trends, print tips, and designer showcases.' 
-              : 'Mantente al día con las últimas tendencias de producción de eventos, consejos de impresión y muestras de diseño.'}
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+            {activeLanguage === 'en' ? 'Useful guidance for planning photo boards, backdrops and print-ready event details.' : 'Guías útiles para planificar photo boards, backdrops y detalles de evento listos para imprimir.'}
           </p>
-          
-          
-        </div>
+        </header>
 
-        {/* Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {blogPosts.map((post, idx) => (
-            <div key={idx} className="group bg-white/5 border border-white/10 rounded-[40px] overflow-hidden shadow-2xl hover:bg-white/10 hover:border-[#d90082]/20 transition-all duration-500 flex flex-col">
-              <div className="h-64 overflow-hidden relative">
-                <img src={post.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2s]" alt={post.title} />
-                <div className="absolute top-6 left-6 px-4 py-1.5 bg-black/60 backdrop-blur-md rounded-full text-[10px] font-black tracking-widest uppercase text-[#ffcc00]">
-                  {language === 'en' ? 'Trend' : 'Tendencia'}
-                </div>
-              </div>
-              <div className="p-8 flex-grow flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-4 text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-4">
-                    <span className="flex items-center gap-1"><Calendar size={12} /> {post.date}</span>
-                    <span className="flex items-center gap-1"><Clock size={12} /> {post.readTime}</span>
+        <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+          {BLOG_POSTS.map((post) => {
+            const content = post.content[activeLanguage];
+            return (
+              <article key={post.slug} className="group flex overflow-hidden rounded-[28px] border border-[#41137e]/10 bg-white shadow-[0_18px_50px_rgba(65,19,126,0.08)] transition-transform duration-300 hover:-translate-y-1">
+                <Link href={`/blog/${post.slug}`} className="flex w-full flex-col focus:outline-none focus-visible:ring-4 focus-visible:ring-[#d90082]/30" aria-label={`${activeLanguage === 'en' ? 'Read' : 'Leer'}: ${content.title}`}>
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#f3eff8]">
+                    <img src={post.image} alt={post.imageAlt[activeLanguage]} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                    <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-[#d90082] shadow-sm">{content.tag}</span>
                   </div>
-                  <h3 className="text-2xl font-black uppercase tracking-tight text-white mb-4 group-hover:text-[#ffcc00] transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm font-light leading-relaxed italic mb-8 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                </div>
-                
-                <div className="flex items-center justify-between pt-6 border-t border-white/5">
-                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                    <User size={12} /> {post.author}
-                  </span>
-                  <Link href="/blog" className="inline-flex items-center gap-2 text-xs font-black tracking-widest text-[#d90082] uppercase group-hover:gap-3 transition-all">
-                    {language === 'en' ? 'Read More' : 'Leer Más'} <ArrowRight size={14} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
+                  <div className="flex flex-1 flex-col p-6 sm:p-7">
+                    <span className="mb-4 flex items-center gap-1.5 text-xs font-bold text-slate-400"><Clock aria-hidden="true" size={14} />{content.readTime}</span>
+                    <h2 className="text-2xl font-black leading-tight tracking-tight text-[#41137e]">{content.title}</h2>
+                    <p className="mt-4 flex-1 text-sm leading-6 text-slate-600">{content.description}</p>
+                    <span className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#d90082]">{activeLanguage === 'en' ? 'Read more' : 'Leer más'} <ArrowRight aria-hidden="true" size={15} /></span>
+                  </div>
+                </Link>
+              </article>
+            );
+          })}
         </div>
-
       </div>
-    </div>
+    </main>
   );
 }

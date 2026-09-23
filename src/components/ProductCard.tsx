@@ -9,18 +9,22 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewDetails }) => {
   return (
-    <div className="group bg-white rounded-[40px] border border-gray-50 overflow-hidden hover:shadow-[0_40px_100px_-30px_rgba(0,0,0,0.1)] transition-all duration-700 transform hover:-translate-y-4">
-      <div 
-        className="relative aspect-square bg-slate-50 flex items-center justify-center overflow-hidden cursor-pointer p-2"
+    <div className="group bg-white rounded-[28px] border border-purple-100 overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
+      <button
+        type="button"
+        aria-label={`View ${product.name}`}
+        className="relative w-full aspect-square bg-[#f6f3f8] flex items-center justify-center overflow-hidden cursor-pointer p-3 focus-visible:outline-4 focus-visible:outline-[#d90082] focus-visible:outline-offset-[-4px]"
         onClick={() => onViewDetails && onViewDetails(product)}
       >
         <img 
           src={product.image} 
           alt={product.name}
-          className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-[2s] ease-out"
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-contain rounded-2xl"
         />
-        <div className="absolute top-10 right-10">
-          <span className="px-6 py-2 bg-white/90 backdrop-blur-md text-[9px] font-black tracking-[0.3em] rounded-full text-black shadow-xl uppercase border border-white/50">
+        <div className="absolute top-5 left-5">
+          <span className="px-3 py-1.5 bg-white/95 text-[10px] font-bold tracking-wide rounded-full text-[#41137e] shadow-sm uppercase border border-purple-100">
             {product.category}
           </span>
         </div>
@@ -31,20 +35,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
               </span>
            </div>
         </div>
-      </div>
+      </button>
       
       <div className="p-6">
         <div className="mb-4">
           <h3 
-            className="text-xl font-black text-[#41137e] leading-tight mb-1 cursor-pointer hover:text-[#d90082] transition-colors tracking-tighter line-clamp-1"
+            className="text-xl font-black text-[#41137e] leading-tight mb-2 cursor-pointer hover:text-[#d90082] transition-colors tracking-tight min-h-[2.5em]"
             onClick={() => onViewDetails && onViewDetails(product)}
           >
             {product.name}
           </h3>
-          <p className="text-gray-400 font-semibold text-[10px]">Museum-Grade Experience</p>
+          <p className="text-slate-500 font-semibold text-xs">Custom printed for your event</p>
         </div>
         
-        <p className="text-gray-400 font-medium text-xs line-clamp-2 mb-6 leading-relaxed italic">
+        <p className="text-slate-600 font-medium text-sm line-clamp-2 mb-6 leading-relaxed">
           "{product.description}"
         </p>
         

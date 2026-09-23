@@ -4,13 +4,13 @@ export const CATEGORIZED_PRODUCTS = {
   photoBoards: {
     title: "Premium Photo Boards & Panels",
     description: "Museum-grade rigid substrates for high-impact backdrops and displays.",
-    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop",
+    image: "/images/photo-board-9856.jpg",
     items: [
       {
         id: "luxury-welcome-sign",
         name: "Luxury Event Welcome Sign",
         category: "Signage",
-        image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2000",
+        image: "/images/welcome-sign-easel.jpg",
         description: "Bespoke acrylic or foam board welcome board with UV print and custom vinyl lettering.",
         themes: ["wedding", "corporate", "quinceanera", "birthday"],
         variants: [
@@ -23,14 +23,14 @@ export const CATEGORIZED_PRODUCTS = {
         id: "standard-photo-board",
         name: "Standard Photo Board",
         category: "Photo",
-        image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop",
+        image: "/images/photo-board-9856.jpg",
         description: "Museum-grade foam board or Sintra material with scratch-resistant matte finish.",
         themes: ["wedding", "birthday", "corporate", "graduation"],
         variants: [
-          { size: "5ft Height", price: 180.00 },
-          { size: "6ft Height", price: 220.00 },
-          { size: "7ft Height", price: 280.00 },
-          { size: "8ft Height", price: 350.00 },
+          { size: "5 ft H x 3 ft W", price: 120.00 },
+          { size: "6 ft H x 4 ft W", price: 130.00 },
+          { size: "7 ft H x 4 ft W", price: 150.00 },
+          { size: "8 ft H x 4 ft W", price: 160.00 },
           { size: "7ft x 7ft Square", price: 450.00 },
           { size: "8ft x 8ft Standard", price: 550.00 },
           { size: "8ft x 20ft Giant", price: 1200.00 },
@@ -40,7 +40,7 @@ export const CATEGORIZED_PRODUCTS = {
         id: "backdrop-panel",
         name: "Backdrop Rigid Panel",
         category: "Photo",
-        image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2073&auto=format&fit=crop",
+        image: "/images/backdrop-6x4-size-reference.jpg",
         description: "Perfect for vinyl decals or custom painting. Seamless high-density boards.",
         themes: ["safari", "barbie", "birthday"],
         variants: [
@@ -145,7 +145,7 @@ export const CATEGORIZED_PRODUCTS = {
         id: "luxury-welcome-sign",
         name: "Luxury Event Welcome Sign",
         category: "Signage",
-        image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2000",
+        image: "/images/welcome-sign-easel.jpg",
         description: "Bespoke acrylic or foam board welcome board with UV print and custom vinyl lettering.",
         themes: ["wedding", "corporate", "quinceanera", "birthday"],
         variants: [
@@ -175,13 +175,13 @@ export const CATEGORIZED_PRODUCTS = {
   floorWraps: {
     title: "Luxury Floor Wraps",
     description: "Turn your event floor into a canvas with high-density non-slip vinyl.",
-    image: "https://images.unsplash.com/photo-1535124406821-d242453e99d3?q=80&w=2070&auto=format&fit=crop",
+    image: "/images/floor-wrap-wedding.jpg",
     items: [
       {
         id: "luxury-welcome-sign",
         name: "Luxury Event Welcome Sign",
         category: "Signage",
-        image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2000",
+        image: "/images/welcome-sign-easel.jpg",
         description: "Bespoke acrylic or foam board welcome board with UV print and custom vinyl lettering.",
         themes: ["wedding", "corporate", "quinceanera", "birthday"],
         variants: [
@@ -194,7 +194,7 @@ export const CATEGORIZED_PRODUCTS = {
         id: "custom-floor-wrap",
         name: "Custom Vinyl Floor Wrap",
         category: "Floor",
-        image: "https://images.unsplash.com/photo-1510074377623-8cf13fb86c08?q=80&w=2072&auto=format&fit=crop",
+        image: "/images/floor-wrap-wedding.jpg",
         description: "Heavy-duty, removable floor vinyl. Scratch-resistant and safe for high-traffic dance floors.",
         themes: ["wedding", "corporate", "party", "dance"],
         variants: [
@@ -215,7 +215,7 @@ export const CATEGORIZED_PRODUCTS = {
         id: "luxury-welcome-sign",
         name: "Luxury Event Welcome Sign",
         category: "Signage",
-        image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2000",
+        image: "/images/welcome-sign-easel.jpg",
         description: "Bespoke acrylic or foam board welcome board with UV print and custom vinyl lettering.",
         themes: ["wedding", "corporate", "quinceanera", "birthday"],
         variants: [

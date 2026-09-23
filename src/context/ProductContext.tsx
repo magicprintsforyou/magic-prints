@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 import { supabase } from '../lib/supabase';
 import { translations, Language } from '../constants/translations';
 import { CATEGORIZED_PRODUCTS } from '../constants/products';
+import { boardVariant, catalogCover } from '../lib/catalogPresentation';
 
 export type ProductVariant = {
   size: string;
@@ -101,7 +102,9 @@ const loadLocalCatalog = (defaultCatalog: CategorizedProducts): CategorizedProdu
               merged[catId].items.unshift(savedItem);
             } else {
               const idx = merged[catId].items.findIndex((i: any) => i.id === savedItem.id);
-              merged[catId].items[idx] = savedItem;
+              const variants = savedItem.variants?.map((v: ProductVariant) => boardVariant(savedItem.id, v));
+              const migrated = savedItem.variants?.some((v: ProductVariant) => boardVariant(savedItem.id, v).size !== v.size);
+              merged[catId].items[idx] = { ...savedItem, image: catalogCover(savedItem.id, savedItem.image), variants, ...(migrated ? { price: variants?.[0]?.price } : {}) };
             }
           });
         }
@@ -263,7 +266,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
           newCatalog[cat.id].title = cat.title || newCatalog[cat.id].title;
           newCatalog[cat.id].description = cat.description || newCatalog[cat.id].description;
           // Failsafe: only overwrite image if DB has a valid URL
-          if (cat.image && cat.image.trim() !== "") {
+          if (cat.image && cat.image.trim() !== "" && !(['photoBoards', 'floorWraps'].includes(cat.id) && cat.image.includes('images.unsplash.com/'))) {
             newCatalog[cat.id].image = cat.image;
           }
         }
@@ -279,11 +282,13 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
             category: prod.category_id,
             name: prod.name,
             description: prod.description,
-            price: prod.price ? parseFloat(prod.price) : undefined,
+            price: prod.id === 'standard-photo-board' && prod.variants?.some((v: ProductVariant) => boardVariant(prod.id, v).size !== v.size)
+              ? boardVariant(prod.id, prod.variants[0]).price
+              : prod.price ? parseFloat(prod.price) : undefined,
             // Failsafe: Use DB image if available, else keep local placeholder
-            image: (prod.image && prod.image.trim() !== "") ? prod.image : (existingLocal?.image || ""),
+            image: catalogCover(prod.id, (prod.image && prod.image.trim() !== "") ? prod.image : existingLocal?.image),
             themes: prod.themes || [],
-            variants: prod.variants || [],
+            variants: (prod.variants || []).map((v: ProductVariant) => boardVariant(prod.id, v)),
             materials: prod.materials || [],
             rush_price: prod.rush_price ? parseFloat(prod.rush_price) : undefined,
             includes: prod.includes || []
