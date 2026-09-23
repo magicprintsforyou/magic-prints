@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 import { supabase } from '../lib/supabase';
 import { translations, Language } from '../constants/translations';
 import { CATEGORIZED_PRODUCTS } from '../constants/products';
-import { boardVariant, catalogCover } from '../lib/catalogPresentation';
+import { boardVariant, catalogCover, isLegacyCategoryCover } from '../lib/catalogPresentation';
 
 export type ProductVariant = {
   size: string;
@@ -266,7 +266,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
           newCatalog[cat.id].title = cat.title || newCatalog[cat.id].title;
           newCatalog[cat.id].description = cat.description || newCatalog[cat.id].description;
           // Failsafe: only overwrite image if DB has a valid URL
-          if (cat.image && cat.image.trim() !== "" && !(['photoBoards', 'floorWraps'].includes(cat.id) && cat.image.includes('images.unsplash.com/'))) {
+          if (cat.image && cat.image.trim() !== "" && !isLegacyCategoryCover(cat.id, cat.image)) {
             newCatalog[cat.id].image = cat.image;
           }
         }

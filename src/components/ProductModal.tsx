@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { X, Upload, Clock, ShieldCheck, ChevronDown } from 'lucide-react';
 import { Product, Variant } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { isDesignPreview } from '../lib/catalogPresentation';
 
 const SIZE_REFERENCE_IMAGES: Record<string, string> = {
   '5x3': '/images/backdrop-5x3-size-reference.jpg',
@@ -113,6 +114,11 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
                 </div>
               )}
             </div>
+            {isDesignPreview(displayedImage) && (
+              <p className="pt-3 text-center text-xs text-slate-500">
+                Design preview · Your artwork will be customized for your event.
+              </p>
+            )}
             {sizeReference && (
               <div className="flex shrink-0 flex-col items-center gap-2 pt-3">
                 <div className="flex max-w-full gap-2 rounded-full bg-white p-1.5 shadow-md">
