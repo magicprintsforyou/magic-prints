@@ -98,7 +98,7 @@ const ProductsPage = () => {
                   {/* Background Handling */}
                   {hasImage ? (
                     <>
-                      <img src={key === 'photoBoards' ? '/images/photo-board-9856.jpg' : cat.image} alt={cat.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <img src={cat.image} alt={cat.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-500 group-hover:opacity-90" />
                       <div className="absolute inset-0 bg-[#d90082]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </>
@@ -181,10 +181,8 @@ const ProductsPage = () => {
           </p>
         </header>
 
-        {activeCategory === 'photoBoards' && <PhotoBoardsSizeGuide />}
-
         {/* Global Search Bar */}
-        <div id="photo-board-products" className="mb-8">
+        <div className="mb-8">
           <div className="relative max-w-2xl group">
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-hover:text-[#d90082] transition-colors" />
             <input 
@@ -278,46 +276,3 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
-
-
-function PhotoBoardsSizeGuide() {
-  const photos = [
-    { file: 'photo-board-9856.jpg', alt: 'Wedding photo board displayed at a venue' },
-    { file: 'photo-board-8871.jpg', alt: 'Formal celebration photo boards' },
-    { file: 'photo-board-9671.jpg', alt: 'Anniversary photo board' },
-    { file: 'photo-board-9750.jpg', alt: 'Gala event photo board' },
-    { file: 'photo-board-8835.jpg', alt: 'Proposal photo board' },
-  ];
-  const boards = [
-    { size: '5 FT', price: '$120', use: 'Welcome sign' },
-    { size: '6 FT', price: '$130', use: 'Photo focal point' },
-    { size: '7 FT', price: '$150', use: 'Event backdrop' },
-    { size: '8 FT', price: '$160', use: 'Statement display' },
-  ];
-  return (
-    <section aria-labelledby="board-size-title" className="mb-14 rounded-[2rem] bg-[#faf7f4] p-5 md:p-10 border border-[#eadfe7]">
-      <p className="text-sm font-black tracking-widest text-[#6e3c69] uppercase mb-3">REAL PHOTO BOARD PROJECTS</p>
-      <h2 id="board-size-title" className="text-3xl md:text-5xl font-black tracking-tight text-[#261f23] mb-3">See the possibilities. Choose your size.</h2>
-      <p className="text-[#685b63] text-base md:text-lg mb-7 max-w-3xl">These are real projects from our studio. Your board is made for your event and artwork.</p>
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-4 mb-9">
-        {photos.map((photo) => (
-          <figure key={photo.file} className="bg-white rounded-2xl overflow-hidden border border-[#eadfe7] shadow-sm">
-            <img src={'/images/' + photo.file} alt={photo.alt} loading="lazy" className="w-full aspect-[3/4] object-cover" />
-          </figure>
-        ))}
-      </div>
-      <h3 className="text-2xl font-black text-[#261f23] mb-4">Photo board sizes & prices</h3>
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4">
-        {boards.map((board) => (
-          <div key={board.size} className="bg-white border border-[#eadfe7] rounded-2xl p-4 md:p-5">
-            <p className="text-sm font-black tracking-widest text-[#6e3c69]">{board.size}</p>
-            <p className="text-3xl font-black text-[#261f23] mt-2">{board.price}</p>
-            <p className="text-[#685b63] mt-1">{board.use}</p>
-          </div>
-        ))}
-      </div>
-      <p className="mt-5 text-[#685b63] text-sm md:text-base"><strong>Design service: $15-$30 extra.</strong> Choose a product below, add it to your cart, and send your quote request. We confirm all details before sending your payment link.</p>
-      <a href="#photo-board-products" className="inline-block mt-6 bg-[#6e3c69] hover:bg-[#542d50] text-white px-7 py-3 rounded-full font-black text-sm uppercase tracking-wide transition-colors">Browse products below</a>
-    </section>
-  );
-}
