@@ -55,7 +55,7 @@ type AppContextType = {
   // Catalog
   catalog: CategorizedProducts;
   addProduct: (categoryId: string, product: Product) => Promise<void>;
-  updateProduct: (categoryId: string, product: Product) => Promise<void>;
+  updateProduct: (categoryId: string, product: Product) => Promise<{ ok: boolean; error?: string }>;
   deleteProduct: (categoryId: string, productId: string) => Promise<void>;
   addCategory: (categoryId: string, categoryData: CategoryData) => Promise<void>;
   updateCategory: (categoryId: string, categoryData: CategoryData) => Promise<void>;
@@ -464,13 +464,31 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  const updateProduct = async (categoryId: string, product: Product) => {
+  const updateProduct = async (categoryId: string, product: Product): Promise<{ ok: boolean; error?: string }> => {
+    // Sanitize variants: clean objects with trimmed size and numeric price.
+    // This guarantees adds/deletes/edits are all sent as the full new array.
+    const cleanVariants = (product.variants || []).map(v => ({
+      size: String(v.size || '').trim(),
+      price: Number(v.price) || 0,
+    }));
+
+    const payload = {
+      name: product.name,
+      description: product.description,
+      price: product.price || null,
+      image: product.image,
+      themes: product.themes || [],
+      variants: cleanVariants,
+      materials: product.materials || [],
+      rush_price: product.rush_price || null
+    };
+
     setCatalog(prevCatalog => {
       const updated = JSON.parse(JSON.stringify(prevCatalog));
       if (updated[categoryId]) {
         const idx = updated[categoryId].items.findIndex((i: any) => i.id === product.id);
         if (idx >= 0) {
-          updated[categoryId].items[idx] = product;
+          updated[categoryId].items[idx] = { ...product, variants: cleanVariants };
         }
       }
       saveLocalCatalog(updated);
@@ -478,22 +496,24 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     });
 
     try {
-      const { error } = await supabase
+      // .select() after update: Supabase returns success even when 0 rows match,
+      // so we verify the row was actually written instead of failing silently.
+      const { data, error } = await supabase
         .from('products')
-        .update({
-          name: product.name,
-          description: product.description,
-          price: product.price || null,
-          image: product.image,
-          themes: product.themes || [],
-          variants: product.variants || [],
-          materials: product.materials || [],
-          rush_price: product.rush_price || null
-        })
-        .eq('id', product.id);
-      if (!error) await fetchCatalog();
-    } catch (err) {
-      console.warn("Supabase updateProduct sync skipped, saved locally:", err);
+        .update(payload)
+        .eq('id', product.id)
+        .select('id');
+      if (error) {
+        return { ok: false, error: error.message };
+      }
+      if (!data || data.length === 0) {
+        return { ok: false, error: `The product id "${product.id}" was not found in the database (0 rows updated). The change was saved locally only.` };
+      }
+      await fetchCatalog();
+      return { ok: true };
+    } catch (err: any) {
+      console.warn("Supabase updateProduct failed:", err);
+      return { ok: false, error: err?.message || 'Unknown error while saving to Supabase.' };
     }
   };
 
