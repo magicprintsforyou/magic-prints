@@ -174,7 +174,9 @@ function AdminPortalContent() {
     setTags(prod.themes?.join(', ') || '');
     setMaterials(prod.materials?.join(', ') || '');
     setRushPrice(prod.rush_price?.toString() || '');
-    setVariants(prod.variants || []);
+    // Deep copy: never share the array/object references with the catalog state,
+    // otherwise in-place edits would mutate the catalog behind React's back.
+    setVariants((prod.variants || []).map(v => ({ size: v.size || '', price: Number(v.price) || 0 })));
     setActiveTab('product');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -199,11 +201,18 @@ function AdminPortalContent() {
       themes: tags.split(',').map(t => t.trim()).filter(Boolean),
       materials: materials.split(',').map(m => m.trim()).filter(Boolean),
       rush_price: parseFloat(rushPrice) || 0,
-      variants
+      // Drop fully-empty rows (no size and no price) so junk never reaches the DB.
+      variants: variants.filter(v => String(v.size || '').trim() !== '' || Number(v.price) > 0)
     };
 
     if (editingProductId) {
-      await updateProduct(category, productData);
+      const result = await updateProduct(category, productData);
+      if (!result.ok) {
+        // Do NOT show success and do NOT reset the form: the user's work is preserved
+        // so nothing is lost while the DB problem gets fixed.
+        alert(`Could not save to the database:\n\n${result.error}\n\nYour changes were kept in this form and saved locally, but they are NOT in Supabase yet.`);
+        return;
+      }
     } else {
       await addProduct(category, productData);
     }
