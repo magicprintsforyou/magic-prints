@@ -76,7 +76,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
                 : 'bg-[#41137e] hover:bg-[#d90082]'
             } ${!onAddToCart ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
-            {justAdded ? 'AGREGADO ✓' : 'COTIZAR'}
+            {justAdded ? 'ADDED ✓' : 'ADD TO QUOTE'}
           </button>
         </div>
       </div>

@@ -30,7 +30,7 @@ export default function ClientFooter() {
                         <li><span className="text-[#ffcc00]">Email: </span><a href="mailto:sales@magicprintsforyou.com" className="hover:text-white transition-colors">{t?.footer?.email || 'sales@magicprintsforyou.com'}</a></li>
                         <li>
                             <a href="/quote" className="hover:text-white transition-colors flex items-center gap-2">
-                                {language === 'es' ? 'Solicita una cotización' : 'Request a quote'}
+                                Request a quote
                             </a>
                         </li>
                         <li className="flex items-start gap-2">
