@@ -6,8 +6,8 @@ import Footer from "../components/Footer";
 import { ProductProvider } from "../context/ProductContext";
 
 export const metadata: Metadata = {
-  title: "Magic Prints For You - Impresiones Personalizadas para Eventos",
-  description: "Transforma tus eventos con impresiones personalizadas de gran formato: photo boards, backdrops, cutouts y floor wraps. Recoge en Arlington, TX o recibe envío a todo el país.",
+  title: "Magic Prints For You - Express Event Catalog",
+  description: "Transform your events with our custom large-format prints and express delivery.",
 };
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
