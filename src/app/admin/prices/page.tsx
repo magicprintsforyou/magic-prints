@@ -100,7 +100,7 @@ export default function BulkPriceEditor() {
       };
       const result = await updateProduct(found.categoryId, updated);
       if (result.ok) {
-        setMessage({ type: 'ok', text: `Precios guardados: ${found.product.name}` });
+        setMessage({ type: 'ok', text: `Precios guardados: ${found.product.name}${result.warning ? ' (' + result.warning + ')' : ''}` });
       } else {
         setMessage({ type: 'err', text: `Error en ${found.product.name}: ${result.error || 'desconocido'}` });
       }
