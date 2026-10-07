@@ -321,6 +321,10 @@ function AdminPortalContent() {
         </div>
 
         <div className="flex items-center gap-4">
+          <Link href="/admin/prices" className="flex items-center gap-2 px-6 py-2 rounded-full bg-[#d90082]/10 hover:bg-[#d90082]/20 transition-all text-xs font-bold uppercase tracking-widest text-[#d90082] border border-[#d90082]/20">
+            <Tag size={14} />
+            Editar precios
+          </Link>
           <Link href="/products" className="flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 hover:bg-white/10 transition-all text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white border border-white/5">
             <ArrowLeft size={14} />
             View Catalog
