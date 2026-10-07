@@ -178,8 +178,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   }, [cart]);
   const [catalog, setCatalog] = useState<CategorizedProducts>(() => loadLocalCatalog(CATEGORIZED_PRODUCTS as any));
-  const [siteContent, setSiteContent] = useState<SiteContent>(translations.es);
-  const [language, setLanguage] = useState<Language>('es');
+  const [siteContent, setSiteContent] = useState<SiteContent>(translations.en);
+  const [language, setLanguage] = useState<Language>('en');
   const [isLoading, setIsLoading] = useState(true);
   const [isContentConfigured, setIsContentConfigured] = useState(false);
 
