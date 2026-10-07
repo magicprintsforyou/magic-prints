@@ -10,6 +10,8 @@ import ProductCard from '@/components/ProductCard';
 import ProductModal from '@/components/ProductModal';
 import Logo from '@/components/Logo';
 import BespokeForm from '@/components/BespokeForm';
+import Reviews from '@/components/Reviews';
+import EmailCapture from '@/components/EmailCapture';
 import { useLanguage } from '@/context/ProductContext';
 import { motion } from 'framer-motion';
 import { 
@@ -376,6 +378,12 @@ export default function Home() {
         <div className="absolute inset-0 bg-spiral-float opacity-5 -z-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-screen"></div>
         <BespokeForm />
       </div>
+
+      {/* Reviews Section */}
+      <Reviews />
+
+      {/* Email Capture Section */}
+      <EmailCapture />
 
       {selectedProduct && (
         <ProductModal
