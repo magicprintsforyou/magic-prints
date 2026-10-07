@@ -10,8 +10,7 @@ import ProductCard from '../../components/ProductCard';
 import ProductModal from '../../components/ProductModal';
 
 const ProductsPage = () => {
-  const { catalog, addToCart, language } = useProducts();
-  const isEs = language !== 'en';
+  const { catalog, addToCart } = useProducts();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTheme, setActiveTheme] = useState<string | null>(null);
@@ -78,10 +77,10 @@ const ProductsPage = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-7xl font-black tracking-tight text-[#41137e] mb-6 leading-[1.1]"
             >
-              {isEs ? <>Explora Nuestro <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#7e22ce]">Catálogo</span></> : <>Explore Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#7e22ce]">Dynamic Catalog</span></>}
+              {<>Explore Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#7e22ce]">Dynamic Catalog</span></>}
             </motion.h1>
             <p className="text-slate-500 text-lg md:text-xl font-medium max-w-2xl mx-auto">
-              {isEs ? 'Elige una categoría y descubre impresiones premium para que tu próximo evento sea inolvidable.' : 'Select a category below to discover premium museum-grade event essentials tailored for your next unforgettable moment.'}
+              'Select a category below to discover premium museum-grade event essentials tailored for your next unforgettable moment.'
             </p>
           </header>
 
@@ -165,7 +164,7 @@ const ProductsPage = () => {
           className="flex items-center gap-2 text-[#41137e] font-bold mb-8 hover:text-[#d90082] transition-colors bg-white px-5 py-2.5 rounded-full shadow-sm hover:shadow-md border border-slate-100 w-fit"
         >
           <ArrowLeft className="w-5 h-5" />
-          {isEs ? 'Volver a Categorías' : 'Back to Categories'}
+          'Back to Categories'
         </button>
 
         <header className="mb-12">
@@ -196,7 +195,7 @@ const ProductsPage = () => {
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-hover:text-[#d90082] transition-colors" />
             <input 
               type="text" 
-              placeholder={isEs ? "Buscar productos..." : "Search products..."}
+              placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-14 pr-6 py-4 rounded-full bg-white border border-slate-200 focus:border-[#41137e] outline-none transition-all shadow-sm text-slate-700 font-medium"
@@ -215,7 +214,7 @@ const ProductsPage = () => {
                 : 'bg-white text-slate-500 hover:bg-slate-100 border border-slate-200'
               }`}
             >
-              {isEs ? 'Todos los Temas' : 'All Themes'}
+              'All Themes'
             </button>
             {backdropThemes.map(theme => (
               <button 
@@ -268,9 +267,9 @@ const ProductsPage = () => {
             <div className="inline-flex w-20 h-20 rounded-full bg-slate-50 items-center justify-center mb-6">
               <Package className="w-8 h-8 text-slate-300" />
             </div>
-            <h3 className="text-2xl font-bold text-slate-700 mb-2">{isEs ? 'No se encontró nada' : 'No items found'}</h3>
+            <h3 className="text-2xl font-bold text-slate-700 mb-2">No items found</h3>
             <p className="text-slate-500">
-              {isEs ? 'Prueba con otra búsqueda o ajusta los filtros.' : "Try adjusting your search or filters to find what you're looking for."}
+              "Try adjusting your search or filters to find what you're looking for."
             </p>
           </div>
         )}
