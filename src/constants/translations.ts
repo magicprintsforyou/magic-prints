@@ -51,6 +51,7 @@ export const translations = {
             step3_title: "3. Professional On-Site Setup",
             step3_desc: "Our technical crew delivers, installs, and secures your prints directly at the event space.",
         },
+        // PENDIENTE-DUEÑA: testimonios por verificar (nombres/textos no confirmados por la dueña). No borrar sin su aprobación.
         testimonials: {
             badge: "EVENT DESIGNER REVIEWS",
             title: "Trusted by Top Event Planners",
@@ -219,6 +220,7 @@ export const translations = {
             step3_title: "3. Instalación Profesional en Venue",
             step3_desc: "Nuestro equipo técnico entrega, monta y asegura tus impresiones directamente en el salón de eventos.",
         },
+        // PENDIENTE-DUEÑA: testimonios por verificar (nombres/textos no confirmados por la dueña). No borrar sin su aprobación.
         testimonials: {
             badge: "OPINIONES DE EVENT PLANNERS",
             title: "La Confianza de los Mejores Diseñadores",
