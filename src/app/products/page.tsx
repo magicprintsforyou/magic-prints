@@ -10,7 +10,8 @@ import ProductCard from '../../components/ProductCard';
 import ProductModal from '../../components/ProductModal';
 
 const ProductsPage = () => {
-  const { catalog, addToCart } = useProducts();
+  const { catalog, addToCart, language } = useProducts();
+  const isEs = language !== 'en';
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTheme, setActiveTheme] = useState<string | null>(null);
@@ -51,8 +52,16 @@ const ProductsPage = () => {
     }
 
     // Only apply theme filtering if we are in backdrops and a theme is active
+    // (tolerant matching: case/whitespace-insensitive, partial names allowed)
     if (activeCategory === 'backdrops' && activeTheme) {
-      items = items.filter(item => item.themes?.includes(activeTheme));
+      const norm = (s: string) => s.toLowerCase().trim();
+      const key = norm(activeTheme);
+      items = items.filter(item =>
+        item.themes?.some((t: string) => {
+          const pt = norm(String(t));
+          return pt === key || pt.includes(key) || key.includes(pt);
+        })
+      );
     }
 
     return items;
@@ -69,10 +78,10 @@ const ProductsPage = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-7xl font-black tracking-tight text-[#41137e] mb-6 leading-[1.1]"
             >
-              Explore Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#7e22ce]">Dynamic Catalog</span>
+              {isEs ? <>Explora Nuestro <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#7e22ce]">Catálogo</span></> : <>Explore Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d90082] to-[#7e22ce]">Dynamic Catalog</span></>}
             </motion.h1>
             <p className="text-slate-500 text-lg md:text-xl font-medium max-w-2xl mx-auto">
-              Select a category below to discover premium museum-grade event essentials tailored for your next unforgettable moment.
+              {isEs ? 'Elige una categoría y descubre impresiones premium para que tu próximo evento sea inolvidable.' : 'Select a category below to discover premium museum-grade event essentials tailored for your next unforgettable moment.'}
             </p>
           </header>
 
@@ -156,7 +165,7 @@ const ProductsPage = () => {
           className="flex items-center gap-2 text-[#41137e] font-bold mb-8 hover:text-[#d90082] transition-colors bg-white px-5 py-2.5 rounded-full shadow-sm hover:shadow-md border border-slate-100 w-fit"
         >
           <ArrowLeft className="w-5 h-5" />
-          Back to Categories
+          {isEs ? 'Volver a Categorías' : 'Back to Categories'}
         </button>
 
         <header className="mb-12">
@@ -187,7 +196,7 @@ const ProductsPage = () => {
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-hover:text-[#d90082] transition-colors" />
             <input 
               type="text" 
-              placeholder="Search products..."
+              placeholder={isEs ? "Buscar productos..." : "Search products..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-14 pr-6 py-4 rounded-full bg-white border border-slate-200 focus:border-[#41137e] outline-none transition-all shadow-sm text-slate-700 font-medium"
@@ -206,7 +215,7 @@ const ProductsPage = () => {
                 : 'bg-white text-slate-500 hover:bg-slate-100 border border-slate-200'
               }`}
             >
-              All Themes
+              {isEs ? 'Todos los Temas' : 'All Themes'}
             </button>
             {backdropThemes.map(theme => (
               <button 
@@ -241,7 +250,15 @@ const ProductsPage = () => {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <ProductCard product={product} onViewDetails={setSelectedProduct} />
+                  <ProductCard
+                    product={product}
+                    onViewDetails={setSelectedProduct}
+                    onAddToCart={(p) => addToCart(p, {
+                      variant: p.variants?.[0],
+                      material: p.materials?.[0] || 'Foamboard',
+                      isRushOrder: false,
+                    })}
+                  />
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -251,9 +268,9 @@ const ProductsPage = () => {
             <div className="inline-flex w-20 h-20 rounded-full bg-slate-50 items-center justify-center mb-6">
               <Package className="w-8 h-8 text-slate-300" />
             </div>
-            <h3 className="text-2xl font-bold text-slate-700 mb-2">No items found</h3>
+            <h3 className="text-2xl font-bold text-slate-700 mb-2">{isEs ? 'No se encontró nada' : 'No items found'}</h3>
             <p className="text-slate-500">
-              Try adjusting your search or filters to find what you're looking for.
+              {isEs ? 'Prueba con otra búsqueda o ajusta los filtros.' : "Try adjusting your search or filters to find what you're looking for."}
             </p>
           </div>
         )}
