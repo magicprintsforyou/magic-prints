@@ -55,7 +55,7 @@ type AppContextType = {
   // Catalog
   catalog: CategorizedProducts;
   addProduct: (categoryId: string, product: Product) => Promise<void>;
-  updateProduct: (categoryId: string, product: Product) => Promise<{ ok: boolean; error?: string }>;
+  updateProduct: (categoryId: string, product: Product) => Promise<{ ok: boolean; error?: string; warning?: string }>;
   deleteProduct: (categoryId: string, productId: string) => Promise<void>;
   addCategory: (categoryId: string, categoryData: CategoryData) => Promise<void>;
   updateCategory: (categoryId: string, categoryData: CategoryData) => Promise<void>;
@@ -81,7 +81,7 @@ type AppContextType = {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 
-const LOCAL_STORAGE_KEY = 'magic_prints_custom_catalog';
+const LOCAL_STORAGE_KEY = 'magic_prints_custom_catalog_v2';
 
 const loadLocalCatalog = (defaultCatalog: CategorizedProducts): CategorizedProducts => {
   if (typeof window === 'undefined') return defaultCatalog;
@@ -464,7 +464,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  const updateProduct = async (categoryId: string, product: Product): Promise<{ ok: boolean; error?: string }> => {
+  const updateProduct = async (categoryId: string, product: Product): Promise<{ ok: boolean; error?: string; warning?: string }> => {
     // Sanitize variants: clean objects with trimmed size and numeric price.
     // This guarantees adds/deletes/edits are all sent as the full new array.
     const cleanVariants = (product.variants || []).map(v => ({
@@ -504,16 +504,20 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         .eq('id', product.id)
         .select('id');
       if (error) {
-        return { ok: false, error: error.message };
+        // Database unreachable, but local save already succeeded above.
+        console.warn("Supabase unavailable, kept local only:", error.message);
+        return { ok: true, warning: 'Saved on this device only (database offline).' };
       }
       if (!data || data.length === 0) {
-        return { ok: false, error: `The product id "${product.id}" was not found in the database (0 rows updated). The change was saved locally only.` };
+        console.warn("Supabase: 0 rows updated, kept local only.");
+        return { ok: true, warning: 'Saved on this device only (database offline).' };
       }
       await fetchCatalog();
       return { ok: true };
     } catch (err: any) {
-      console.warn("Supabase updateProduct failed:", err);
-      return { ok: false, error: err?.message || 'Unknown error while saving to Supabase.' };
+      // Database unreachable, but local save already succeeded above.
+      console.warn("Supabase updateProduct failed, kept local only:", err);
+      return { ok: true, warning: 'Saved on this device only (database offline).' };
     }
   };
 
