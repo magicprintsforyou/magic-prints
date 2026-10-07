@@ -19,7 +19,7 @@ import {
 
 export default function Home() {
   const { t, language } = useLanguage();
-  const { catalog } = useProducts();
+  const { catalog, addToCart } = useProducts();
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showHeroLogo, setShowHeroLogo] = useState(true);
@@ -225,7 +225,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-6"><AIInspirationMockup /></div>
+      <div className="max-w-7xl mx-auto px-6"><AIInspirationMockup lang={language} /></div>
       {/* The Magic Process */}
       <section className="py-32 bg-[#0A0212] px-6 rounded-t-[50px] md:rounded-t-[100px] rounded-b-[100px] relative overflow-hidden shadow-2xl z-20 border-t border-b border-white/5">
         <div className="absolute top-0 right-0 p-20 opacity-5 text-[200px] select-none pointer-events-none">✨</div>
@@ -281,8 +281,13 @@ export default function Home() {
             {bestSellers.map(product => (
               <ProductCard
                 key={product.id}
-                  product={product} 
+                  product={product}
                   onViewDetails={setSelectedProduct}
+                  onAddToCart={(prod) => addToCart(prod, {
+                    variant: prod.variants?.[0],
+                    material: prod.materials?.[0] || 'Foamboard',
+                    isRushOrder: false,
+                  })}
                 />
             ))}
           </div>
@@ -371,6 +376,18 @@ export default function Home() {
         <div className="absolute inset-0 bg-spiral-float opacity-5 -z-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-screen"></div>
         <BespokeForm />
       </div>
+
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          isOpen={!!selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={(product, config) => {
+            addToCart(product, config);
+            setSelectedProduct(null);
+          }}
+        />
+      )}
     </div>
   );
 }
