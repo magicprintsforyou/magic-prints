@@ -4,6 +4,7 @@ import { X, Upload, Clock, ShieldCheck, ChevronDown } from 'lucide-react';
 import { Product, Variant } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { isDesignPreview } from '../lib/catalogPresentation';
+import { useLanguage } from '../context/ProductContext';
 
 const SIZE_REFERENCE_IMAGES: Record<string, string> = {
   '5x3': '/images/backdrop-5x3-size-reference.jpg',
@@ -43,6 +44,8 @@ interface ProductModalProps {
 }
 
 const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, onAddToCart }) => {
+  const { language } = useLanguage();
+  const isEs = language !== 'en';
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(product.variants && product.variants.length > 0 ? product.variants[0] : null);
   const [material, setMaterial] = useState<string>(product.materials?.[0] || 'Foamboard');
   const [isRushOrder, setIsRushOrder] = useState<boolean>(false);
@@ -57,8 +60,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
   // Fallback base price if no variants exist
   const basePrice = selectedVariant?.price || product.price || 0;
   const rushSurcharge = 40;
-  const rushLabel = (product as any).rush_label || 'Rush Order Delivery';
-  const rushDesc = (product as any).rush_desc || 'Skip the line. Ships faster.';
+  const rushLabel = (product as any).rush_label || (isEs ? 'Entrega urgente' : 'Rush Order Delivery');
+  const rushDesc = (product as any).rush_desc || (isEs ? 'Sin filas. Lo producimos más rápido.' : 'Skip the line. Ships faster.');
   const totalPrice = basePrice + (isRushOrder ? rushSurcharge : 0);
 
   if (!isOpen || typeof document === 'undefined') return null;
@@ -84,7 +87,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
         >
           {/* Close Button */}
           <button 
-            aria-label="Close product details"
+            aria-label={isEs ? "Cerrar detalles del producto" : "Close product details"}
             onClick={onClose}
             className="absolute top-6 right-6 z-20 w-12 h-12 bg-white/50 backdrop-blur-md rounded-full flex items-center justify-center text-slate-800 hover:bg-[#d90082] hover:text-white transition-all border border-slate-200"
           >
@@ -116,7 +119,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
             </div>
             {isDesignPreview(displayedImage) && (
               <p className="pt-3 text-center text-xs text-slate-500">
-                Design preview · Your artwork will be customized for your event.
+                {isEs ? 'Vista previa del diseño · Tu arte se personalizará para tu evento.' : 'Design preview · Your artwork will be customized for your event.'}
               </p>
             )}
             {sizeReference && (
@@ -124,30 +127,30 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
                 <div className="flex max-w-full gap-2 rounded-full bg-white p-1.5 shadow-md">
                   <button
                     type="button"
-                    aria-label="Show product photo"
+                    aria-label={isEs ? "Mostrar foto del producto" : "Show product photo"}
                     aria-pressed={!showSizeReference}
                     onClick={() => setShowSizeReference(false)}
                     className={`rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-wider transition-colors ${
                       !showSizeReference ? 'bg-[#41137e] text-white' : 'text-slate-600 hover:bg-slate-100'
                     }`}
                   >
-                    Product photo
+                    {isEs ? 'Foto del producto' : 'Product photo'}
                   </button>
                   <button
                     type="button"
-                    aria-label={`Show illustrative size reference for ${sizeReference.label}`}
+                    aria-label={isEs ? `Mostrar referencia de tamaño ilustrativa (${sizeReference.label})` : `Show illustrative size reference for ${sizeReference.label}`}
                     aria-pressed={showSizeReference}
                     onClick={() => setShowSizeReference(true)}
                     className={`rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-wider transition-colors ${
                       showSizeReference ? 'bg-[#41137e] text-white' : 'text-slate-600 hover:bg-slate-100'
                     }`}
                   >
-                    Size reference
+                    {isEs ? 'Referencia de tamaño' : 'Size reference'}
                   </button>
                 </div>
                 {showSizeReference && (
                   <p className="text-center text-[10px] font-semibold text-slate-500">
-                    Illustrative size reference · Height × width · {sizeReference.label}
+                    {isEs ? 'Referencia de tamaño ilustrativa · Alto × ancho · ' : 'Illustrative size reference · Height × width · '}{sizeReference.label}
                   </p>
                 )}
               </div>
@@ -166,7 +169,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
               {/* Size Specification */}
               {(product.variants && product.variants.length > 0) && (
                 <div>
-                  <label htmlFor={`product-size-${product.id}`} className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Select Size (Inches / Feet)</label>
+                  <label htmlFor={`product-size-${product.id}`} className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">{isEs ? "Elige el tamaño" : "Select Size (Inches / Feet)"}</label>
                   <div className="relative">
                     <select 
                       id={`product-size-${product.id}`}
@@ -191,7 +194,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
 
               {/* Material Dropdown */}
               <div>
-                <label htmlFor={`product-material-${product.id}`} className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Material Options</label>
+                <label htmlFor={`product-material-${product.id}`} className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">{isEs ? "Opciones de material" : "Material Options"}</label>
                 <div className="relative">
                   <select 
                     id={`product-material-${product.id}`}
@@ -205,8 +208,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
                       ))
                     ) : (
                       <>
-                        <option value="Foamboard">Premium Foamboard</option>
-                        <option value="Coroplast">Coroplast (Weatherproof)</option>
+                        <option value="Foamboard">{isEs ? "Foamboard premium" : "Premium Foamboard"}</option>
+                        <option value="Coroplast">{isEs ? "Coroplast (resistente al clima)" : "Coroplast (Weatherproof)"}</option>
                       </>
                     )}
                   </select>
@@ -216,7 +219,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
 
               {/* File Upload Mandatory */}
               <div>
-                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Print Artwork (Required)</label>
+                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">{isEs ? "Arte para impresión (requerido)" : "Print Artwork (Required)"}</label>
                 <label 
                   className={`w-full border-2 border-dashed rounded-2xl px-6 py-8 flex flex-col items-center justify-center transition-all cursor-pointer relative ${
                     selectedFile 
@@ -236,9 +239,9 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
                   />
                   <Upload size={28} className="mb-3" />
                   <span className="font-bold truncate max-w-[200px]">
-                    {selectedFile ? selectedFile.name : 'Upload Your File'}
+                    {selectedFile ? selectedFile.name : (isEs ? 'Sube tu archivo' : 'Upload Your File')}
                   </span>
-                  <span className="text-xs font-medium opacity-70 mt-1">.PDF, .AI, .PSD, .JPG (High Res)</span>
+                  <span className="text-xs font-medium opacity-70 mt-1">{isEs ? ".PDF, .AI, .PSD, .JPG (alta resolución)" : ".PDF, .AI, .PSD, .JPG (High Res)"}</span>
                 </label>
               </div>
 
@@ -268,7 +271,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
             {/* Price & Action */}
             <div className="mt-10 pt-8 border-t border-slate-100 flex items-center justify-between gap-6">
                <div className="flex flex-col">
-                  <span className="text-[10px] font-black text-slate-400 tracking-[0.3em] uppercase mb-1">Total Configuration</span>
+                  <span className="text-[10px] font-black text-slate-400 tracking-[0.3em] uppercase mb-1">{isEs ? "Total de tu configuración" : "Total Configuration"}</span>
                   <span className="text-5xl font-black text-[#00bff3] tracking-tighter">${totalPrice.toFixed(2)}</span>
                </div>
                <button 
@@ -287,7 +290,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
                   }
                 }}
               >
-                {selectedFile ? 'Finalize Quote' : 'Upload File First'}
+                {selectedFile ? (isEs ? 'Agregar a cotización' : 'Finalize Quote') : (isEs ? 'Sube tu archivo primero' : 'Upload File First')}
               </button>
             </div>
 

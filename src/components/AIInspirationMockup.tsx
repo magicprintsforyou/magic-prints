@@ -16,7 +16,7 @@ export default function AIInspirationMockup({ lang = 'en' }: PrintScaleQualityVi
   const [posY, setPosY] = useState<number>(50);
   const [zoom, setZoom] = useState<number>(100);
 
-  // Modal Email Form state for Claude Automated Routing
+  // Modal Email Form state for quote requests
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clientName, setClientName] = useState('');
   const [clientEmail, setClientEmail] = useState('');
@@ -338,14 +338,14 @@ export default function AIInspirationMockup({ lang = 'en' }: PrintScaleQualityVi
               className="w-full py-3.5 bg-gradient-to-r from-[#cc004e] via-[#d90082] to-[#ffcc00] text-white hover:scale-[1.01] transition-transform rounded-xl text-center font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg cursor-pointer"
             >
               <Mail className="w-4 h-4" />
-              {isEs ? `Enviar Cotización Directa al Email` : `Send Quote Request via Email (Claude Inbox)`}
+              {isEs ? `Enviar Cotización Directa al Email` : `Send Quote Request via Email`}
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Email Quote Request Modal (Routed to Specific Inbox for Claude Auto-Responder) */}
+      {/* Email Quote Request Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-[#0A0212] border border-[#d90082]/40 rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl relative text-white">
@@ -357,14 +357,14 @@ export default function AIInspirationMockup({ lang = 'en' }: PrintScaleQualityVi
             </button>
 
             <span className="text-[10px] text-[#ffcc00] font-bold uppercase tracking-widest block mb-1">
-              {isEs ? 'CORREO AUTOMATIZADO DE COTIZACIÓN' : 'AUTOMATED EMAIL QUOTE ROUTER'}
+              {isEs ? 'SOLICITUD DE COTIZACIÓN' : 'QUOTE REQUEST'}
             </span>
             <h3 className="text-xl font-black uppercase mb-2">
               {isEs ? 'Enviar Solicitud al Email de Imprenta' : 'Send Quote Request to Print Inbox'}
             </h3>
             <p className="text-xs text-[#a0a0a0] mb-6">
               {isEs 
-                ? 'Tu solicitud llegará a una carpeta dedicada para respuesta inmediata de Claude / Yndira. Producto: ' 
+                ? 'Tu solicitud llegará directo a nuestro equipo para una respuesta rápida. Producto: ' 
                 : 'Your quote will land in our dedicated inbox for rapid response. Selected product: '}
               <strong className="text-white">{currentSizeObj ? (isEs ? currentSizeObj.labelEs : currentSizeObj.labelEn) : ''}</strong>
             </p>
@@ -402,13 +402,13 @@ export default function AIInspirationMockup({ lang = 'en' }: PrintScaleQualityVi
                         phone: clientPhone,
                         eventDate: eventDate,
                         needs: [currentSizeObj ? (isEs ? currentSizeObj.labelEs : currentSizeObj.labelEn) : 'Print Product'],
-                        notes: `[CLAUDE-QUOTE-PENDING] Size: ${currentSizeObj ? currentSizeObj.id : ''}. User Position Y: ${posY}%, Zoom: ${zoom}%. ${eventNotes}`,
+                        notes: `[COTIZACION-WEB] Size: ${currentSizeObj ? currentSizeObj.id : ''}. User Position Y: ${posY}%, Zoom: ${zoom}%. ${eventNotes}`,
                       })
                     });
                     if (res.ok) {
                       setEmailSuccess(true);
                     } else {
-                      window.location.href = `mailto:magicprintsforyou@gmail.com?subject=[CLAUDE-QUOTE-PENDING] ${encodeURIComponent(clientName)} - ${currentSizeObj?.id}&body=${encodeURIComponent(`Client: ${clientName}
+                      window.location.href = `mailto:info@magicprintsforyou.com?subject=[COTIZACION-WEB] ${encodeURIComponent(clientName)} - ${currentSizeObj?.id}&body=${encodeURIComponent(`Client: ${clientName}
 Email: ${clientEmail}
 Phone: ${clientPhone}
 Event Date: ${eventDate}
@@ -417,7 +417,7 @@ Notes: ${eventNotes}`)}`;
                       setEmailSuccess(true);
                     }
                   } catch (err) {
-                    window.location.href = `mailto:magicprintsforyou@gmail.com?subject=[CLAUDE-QUOTE-PENDING] ${encodeURIComponent(clientName)}`;
+                    window.location.href = `mailto:info@magicprintsforyou.com?subject=[COTIZACION-WEB] ${encodeURIComponent(clientName)}`;
                     setEmailSuccess(true);
                   }
                   setIsSubmittingEmail(false);
