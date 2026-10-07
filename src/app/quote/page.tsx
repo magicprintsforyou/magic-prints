@@ -7,8 +7,7 @@ import Image from 'next/image';
 import { useProducts } from '../../context/ProductContext';
 
 export default function QuotePage() {
-  const { t, uploadImage, language } = useProducts();
-  const isEs = language !== 'en';
+  const { t, uploadImage } = useProducts();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -18,7 +17,7 @@ export default function QuotePage() {
     if (e.target.files) {
       const files = Array.from(e.target.files);
       if (files.length > 10) {
-        alert(isEs ? "Puedes subir un máximo de 10 archivos." : "You can upload a maximum of 10 files.");
+        alert("You can upload a maximum of 10 files.");
         setSelectedFiles(files.slice(0, 10));
       } else {
         setSelectedFiles(files);
@@ -120,13 +119,13 @@ export default function QuotePage() {
               <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500">
                 <Sparkles size={40} />
               </div>
-              <h2 className="text-3xl font-black text-[#0f172a] mb-4">{isEs ? "¡Tu solicitud va en camino!" : "Magic is on its way!"}</h2>
-              <p className="text-slate-600 font-light text-lg mb-8">{isEs ? "Recibimos tu solicitud. Nuestro equipo VIP preparará tu cotización personalizada y te contactará muy pronto." : "We have received your request. Our VIP production team will craft your bespoke quote and contact you shortly."}</p>
+              <h2 className="text-3xl font-black text-[#0f172a] mb-4">Magic is on its way!</h2>
+              <p className="text-slate-600 font-light text-lg mb-8">We have received your request. Our VIP production team will craft your bespoke quote and contact you shortly.</p>
               <button
                 onClick={() => setSuccess(false)}
                 className="text-[#ff2a70] font-bold hover:underline"
               >
-                {isEs ? 'Enviar otra solicitud' : 'Send another request'}
+                'Send another request'
               </button>
             </div>
           ) : (
@@ -157,7 +156,7 @@ export default function QuotePage() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
-                    <Phone size={14} /> {isEs ? 'Teléfono (WhatsApp)' : 'Phone (WhatsApp)'}
+                    <Phone size={14} /> 'Phone (WhatsApp)'
                   </label>
                   <input required name="phone" type="tel" className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#ff2a70]/50 focus:bg-white transition-all" placeholder="+1 (555) 000-0000" />
                 </div>
