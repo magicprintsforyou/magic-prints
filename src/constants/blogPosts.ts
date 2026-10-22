@@ -27,6 +27,86 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'accordion-welcome-photo-board-set',
+    image: '/images/blog/accordion-welcome.jpg',
+    inspirationUrl: 'https://www.instagram.com/magicprintsforyou',
+    imageAlt: {
+      en: 'Seven-panel accordion WELCOME photo board set installed in a hotel lobby, alternating the couple’s portraits with the letters of WELCOME',
+      es: 'Set acordeón WELCOME de siete paneles instalado en el lobby de un hotel, alternando retratos de la pareja con las letras de WELCOME',
+    },
+    author: 'Magic Prints For You',
+    content: {
+      en: {
+        title: 'A 7 ft WELCOME Wall: Our Accordion Photo Board Set',
+        description: 'Seven freestanding panels that alternate your favorite photos with the letters of WELCOME — a wedding entrance guests photograph before they find their seats.',
+        tag: 'Wedding welcome signs',
+        readTime: '3 min read',
+        intro: [
+          'Most wedding guests take their first photo of the night before they even find their table. This accordion photo board set turns that moment into part of the celebration: a full wall of panels that spells out WELCOME while showing off your favorite photographs as a couple.',
+          'The set in the photo was installed in the lobby of a Dallas–Fort Worth hotel. Seven panels alternate large portraits of the couple with the letters of WELCOME and the line “to our wedding” in script, so guests read the greeting and meet the couple’s story at the same time.',
+        ],
+        sections: [
+          {
+            heading: 'Seven panels, one continuous welcome',
+            paragraphs: ['Each panel measures 22×84 in, and the full set stands 7 ft tall. The accordion fold lets the panels flow in a gentle zigzag across a lobby, ballroom entrance or foyer, so the display reads as one continuous piece instead of seven separate signs. You choose which photographs alternate with the letters, and the layout is designed around your images before anything is printed.'],
+          },
+          {
+            heading: 'It stands completely on its own',
+            paragraphs: ['There is no wall, frame or hardware behind this set. The folded structure supports itself, which venues appreciate: nothing leans against their walls and nothing needs to be hung. It sets up fast, photographs beautifully from the front and the side, and folds flat again for transport and storage.'],
+          },
+          {
+            heading: 'Two versions: photos only, or seating chart',
+            bullets: [
+              'Photos Only: your favorite photographs alternate with the WELCOME letters, as shown here.',
+              'Seating Chart: the same accordion format carries your guest list, so the welcome wall also shows everyone to their table.',
+              'Custom colors: the background, lettering and accents are matched to your wedding palette.',
+            ],
+          },
+          {
+            heading: 'Price, shipping and booking',
+            paragraphs: ['The accordion photo board set is $950. We build every set to order in Arlington, TX and ship it folded nationwide, so it can travel to weddings well beyond Dallas–Fort Worth. We are now booking 2026 and 2027 weddings.',
+              'See more of our work on Instagram at @magicprintsforyou, or order your set through our Etsy shop: https://www.etsy.com/listing/4591521888. Send us your wedding date and the photographs you would love to feature, and we will design the layout around them.'],
+          },
+        ],
+        conclusion: 'An entrance sets the tone for the whole celebration. A welcome wall built from your own photographs gives guests a first stop they will remember — and photograph.',
+      },
+      es: {
+        title: 'Una pared WELCOME de 7 ft: nuestro set acordeón de fotos',
+        description: 'Siete paneles que se sostienen solos y alternan tus fotos favoritas con las letras de WELCOME: una entrada de boda que los invitados fotografían antes de buscar su mesa.',
+        tag: 'Letreros de bienvenida',
+        readTime: '3 min de lectura',
+        intro: [
+          'La mayoría de los invitados se toma su primera foto de la noche antes de encontrar su mesa. Este set acordeón convierte ese momento en parte de la celebración: una pared completa de paneles que forma la palabra WELCOME mientras muestra tus fotografías favoritas como pareja.',
+          'El set de la foto se instaló en el lobby de un hotel de Dallas–Fort Worth. Siete paneles alternan retratos grandes de la pareja con las letras de WELCOME y la frase “to our wedding” en letra cursiva, para que los invitados lean la bienvenida y conozcan la historia de la pareja al mismo tiempo.',
+        ],
+        sections: [
+          {
+            heading: 'Siete paneles, una sola bienvenida',
+            paragraphs: ['Cada panel mide 22×84 pulgadas y el set completo alcanza 7 ft de altura. El doblez tipo acordeón permite que los paneles fluyan en un zigzag suave por un lobby, la entrada de un salón o un recibidor, de modo que la pieza se lee como una sola y no como siete letreros separados. Tú eliges qué fotografías se alternan con las letras, y el diseño se arma alrededor de tus imágenes antes de imprimir.'],
+          },
+          {
+            heading: 'Se sostiene por completo solo',
+            paragraphs: ['Detrás de este set no hay pared, marco ni estructura adicional. El propio doblez lo sostiene, algo que los salones agradecen: nada se apoya en sus paredes y nada hay que colgar. Se monta rápido, se fotografía hermoso de frente y de lado, y vuelve a doblarse plano para transportarlo y guardarlo.'],
+          },
+          {
+            heading: 'Dos versiones: solo fotos o seating chart',
+            bullets: [
+              'Photos Only: tus fotografías favoritas se alternan con las letras de WELCOME, como se muestra aquí.',
+              'Seating Chart: el mismo formato acordeón lleva la lista de invitados, así la pared de bienvenida también guía a cada quien a su mesa.',
+              'Colores personalizados: el fondo, las letras y los acentos se ajustan a la paleta de tu boda.',
+            ],
+          },
+          {
+            heading: 'Precio, envío y reservación',
+            paragraphs: ['El set acordeón de fotos cuesta $950. Cada set se fabrica bajo pedido en Arlington, TX y se envía doblado a todo Estados Unidos, así puede viajar a bodas mucho más allá de Dallas–Fort Worth. Ya estamos reservando bodas de 2026 y 2027.',
+              'Mira más de nuestro trabajo en Instagram, @magicprintsforyou, o ordena tu set en nuestra tienda de Etsy: https://www.etsy.com/listing/4591521888. Envíanos la fecha de tu boda y las fotografías que quieres destacar, y diseñamos la composición alrededor de ellas.'],
+          },
+        ],
+        conclusion: 'La entrada marca el tono de toda la celebración. Una pared de bienvenida construida con tus propias fotografías les da a los invitados una primera parada que recordarán — y fotografiarán.',
+      },
+    },
+  },
+  {
     slug: 'pinterest-wedding-inspiration-to-production',
     image: '/images/blog/pinterest-wedding.jpg',
     inspirationUrl: 'https://www.instagram.com/magicprintsforyou/p/DdRrYj2GtdE/',
