@@ -211,7 +211,7 @@ export default function Home() {
               },
               {
                 title: language === 'en' ? 'Fast Print' : 'Fast Print Exprés',
-                desc: language === 'en' ? 'Need it sooner? Same/next day production for eligible items (+$40).' : '¿Lo necesitas antes? Producción exprés en 24-48h (+$40 por producto).',
+                desc: language === 'en' ? 'Need it sooner? Same/next day production for eligible items (+$25).' : '¿Lo necesitas antes? Producción el mismo día o al día siguiente para artículos elegibles (+$25).',
                 icon: <Clock className="text-[#f9a826]" size={32} />
               }
             ].map((option, i) => (
