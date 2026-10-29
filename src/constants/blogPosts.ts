@@ -65,7 +65,7 @@ export const BLOG_POSTS: BlogPost[] = [
           {
             heading: 'Price, shipping and booking',
             paragraphs: ['The accordion photo board set is $950. We build every set to order in Arlington, TX and ship it folded nationwide, so it can travel to weddings well beyond Dallas–Fort Worth. We are now booking 2026 and 2027 weddings.',
-              'See more of our work on Instagram at @magicprintsforyou, or order your set through our Etsy shop: https://www.etsy.com/listing/4591521888. Send us your wedding date and the photographs you would love to feature, and we will design the layout around them.'],
+              'See more of our work on Instagram at @magicprintsforyou, or order your set right here on our website: find the Accordion Photo Board Set in our Products catalog and add it to your quote cart. Send us your wedding date and the photographs you would love to feature, and we will design the layout around them.'],
           },
         ],
         conclusion: 'An entrance sets the tone for the whole celebration. A welcome wall built from your own photographs gives guests a first stop they will remember — and photograph.',
@@ -99,7 +99,7 @@ export const BLOG_POSTS: BlogPost[] = [
           {
             heading: 'Precio, envío y reservación',
             paragraphs: ['El set acordeón de fotos cuesta $950. Cada set se fabrica bajo pedido en Arlington, TX y se envía doblado a todo Estados Unidos, así puede viajar a bodas mucho más allá de Dallas–Fort Worth. Ya estamos reservando bodas de 2026 y 2027.',
-              'Mira más de nuestro trabajo en Instagram, @magicprintsforyou, o ordena tu set en nuestra tienda de Etsy: https://www.etsy.com/listing/4591521888. Envíanos la fecha de tu boda y las fotografías que quieres destacar, y diseñamos la composición alrededor de ellas.'],
+              'Mira más de nuestro trabajo en Instagram, @magicprintsforyou, o ordena tu set aquí mismo en nuestro sitio web: busca el Accordion Photo Board Set en nuestro catálogo de productos y agrégalo a tu carrito de cotización. Envíanos la fecha de tu boda y las fotografías que quieres destacar, y diseñamos la composición alrededor de ellas.'],
           },
         ],
         conclusion: 'La entrada marca el tono de toda la celebración. Una pared de bienvenida construida con tus propias fotografías les da a los invitados una primera parada que recordarán — y fotografiarán.',
@@ -205,7 +205,7 @@ export const BLOG_POSTS: BlogPost[] = [
     author: 'Magic Prints For You',
     content: {
       en: {
-        title: 'How to Choose a 5×3, 6×4, 7×4 or 8×4 Photo Board',
+        title: 'How to Choose a 5×4, 6×4, 7×4 or 7×8 Photo Board',
         description: 'Compare photo board sizes by purpose, placement, artwork and venue conditions instead of guest count.',
         tag: 'Size guide',
         readTime: '4 min read',
@@ -233,7 +233,7 @@ export const BLOG_POSTS: BlogPost[] = [
         conclusion: 'Choose the size that solves the visual and physical needs of the location. Measurements, artwork and viewing distance provide better guidance than the number of guests.',
       },
       es: {
-        title: 'Cómo escoger un photo board de 5×3, 6×4, 7×4 u 8×4',
+        title: 'Cómo escoger un photo board de 5×4, 6×4, 7×4 o 7×8',
         description: 'Compara tamaños según función, ubicación, arte y condiciones del lugar, sin basarte en el número de invitados.',
         tag: 'Guía de tamaños',
         readTime: '4 min de lectura',
