@@ -33,6 +33,8 @@ export type CartItem = {
     material: string;
     isRushOrder: boolean;
     fileUploaded?: boolean;
+    artworkName?: string;
+    artworkUrl?: string;
   };
   quantity: number;
   price: number;
