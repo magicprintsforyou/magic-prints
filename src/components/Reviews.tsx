@@ -2,45 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { Star, Quote, ExternalLink, MessageCircleHeart } from "lucide-react";
+import { Star, ExternalLink, MessageCircleHeart, Trophy } from "lucide-react";
 
 // TODO (owner): replace with your real Google Business review link
 const GOOGLE_REVIEW_URL =
   "https://www.google.com/search?q=Magic+Prints+For+You+Arlington+TX";
-
-type Review = {
-  name: string;
-  event: string;
-  rating: number;
-  text: string;
-  placeholder: boolean;
-};
-
-// Placeholder reviews — the owner replaces these with real customer reviews.
-// Kept structurally realistic so the layout is final; content is marked sample.
-const SAMPLE_REVIEWS: Review[] = [
-  {
-    name: "Sample Review",
-    event: "Quinceañera",
-    rating: 5,
-    text: "This is a sample review. Replace it with a real customer testimonial once reviews start coming in from Google.",
-    placeholder: true,
-  },
-  {
-    name: "Sample Review",
-    event: "Wedding",
-    rating: 5,
-    text: "This is a sample review. Replace it with a real customer testimonial once reviews start coming in from Google.",
-    placeholder: true,
-  },
-  {
-    name: "Sample Review",
-    event: "Birthday Party",
-    rating: 5,
-    text: "This is a sample review. Replace it with a real customer testimonial once reviews start coming in from Google.",
-    placeholder: true,
-  },
-];
 
 function Stars({ rating }: { rating: number }) {
   return (
@@ -68,40 +34,38 @@ export default function Reviews() {
           <h2 className="mt-4 text-4xl font-black tracking-tight text-[#41137e] sm:text-5xl">
             Loved by Hosts Across DFW
           </h2>
-          <div className="mt-4 flex items-center justify-center gap-3">
-            <Stars rating={5} />
-            <span className="text-sm font-bold text-gray-500">
-              Real reviews from Google — yours could be next
-            </span>
-          </div>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {SAMPLE_REVIEWS.map((review, i) => (
-            <article
-              key={i}
-              className="relative flex flex-col rounded-[28px] border border-purple-100 bg-[#FDF9FF] p-8 shadow-[0_18px_50px_rgba(65,19,126,0.07)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(65,19,126,0.12)]"
-            >
-              {review.placeholder && (
-                <span className="absolute right-5 top-5 rounded-full bg-amber-100 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-amber-700">
-                  Sample
-                </span>
-              )}
-              <Quote className="h-8 w-8 text-[#d90082]/30" />
-              <div className="mt-4">
-                <Stars rating={review.rating} />
-              </div>
-              <p className="mt-4 flex-1 text-base leading-relaxed text-gray-600">
-                {review.text}
-              </p>
-              <div className="mt-6 border-t border-purple-100 pt-5">
-                <p className="font-black text-[#41137e]">{review.name}</p>
-                <p className="text-sm font-semibold text-gray-400">
-                  {review.event}
-                </p>
-              </div>
-            </article>
-          ))}
+        <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
+          <article className="flex flex-col items-center rounded-[28px] border border-purple-100 bg-[#FDF9FF] p-10 text-center shadow-[0_18px_50px_rgba(65,19,126,0.07)]">
+            <p className="text-6xl font-black tracking-tight text-[#41137e]">
+              4.9
+            </p>
+            <div className="mt-3">
+              <Stars rating={5} />
+            </div>
+            <p className="mt-4 text-base font-bold text-gray-600">
+              4.9 stars from 70 Google reviews
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-gray-500">
+              Real customers, real events — quinceañeras, weddings, birthdays
+              and corporate celebrations across Dallas–Fort Worth.
+            </p>
+          </article>
+
+          <article className="flex flex-col items-center rounded-[28px] border border-purple-100 bg-[#FDF9FF] p-10 text-center shadow-[0_18px_50px_rgba(65,19,126,0.07)]">
+            <Trophy className="h-12 w-12 text-[#d90082]" />
+            <p className="mt-4 text-2xl font-black leading-snug tracking-tight text-[#41137e]">
+              #1 Balloon Store in Arlington 2026
+            </p>
+            <p className="mt-2 text-sm font-bold uppercase tracking-widest text-gray-400">
+              BusinessRate
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-gray-500">
+              Ranked first among Arlington balloon stores by BusinessRate for
+              2026, based on our public Google reviews.
+            </p>
+          </article>
         </div>
 
         <div className="mt-12 text-center">
