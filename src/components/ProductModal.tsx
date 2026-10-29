@@ -4,6 +4,7 @@ import { X, Upload, Clock, ShieldCheck, ChevronDown } from 'lucide-react';
 import { Product, Variant } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { isDesignPreview } from '../lib/catalogPresentation';
+import { useProducts } from '../context/ProductContext';
 
 const SIZE_REFERENCE_IMAGES: Record<string, string> = {
   '5x3': '/images/backdrop-5x3-size-reference.jpg',
@@ -47,6 +48,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
   const [material, setMaterial] = useState<string>(product.materials?.[0] || 'Foamboard');
   const [isRushOrder, setIsRushOrder] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isAdding, setIsAdding] = useState<boolean>(false);
+  const { uploadImage } = useProducts();
   const [showSizeReference, setShowSizeReference] = useState<boolean>(true);
 
   const sizeReference = SIZE_REFERENCE_PRODUCTS.has(product.id)
@@ -56,7 +59,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
 
   // Fallback base price if no variants exist
   const basePrice = selectedVariant?.price || product.price || 0;
-  const rushSurcharge = 40;
+  const rushSurcharge = 25;
   const rushLabel = (product as any).rush_label || ('Rush Order Delivery');
   const rushDesc = (product as any).rush_desc || ('Skip the line. Ships faster.');
   const totalPrice = basePrice + (isRushOrder ? rushSurcharge : 0);
@@ -275,19 +278,38 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose, o
                 className={`flex-grow py-5 text-white rounded-full font-black text-sm tracking-widest uppercase transition-all shadow-xl flex items-center justify-center gap-2 ${
                   selectedFile ? 'bg-[#d90082] hover:bg-[#ff2a70] hover:scale-105 active:scale-95' : 'bg-slate-300 cursor-not-allowed'
                 }`}
-                onClick={() => {
-                  if (selectedFile && onAddToCart) {
-                    onAddToCart(product, { 
-                      variant: selectedVariant, 
-                      material, 
+                onClick={async () => {
+                  if (selectedFile && onAddToCart && !isAdding) {
+                    setIsAdding(true);
+                    // Retain the artwork itself (not just its name) so it can be
+                    // attached to the order email. Images go through uploadImage,
+                    // which compresses them to a small WebP data URL (or a storage
+                    // URL when storage is available). Oversized embeds are skipped
+                    // so the localStorage-persisted cart stays within quota.
+                    let artworkUrl: string | undefined;
+                    if (selectedFile.type.startsWith('image/')) {
+                      try {
+                        const url = await uploadImage(selectedFile, 'client-assets');
+                        if (url && (!url.startsWith('data:') || url.length <= 2000000)) {
+                          artworkUrl = url;
+                        }
+                      } catch (uploadErr) {
+                        console.warn('Artwork embed failed, keeping file name only:', uploadErr);
+                      }
+                    }
+                    onAddToCart(product, {
+                      variant: selectedVariant,
+                      material,
                       isRushOrder,
-                      artworkName: selectedFile.name 
+                      artworkName: selectedFile.name,
+                      ...(artworkUrl ? { artworkUrl } : {})
                     });
+                    setIsAdding(false);
                     onClose();
                   }
                 }}
               >
-                {selectedFile ? ('Finalize Quote') : ('Upload File First')}
+                {selectedFile ? (isAdding ? 'Uploading…' : 'Finalize Quote') : ('Upload File First')}
               </button>
             </div>
 
