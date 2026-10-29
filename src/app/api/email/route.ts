@@ -1,6 +1,38 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
+// ---- Client file attachments -------------------------------------------------
+// Clients send photos/artwork as base64 data URIs (see BespokeForm and
+// ProductContext.uploadImage). Gmail blocks data-URI images/links, so those
+// files must travel as REAL email attachments instead of "View File" links.
+const MAX_ATTACHMENT_BASE64_LENGTH = 8 * 1024 * 1024; // ~8MB of base64 per file
+
+const MIME_EXTENSIONS: Record<string, string> = {
+  'image/webp': 'webp',
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+  'image/png': 'png',
+  'image/gif': 'gif',
+  'image/svg+xml': 'svg',
+  'image/avif': 'avif',
+  'image/tiff': 'tiff',
+  'application/pdf': 'pdf',
+};
+
+type OutgoingAttachment = { filename: string; content: string };
+
+function sanitizeFilename(name: string): string {
+  const cleaned = name.replace(/[^\w.\-]+/g, '_').replace(/^\.+/, '').slice(0, 120);
+  return cleaned || 'file';
+}
+
+function extensionFor(mime: string, preferredName?: string): string {
+  if (preferredName && preferredName.includes('.')) {
+    return preferredName.split('.').pop()!.toLowerCase();
+  }
+  return MIME_EXTENSIONS[mime.toLowerCase()] || 'bin';
+}
+
 export async function POST(req: Request) {
   try {
     const apiKey = process.env.RESEND_API_KEY;
@@ -64,6 +96,77 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
+    // Convert every client file we received into a real email attachment.
+    // Sources: `fileUrls` (quote form uploads) and each cart item's
+    // `config.artworkUrl` (product configurator artwork, named via artworkName).
+    const attachments: OutgoingAttachment[] = [];
+    const attachedNames: string[] = [];
+    const skippedFiles: string[] = [];
+    const remoteFiles: { name: string; url: string }[] = [];
+    const usedNames = new Set<string>();
+
+    const uniqueName = (base: string) => {
+      let candidate = base;
+      let n = 2;
+      while (usedNames.has(candidate)) {
+        const dot = base.lastIndexOf('.');
+        candidate = dot > 0 ? `${base.slice(0, dot)}-${n}${base.slice(dot)}` : `${base}-${n}`;
+        n++;
+      }
+      usedNames.add(candidate);
+      return candidate;
+    };
+
+    const collectFile = (source: unknown, preferredName: string | undefined, fallbackBase: string) => {
+      if (typeof source !== 'string' || !source) return;
+      if (source.startsWith('data:')) {
+        const match = source.match(/^data:([^;,]*)?(;base64)?,([\s\S]*)$/);
+        if (!match) return;
+        const mime = match[1] || 'application/octet-stream';
+        const ext = extensionFor(mime, preferredName);
+        const filename = uniqueName(sanitizeFilename(
+          preferredName && preferredName.includes('.') ? preferredName : `${fallbackBase}.${ext}`
+        ));
+        if (!match[2]) {
+          skippedFiles.push(`${filename} (formato no compatible para adjuntar)`);
+          return;
+        }
+        const base64 = match[3].replace(/\s/g, '');
+        if (base64.length > MAX_ATTACHMENT_BASE64_LENGTH) {
+          skippedFiles.push(`${filename} (archivo demasiado grande para adjuntar)`);
+          return;
+        }
+        attachments.push({ filename, content: base64 });
+        attachedNames.push(filename);
+      } else if (/^https?:\/\//i.test(source)) {
+        // A real storage URL (Supabase) — a normal link works fine in Gmail.
+        remoteFiles.push({ name: preferredName || fallbackBase, url: source });
+      }
+    };
+
+    if (Array.isArray(fileUrls)) {
+      fileUrls.forEach((url: string, i: number) => collectFile(url, undefined, `inspiration-${i + 1}`));
+    }
+    if (Array.isArray(cart)) {
+      cart.forEach((item: any, i: number) => {
+        const cfg = item?.config;
+        if (cfg?.artworkUrl) {
+          collectFile(cfg.artworkUrl, cfg.artworkName, `artwork-${i + 1}`);
+        }
+      });
+    }
+
+    const filesSectionHtml = (attachedNames.length > 0 || remoteFiles.length > 0 || skippedFiles.length > 0) ? `
+      <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; border: 1px solid #ddd;">
+        <p><strong>Archivos adjuntos / Attached files:</strong></p>
+        <ul>
+          ${attachedNames.map((n: string) => `<li>${n}</li>`).join('')}
+          ${remoteFiles.map((f) => `<li><a href="${f.url}" target="_blank" style="color: #d90082; font-weight: bold;">${f.name}</a></li>`).join('')}
+          ${skippedFiles.map((n: string) => `<li><i>${n}</i></li>`).join('')}
+        </ul>
+      </div>
+    ` : '<p><i>No files attached.</i></p>';
+
     let adminEmailId = null;
     let clientEmailId = null;
 
@@ -88,19 +191,10 @@ export async function POST(req: Request) {
             <p><strong>Needs:</strong> ${Array.isArray(needs) ? needs.join(', ') : needs}</p>
             <p><strong>Notes:</strong> ${notes || 'No extra notes'}</p>
             ${cartHtml}
-            
-            ${fileUrls && fileUrls.length > 0 ? `
-              <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; border: 1px solid #ddd;">
-                <p><strong>Attachments / Inspiration:</strong></p>
-                <ul>
-                  ${fileUrls.map((url: string, index: number) => `
-                    <li><a href="${url}" target="_blank" style="color: #d90082; font-weight: bold;">View File ${index + 1}</a></li>
-                  `).join('')}
-                </ul>
-              </div>
-            ` : '<p><i>No files attached.</i></p>'}
+            ${filesSectionHtml}
           </div>
         `,
+        ...(attachments.length > 0 ? { attachments } : {}),
       });
       
       if (adminResponse.error) throw adminResponse.error;
