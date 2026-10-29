@@ -36,8 +36,59 @@ export const CATEGORIZED_PRODUCTS = {
           { size: "7x7 ft", price: 300.00 },
           { size: "8x8 ft", price: 320.00 },
           { size: "8x10 ft", price: 480.00 },
+          { size: "10x10 ft", price: 490.00 },
           { size: "8x12 ft", price: 590.00 },
           { size: "8x20 ft", price: 950.00 },
+        ]
+      },
+      {
+        id: "accordion-photo-board-set",
+        name: "Accordion Photo Board Set",
+        category: "Photo",
+        image: "/images/blog/accordion-welcome.jpg",
+        description: "Seven-panel freestanding accordion photo board set that spells WELCOME with your favorite photographs. Each panel measures 22x84 in and the full set stands 7 ft tall — no wall, frame or hardware needed. Also available as a seating chart version. Built to order in Arlington, TX and shipped folded nationwide.",
+        themes: ["wedding", "quinceanera", "corporate"],
+        price: 950.00,
+        variants: [
+          { size: "7-Panel Set (22x84 in per panel) — Photos", price: 950.00 },
+          { size: "7-Panel Set (22x84 in per panel) — Seating Chart", price: 950.00 },
+        ]
+      },
+      {
+        id: "foam-board-backdrop",
+        name: "Foam Board Backdrop",
+        category: "Backdrop",
+        image: "/images/backdrop-8x4-size-reference.jpg",
+        description: "Custom printed foam board backdrop with the stand included. For indoor use only. Printed with your photo or design and ready to display at weddings, quinceañeras, birthdays and corporate events.",
+        themes: ["wedding", "birthday", "corporate", "quinceanera", "graduation"],
+        price: 120.00,
+        variants: [
+          { size: "5x4 ft", price: 120.00 },
+          { size: "6x4 ft", price: 130.00 },
+          { size: "7x4 ft", price: 150.00 },
+          { size: "7x8 ft", price: 160.00 },
+          { size: "6x6 ft", price: 260.00 },
+          { size: "7x7 ft", price: 300.00 },
+          { size: "8x8 ft", price: 320.00 },
+          { size: "8x10 ft", price: 480.00 },
+          { size: "10x10 ft", price: 490.00 },
+          { size: "8x12 ft", price: 590.00 },
+          { size: "8x20 ft", price: 950.00 },
+        ]
+      },
+      {
+        id: "adhesive-vinyl-backdrop",
+        name: "Adhesive Vinyl Backdrop",
+        category: "Backdrop",
+        image: "/images/backdrop-7x4-size-reference.jpg",
+        description: "Self-adhesive vinyl backdrop printed with your design — applies directly to a smooth wall, no stand needed. Priced by size; larger sizes are quoted by size, so contact us for an exact quote on bigger walls.",
+        themes: ["wedding", "birthday", "corporate", "quinceanera"],
+        price: 120.00,
+        variants: [
+          { size: "5x4 ft", price: 120.00 },
+          { size: "6x4 ft", price: 130.00 },
+          { size: "7x4 ft", price: 150.00 },
+          { size: "7x8 ft", price: 160.00 },
         ]
       },
       {
@@ -63,8 +114,8 @@ export const CATEGORIZED_PRODUCTS = {
         description: "Perfect for vinyl decals or custom painting. Seamless high-density boards.",
         themes: ["safari", "barbie", "birthday"],
         variants: [
-          { size: "6ft x 4ft Panel", price: 100.00 },
-          { size: "7ft x 4ft Panel", price: 140.00 },
+          { size: "6ft x 4ft Panel", price: 130.00 },
+          { size: "7ft x 4ft Panel", price: 150.00 },
           { size: "8ft x 4ft Panel", price: 180.00 },
         ]
       },
@@ -161,19 +212,6 @@ export const CATEGORIZED_PRODUCTS = {
     image: "/images/covers/themed-props.jpg",
     items: [
       {
-        id: "luxury-welcome-sign",
-        name: "Luxury Event Welcome Sign",
-        category: "Signage",
-        image: "/images/welcome-sign-easel.jpg",
-        description: "Bespoke acrylic or foam board welcome board with UV print and custom vinyl lettering.",
-        themes: ["wedding", "corporate", "quinceanera", "birthday"],
-        variants: [
-          { size: "24 in. x 36 in.", price: 120.00 },
-          { size: "30 in. x 40 in.", price: 160.00 },
-          { size: "36 in. x 48 in.", price: 210.00 },
-        ]
-      },
-      {
         id: "themed-props",
         name: "Custom Life-Size Cutout",
         category: "Props",
@@ -196,19 +234,6 @@ export const CATEGORIZED_PRODUCTS = {
     description: "Turn your event floor into a canvas with high-density non-slip vinyl.",
     image: "/images/floor-wrap-wedding.jpg",
     items: [
-      {
-        id: "luxury-welcome-sign",
-        name: "Luxury Event Welcome Sign",
-        category: "Signage",
-        image: "/images/welcome-sign-easel.jpg",
-        description: "Bespoke acrylic or foam board welcome board with UV print and custom vinyl lettering.",
-        themes: ["wedding", "corporate", "quinceanera", "birthday"],
-        variants: [
-          { size: "24 in. x 36 in.", price: 120.00 },
-          { size: "30 in. x 40 in.", price: 160.00 },
-          { size: "36 in. x 48 in.", price: 210.00 },
-        ]
-      },
       {
         id: "custom-floor-wrap",
         name: "Custom Vinyl Floor Wrap",
@@ -237,19 +262,6 @@ export const CATEGORIZED_PRODUCTS = {
     description: "Curated kits with everything you need for a professional themed setup.",
     image: "/images/covers/grand-production-kit.jpg",
     items: [
-      {
-        id: "luxury-welcome-sign",
-        name: "Luxury Event Welcome Sign",
-        category: "Signage",
-        image: "/images/welcome-sign-easel.jpg",
-        description: "Bespoke acrylic or foam board welcome board with UV print and custom vinyl lettering.",
-        themes: ["wedding", "corporate", "quinceanera", "birthday"],
-        variants: [
-          { size: "24 in. x 36 in.", price: 120.00 },
-          { size: "30 in. x 40 in.", price: 160.00 },
-          { size: "36 in. x 48 in.", price: 210.00 },
-        ]
-      },
       {
         id: "essential-kit",
         name: "Essential Event Kit",
