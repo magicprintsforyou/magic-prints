@@ -128,10 +128,10 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "wedding", "quinceanera", "birthday", "expo"],
         materials: ["Premium Polyester Fabric", "Heavy-Duty 13oz Matte Vinyl"],
         variants: [
-          { size: "8ft x 8ft (Banner Only)", price: 264.00 },
-          { size: "8ft x 8ft (Banner + Stand)", price: 464.75 },
+          { size: "8ft x 8ft (Banner Only)", price: 291.00 },
+          { size: "8ft x 8ft (Banner + Stand)", price: 400.00 },
           { size: "10ft x 8ft (Banner Only)", price: 330.00 },
-          { size: "10ft x 8ft (Banner + Stand)", price: 492.25 },
+          { size: "10ft x 8ft (Banner + Stand)", price: 432.00 },
           { size: "10ft x 10ft (Banner Only)", price: 387.50 },
           { size: "10ft x 10ft (Banner + Stand)", price: 550.00 }
         ],
@@ -148,9 +148,9 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["9oz Tension Fabric"],
         variants: [
-          { size: "3ft (Non-Lit Slim Frame)", price: 219.80 },
-          { size: "10ft (Non-Lit Slim Frame)", price: 659.80 },
-          { size: "20ft (Non-Lit Slim Frame)", price: 1295.80 }
+          { size: "3ft (Non-Lit Slim Frame)", price: 273.00 },
+          { size: "10ft (Non-Lit Slim Frame)", price: 735.00 },
+          { size: "20ft (Non-Lit Slim Frame)", price: 1425.00 }
         ],
         rush_price: 150.00,
         rush_label: "Express 2-Day Shipping",
@@ -165,7 +165,7 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["LED Backlit Tension Fabric"],
         variants: [
-          { size: "10ft (Backlit Slim Frame)", price: 1799.80 }
+          { size: "10ft (Backlit Slim Frame)", price: 1952.00 }
         ],
         rush_price: 250.00,
         rush_label: "Express 2-Day Shipping",
@@ -180,8 +180,8 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["LED Backlit Tension Fabric"],
         variants: [
-          { size: "8ft SEG Backlit Popup", price: 1735.58 },
-          { size: "10ft SEG Backlit Popup", price: 2199.78 }
+          { size: "8ft SEG Backlit Popup", price: 1864.00 },
+          { size: "10ft SEG Backlit Popup", price: 2331.00 }
         ],
         rush_price: 300.00,
         rush_label: "Express 2-Day Shipping",
@@ -196,9 +196,9 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "wedding"],
         materials: ["8.8 oz. Tension Fabric"],
         variants: [
-          { size: "6ft Curved Display (Frame + Graphic)", price: 482.60 },
-          { size: "8ft Curved Display (Frame + Graphic)", price: 627.00 },
-          { size: "10ft Curved Display (Frame + Graphic)", price: 652.60 }
+          { size: "6ft Curved Display (Frame + Graphic)", price: 511.00 },
+          { size: "8ft Curved Display (Frame + Graphic)", price: 655.00 },
+          { size: "10ft Curved Display (Frame + Graphic)", price: 681.00 }
         ],
         rush_price: 90.00,
         rush_label: "Express 2-Day Shipping",
@@ -308,8 +308,8 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail", "wedding"],
         materials: ["13oz Matte Vinyl", "Premium Block-out Fabric"],
         variants: [
-          { size: "33 in. x 81 in. (Standard)", price: 137.50 },
-          { size: "47 in. x 81 in. (Grand)", price: 280.00 }
+          { size: "33 in. x 81 in. (Standard)", price: 137.00 },
+          { size: "47 in. x 81 in. (Grand)", price: 279.00 }
         ],
         rush_price: 45.00,
         rush_label: "Express 2-Day Shipping",
@@ -324,8 +324,8 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["13oz Matte Vinyl", "Premium Block-out Fabric"],
         variants: [
-          { size: "33 in. x 81 in. (Single Sided)", price: 206.00 },
-          { size: "33 in. x 81 in. (Double Sided)", price: 509.00 }
+          { size: "33 in. x 81 in. (Single Sided)", price: 192.00 },
+          { size: "33 in. x 81 in. (Double Sided)", price: 434.00 }
         ],
         rush_price: 55.00,
         rush_label: "Express 2-Day Shipping",
@@ -340,8 +340,8 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["Stretch Fabric Sleeve"],
         variants: [
-          { size: "36 in. x 90 in.", price: 357.50 },
-          { size: "48 in. x 90 in.", price: 412.50 }
+          { size: "36 in. x 90 in.", price: 339.00 },
+          { size: "48 in. x 90 in.", price: 411.00 }
         ],
         rush_price: 70.00,
         rush_label: "Express 2-Day Shipping",
@@ -356,8 +356,8 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail", "birthday"],
         materials: ["13oz Matte Vinyl"],
         variants: [
-          { size: "24 in. x 63 in. (Standard)", price: 75.50 },
-          { size: "32 in. x 71 in. (Large)", price: 103.00 }
+          { size: "24 in. x 63 in. (Standard)", price: 89.00 },
+          { size: "32 in. x 71 in. (Large)", price: 111.00 }
         ],
         rush_price: 25.00,
         rush_label: "Express 2-Day Shipping",
@@ -372,7 +372,7 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail", "wedding"],
         materials: ["13oz Matte Vinyl"],
         variants: [
-          { size: "11.5 in. x 17.5 in. (Mini)", price: 55.00 }
+          { size: "11.5 in. x 17.5 in. (Mini)", price: 71.00 }
         ],
         rush_price: 15.00,
         rush_label: "Express 2-Day Shipping",
@@ -387,10 +387,10 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
-          { size: "Small 9 ft.", price: 164.00 },
-          { size: "Medium 10.5 ft.", price: 164.00 },
-          { size: "Large 14 ft. (Popular)", price: 175.00 },
-          { size: "X-Large 18 ft.", price: 220.00 }
+          { size: "Small 9 ft.", price: 161.00 },
+          { size: "Medium 10.5 ft.", price: 161.00 },
+          { size: "Large 14 ft. (Popular)", price: 170.00 },
+          { size: "X-Large 18 ft.", price: 206.00 }
         ],
         rush_price: 35.00,
         rush_label: "Express 2-Day Shipping",
@@ -405,10 +405,10 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
-          { size: "Small 9 ft.", price: 164.00 },
-          { size: "Medium 10.5 ft.", price: 164.00 },
-          { size: "Large 14 ft.", price: 175.00 },
-          { size: "X-Large 18 ft.", price: 220.00 }
+          { size: "Small 9 ft.", price: 161.00 },
+          { size: "Medium 10.5 ft.", price: 161.00 },
+          { size: "Large 14 ft.", price: 170.00 },
+          { size: "X-Large 18 ft.", price: 206.00 }
         ],
         rush_price: 35.00,
         rush_label: "Express 2-Day Shipping",
@@ -423,10 +423,10 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
-          { size: "Small 7 ft.", price: 164.00 },
-          { size: "Medium 9 ft.", price: 164.00 },
-          { size: "Large 11.2 ft.", price: 175.00 },
-          { size: "X-Large 13.5 ft.", price: 220.00 }
+          { size: "Small 7 ft.", price: 161.00 },
+          { size: "Medium 9 ft.", price: 161.00 },
+          { size: "Large 11.2 ft.", price: 170.00 },
+          { size: "X-Large 13.5 ft.", price: 206.00 }
         ],
         rush_price: 35.00,
         rush_label: "Express 2-Day Shipping",
@@ -441,9 +441,9 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
-          { size: "Small 8.5 ft.", price: 257.00 },
-          { size: "Medium 11.8 ft.", price: 286.00 },
-          { size: "Large 15 ft.", price: 315.00 }
+          { size: "Small 8.5 ft.", price: 267.00 },
+          { size: "Medium 11.8 ft.", price: 290.00 },
+          { size: "Large 15 ft.", price: 313.00 }
         ],
         rush_price: 45.00,
         rush_label: "Express 2-Day Shipping",
@@ -458,7 +458,7 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
-          { size: "One Size 16 ft.", price: 190.00 }
+          { size: "One Size 16 ft.", price: 213.00 }
         ],
         rush_price: 30.00,
         rush_label: "Express 2-Day Shipping",
@@ -473,9 +473,9 @@ export const CATEGORIZED_PRODUCTS = {
         themes: ["corporate", "expo", "retail", "wedding"],
         materials: ["Premium Polyester Fabric"],
         variants: [
-          { size: "3ft x 2ft", price: 49.50 },
-          { size: "5ft x 3ft", price: 124.00 },
-          { size: "6ft x 4ft", price: 198.00 }
+          { size: "3ft x 2ft", price: 66.00 },
+          { size: "5ft x 3ft", price: 126.00 },
+          { size: "6ft x 4ft", price: 185.00 }
         ],
         rush_price: 15.00,
         rush_label: "Express 2-Day Shipping",
