@@ -383,7 +383,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Feather Angled Flag",
         category: "Flags",
         image: "/images/covers/feather-angled-flag.jpg",
-        description: "Premium angled feather flag for high visibility indoor and outdoor branding. Includes ground spike or cross base options. Standard 5-7 day shipping included. / Bandera pluma angular premium para publicidad de alto impacto en interiores y exteriores. Incluye estaca para tierra o base en cruz. Envío estándar gratis (5-7 días).",
+        description: "Premium angled feather flag for high visibility indoor and outdoor branding. Includes pole and ground spike for grass. Hard-surface bases available as extras: Cross Base +$34, Square Base +$42, Cross Base with Water Bag +$44. Standard 5-7 day shipping included. / Bandera pluma angular premium para publicidad de alto impacto en interiores y exteriores. Incluye poste y estaca para grama. Bases para piso duro disponibles como extra: Base en Cruz +$34, Base Cuadrada +$42, Base en Cruz con Bolsa de Agua +$44. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
@@ -401,7 +401,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Feather Convex Flag",
         category: "Flags",
         image: "/images/covers/feather-convex-flag.jpg",
-        description: "Sleek convex bottom feather flag designed to stand out. Ideal for retail stores and outdoor corporate events. Standard 5-7 day shipping included. / Bandera pluma convexa elegante diseñada para destacar. Ideal para tiendas y eventos corporativos al aire libre. Envío estándar gratis (5-7 días).",
+        description: "Sleek convex bottom feather flag designed to stand out. Ideal for retail stores and outdoor corporate events. Includes pole and ground spike for grass. Hard-surface bases available as extras: Cross Base +$34, Square Base +$42, Cross Base with Water Bag +$44. Standard 5-7 day shipping included. / Bandera pluma convexa elegante diseñada para destacar. Ideal para tiendas y eventos corporativos al aire libre. Incluye poste y estaca para grama. Bases para piso duro disponibles como extra: Base en Cruz +$34, Base Cuadrada +$42, Base en Cruz con Bolsa de Agua +$44. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
@@ -419,7 +419,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Teardrop Advertising Flag",
         category: "Flags",
         image: "/images/covers/teardrop-flag.jpg",
-        description: "Distinctive teardrop shape keeps the flag taut even in light wind. High-impact visibility for festivals, markets, and shopfronts. Standard 5-7 day shipping included. / Bandera de gota publicitaria de alta resistencia. Mantiene la tela tensada con el viento. Ideal para festivales y fachadas. Envío estándar gratis (5-7 días).",
+        description: "Distinctive teardrop shape keeps the flag taut even in light wind. High-impact visibility for festivals, markets, and shopfronts. Includes pole and ground spike for grass. Hard-surface bases available as extras: Cross Base +$34, Square Base +$42, Cross Base with Water Bag +$44. Standard 5-7 day shipping included. / Bandera de gota publicitaria de alta resistencia. Mantiene la tela tensada con el viento. Ideal para festivales y fachadas. Incluye poste y estaca para grama. Bases para piso duro disponibles como extra: Base en Cruz +$34, Base Cuadrada +$42, Base en Cruz con Bolsa de Agua +$44. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
@@ -437,7 +437,7 @@ export const CATEGORIZED_PRODUCTS = {
         name: "Rectangle Advertising Flag",
         category: "Flags",
         image: "/images/covers/rectangle-flag.jpg",
-        description: "Large rectangular fabric flag offering maximum print space for company logos and messaging. Complete with hardware and stand. Standard 5-7 day shipping included. / Bandera rectangular de gran formato para máxima área de impresión de logos corporativos. Incluye estructura y base. Envío estándar gratis (5-7 días).",
+        description: "Large rectangular fabric flag offering maximum print space for company logos and messaging. Includes pole and ground spike for grass. Hard-surface bases available as extras: Cross Base +$34, Square Base +$42, Cross Base with Water Bag +$44. Standard 5-7 day shipping included. / Bandera rectangular de gran formato para máxima área de impresión de logos corporativos. Incluye poste y estaca para grama. Bases para piso duro disponibles como extra: Base en Cruz +$34, Base Cuadrada +$42, Base en Cruz con Bolsa de Agua +$44. Envío estándar gratis (5-7 días).",
         themes: ["corporate", "expo", "retail"],
         materials: ["Premium Polyester Fabric"],
         variants: [
