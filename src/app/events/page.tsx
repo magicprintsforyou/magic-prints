@@ -18,7 +18,7 @@ export default function EventsPage() {
     { id: "weddings", title: language === 'en' ? "Weddings" : "Bodas", image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600", count: "1 theme available", icon: <Sparkles className="text-white" size={20} /> },
     { id: "graduations", title: language === 'en' ? "Graduations" : "Graduaciones", image: "/images/events/graduation.jpg", count: "1 theme available", icon: <Award className="text-white" size={20} /> },
     { id: "churches", title: language === 'en' ? "Churches & Assemblies" : "Iglesias y Asambleas", image: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=600", count: "1 theme available", icon: <MapPin className="text-white" size={20} /> },
-    { id: "corporate", title: language === 'en' ? "Corporate & Expos" : "Corporativos y Ferias", image: "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?q=80&w=600", count: "2 themes available", icon: <Briefcase className="text-white" size={20} /> },
+    { id: "corporate", title: language === 'en' ? "Corporate & Expos" : "Corporativos y Ferias", image: "/images/events/samoa-beauty-grand-opening.jpg", count: "2 themes available", icon: <Briefcase className="text-white" size={20} /> },
     { id: "life", title: language === 'en' ? "Celebrations of Life" : "Memoriales / Vida", image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=600", count: "1 theme available", icon: <Clock className="text-white" size={20} /> }
   ];
 
@@ -162,6 +162,76 @@ export default function EventsPage() {
                   {(language === 'en'
                     ? ['Custom backdrops & photo panels', 'Draping & fabric styling', 'Floral arrangements', 'Light-up marquee numbers & letters', 'Balloon garlands & arches', 'Floor wraps & signage', 'Delivery, setup & styling', 'Photo restoration for displays']
                     : ['Backdrops y paneles de fotos personalizados', 'Cortinas y decoración con telas', 'Arreglos florales', 'Números y letras gigantes con luces', 'Guirnaldas y arcos de globos', 'Floor wraps y letreros', 'Entrega, montaje y decoración', 'Restauración de fotos para exhibición']
+                  ).map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
+                      <span className="w-6 h-6 rounded-full bg-[#d90082] flex items-center justify-center shrink-0 mt-0.5"><Check size={13} className="text-white" /></span>
+                      <span className="font-medium">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* FEATURED: Grand Openings & Storefront Branding */}
+            <div className="mb-24">
+              <div className="text-center max-w-3xl mx-auto mb-12">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d90082]/10 text-[#d90082] font-black text-xs tracking-widest uppercase mb-6 border border-[#d90082]/20">
+                  <Briefcase size={14} /> {language === 'en' ? 'Grand Openings & Storefronts' : 'Inauguraciones y Locales'}
+                </div>
+                <h2 className="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter italic leading-none">
+                  {language === 'en' ? 'Grand Openings That Stop Traffic' : 'Inauguraciones que Llaman la Atención'}
+                </h2>
+                <p className="text-gray-400 text-lg font-light italic leading-relaxed">
+                  {language === 'en'
+                    ? 'Real grand opening we styled for Samoa Beauty Aesthetics: custom window vinyl lettering, door graphics with hours and a scannable booking QR, an organic balloon garland in blush, cream and gold, and a branded feather flag at the entrance.'
+                    : 'Inauguración real que preparamos para Samoa Beauty Aesthetics: letras de vinil personalizadas en las ventanas, gráficos en la puerta con horario y un QR escaneable para reservar, una guirnalda orgánica de globos en tonos rosa, crema y dorado, y una bandera feather con su marca en la entrada.'}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div className="lg:col-span-2 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl">
+                  <img src="/images/events/samoa-beauty-grand-opening.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Samoa Beauty Aesthetics grand opening storefront with window vinyl, balloon garland and feather flag' : 'Inauguración de Samoa Beauty Aesthetics con vinil en ventanas, guirnalda de globos y bandera feather'} />
+                </div>
+                <div className="rounded-[40px] overflow-hidden border border-white/10 shadow-2xl">
+                  <img src="/images/events/samoa-beauty-balloons.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Balloon garland detail at a business grand opening entrance' : 'Detalle de guirnalda de globos en la entrada de una inauguración'} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div className="rounded-[30px] overflow-hidden border border-white/10 shadow-xl aspect-[4/3]">
+                  <img src="/images/events/samoa-beauty-storefront.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Storefront window vinyl lettering for a beauty business' : 'Letras de vinil en la ventana de un negocio de belleza'} />
+                </div>
+                <div className="rounded-[30px] overflow-hidden border border-white/10 shadow-xl aspect-[4/3]">
+                  <img src="/images/events/samoa-beauty-flag.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Custom feather flag with business branding' : 'Bandera feather personalizada con la marca del negocio'} />
+                </div>
+                <div className="rounded-[30px] overflow-hidden border border-white/10 shadow-xl aspect-[4/3]">
+                  <img src="/images/events/samoa-beauty-door.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Door graphics with business hours and booking QR code' : 'Gráficos en puerta con horario y código QR para reservar'} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white/5 border border-white/10 rounded-[40px] p-10 md:p-14">
+                <div>
+                  <h3 className="text-3xl font-black uppercase tracking-tight mb-4">
+                    {language === 'en' ? 'Your Storefront Is Your First Impression' : 'Tu Local es tu Primera Impresión'}
+                  </h3>
+                  <p className="text-gray-400 font-light italic leading-relaxed mb-6">
+                    {language === 'en'
+                      ? 'Opening a salon, med spa, boutique, restaurant or office in DFW? We design, print and install the complete storefront package — window graphics, signage, flags and balloons — so your business looks established from day one.'
+                      : '¿Estás abriendo un salón, med spa, boutique, restaurante u oficina en DFW? Diseñamos, imprimimos e instalamos el paquete completo para tu local — gráficos en ventanas, letreros, banderas y globos — para que tu negocio se vea establecido desde el primer día.'}
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    <a href="/quote" className="inline-flex items-center gap-2 px-8 py-4 bg-[#d90082] text-white rounded-full font-black text-xs tracking-widest uppercase hover:bg-[#ff2a70] hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
+                      {language === 'en' ? 'Request a Branding Quote' : 'Pedir Cotización de Branding'} <ChevronRight size={14} />
+                    </a>
+                    <a href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white rounded-full font-black text-xs tracking-widest uppercase border border-white/20 hover:bg-white/20 active:scale-95 transition-all">
+                      {language === 'en' ? 'Contact Us' : 'Contáctanos'}
+                    </a>
+                  </div>
+                </div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  {(language === 'en'
+                    ? ['Window vinyl lettering & logos', 'Door graphics: hours & info', 'QR code decals for booking', 'Balloon garlands & arches', 'Feather flags & banners', 'Storefront signs & decals', 'Grand opening packages', 'Delivery & installation']
+                    : ['Letras y logos de vinil en ventanas', 'Gráficos en puerta: horario e info', 'Calcomanías con QR para reservar', 'Guirnaldas y arcos de globos', 'Banderas feather y banners', 'Letreros y calcomanías para locales', 'Paquetes de inauguración', 'Entrega e instalación']
                   ).map((item, i) => (
                     <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
                       <span className="w-6 h-6 rounded-full bg-[#d90082] flex items-center justify-center shrink-0 mt-0.5"><Check size={13} className="text-white" /></span>
