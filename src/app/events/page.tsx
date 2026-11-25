@@ -242,6 +242,76 @@ export default function EventsPage() {
               </div>
             </div>
 
+            {/* FEATURED: Industrial & Heavy Equipment Decals */}
+            <div className="mb-24">
+              <div className="text-center max-w-3xl mx-auto mb-12">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d90082]/10 text-[#d90082] font-black text-xs tracking-widest uppercase mb-6 border border-[#d90082]/20">
+                  <Briefcase size={14} /> {language === 'en' ? 'Industrial & Heavy Equipment' : 'Industrial y Maquinaria Pesada'}
+                </div>
+                <h2 className="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter italic leading-none">
+                  {language === 'en' ? 'Decals for Heavy Machinery' : 'Decals para Maquinaria Pesada'}
+                </h2>
+                <p className="text-gray-400 text-lg font-light italic leading-relaxed">
+                  {language === 'en'
+                    ? 'Real on-site installation for Herling Energy: custom decals produced and installed by our team directly at their project, on a crawler crane. We travel to your job site — your equipment never has to stop working to get branded.'
+                    : 'Instalación real en sitio para Herling Energy: decals personalizados producidos e instalados por nuestro equipo directamente en su proyecto, sobre una grúa de orugas. Llegamos hasta tu obra — tu equipo no tiene que parar para llevar tu marca.'}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div className="lg:col-span-2 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl">
+                  <img src="/images/events/herling-energy-crane.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Crawler crane with Herling Energy decals installed on site' : 'Grúa de orugas con decals de Herling Energy instalados en sitio'} />
+                </div>
+                <div className="rounded-[40px] overflow-hidden border border-white/10 shadow-2xl">
+                  <img src="/images/events/herling-energy-install.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Installer applying a large equipment decal on site' : 'Instalador aplicando un decal grande en sitio'} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div className="rounded-[30px] overflow-hidden border border-white/10 shadow-xl aspect-[4/3]">
+                  <img src="/images/events/herling-energy-decal.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Large logo decal on heavy equipment body' : 'Decal grande con logo en el cuerpo de maquinaria pesada'} />
+                </div>
+                <div className="rounded-[30px] overflow-hidden border border-white/10 shadow-xl aspect-[4/3]">
+                  <img src="/images/events/herling-energy-cab.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Company logo decal on crane cab' : 'Decal con logo de la compañía en la cabina de la grúa'} />
+                </div>
+                <div className="rounded-[30px] overflow-hidden border border-white/10 shadow-xl aspect-[4/3]">
+                  <img src="/images/events/herling-energy-side.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Equipment decal side view at the job site' : 'Vista lateral de decal en equipo en la obra'} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white/5 border border-white/10 rounded-[40px] p-10 md:p-14">
+                <div>
+                  <h3 className="text-3xl font-black uppercase tracking-tight mb-4">
+                    {language === 'en' ? 'We Come to Your Project' : 'Llegamos a tu Proyecto'}
+                  </h3>
+                  <p className="text-gray-400 font-light italic leading-relaxed mb-6">
+                    {language === 'en'
+                      ? 'Cranes, rigs, trucks, trailers and heavy equipment across Texas: we produce durable, weather-ready decals and install them at your yard or job site, so your brand is working everywhere your machines are.'
+                      : 'Grúas, rigs, camiones, tráileres y maquinaria pesada en todo Texas: producimos decals duraderos, listos para el clima, y los instalamos en tu patio o en tu obra, para que tu marca trabaje dondequiera que estén tus máquinas.'}
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    <a href="/quote" className="inline-flex items-center gap-2 px-8 py-4 bg-[#d90082] text-white rounded-full font-black text-xs tracking-widest uppercase hover:bg-[#ff2a70] hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
+                      {language === 'en' ? 'Request an Industrial Quote' : 'Pedir Cotización Industrial'} <ChevronRight size={14} />
+                    </a>
+                    <a href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white rounded-full font-black text-xs tracking-widest uppercase border border-white/20 hover:bg-white/20 active:scale-95 transition-all">
+                      {language === 'en' ? 'Contact Us' : 'Contáctanos'}
+                    </a>
+                  </div>
+                </div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  {(language === 'en'
+                    ? ['Equipment & fleet decals', 'Crane & rigging branding', 'On-site installation at your project', 'Weather-resistant vinyl', 'Truck & trailer graphics', 'Safety & ID decals', 'Logo design & resizing', 'Fast turnaround for fleets']
+                    : ['Decals para equipos y flotillas', 'Branding para grúas y rigging', 'Instalación en sitio en tu proyecto', 'Vinil resistente al clima', 'Gráficos para camiones y tráileres', 'Decals de seguridad e identificación', 'Diseño y ajuste de logos', 'Entrega rápida para flotillas']
+                  ).map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
+                      <span className="w-6 h-6 rounded-full bg-[#d90082] flex items-center justify-center shrink-0 mt-0.5"><Check size={13} className="text-white" /></span>
+                      <span className="font-medium">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {occasions.map((occ, idx) => (
                 <div 
