@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { Calendar, Sparkles, ChevronRight, Gift, PartyPopper, Heart, Award, MapPin, Briefcase, Clock, ArrowLeft } from 'lucide-react';
+import { Calendar, Sparkles, ChevronRight, Gift, PartyPopper, Heart, Award, MapPin, Briefcase, Clock, ArrowLeft, Check } from 'lucide-react';
 import { useLanguage, useProducts } from '@/context/ProductContext';
 import ProductModal from '@/components/ProductModal';
 
@@ -13,7 +13,7 @@ export default function EventsPage() {
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
 
   const occasions = [
-    { id: "birthdays", title: language === 'en' ? "Birthdays (Kids & Adults)" : "Cumpleaños (Niños y Adultos)", image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=600", count: "4 themes available", icon: <PartyPopper className="text-white" size={20} /> },
+    { id: "birthdays", title: language === 'en' ? "Birthdays (Kids & Adults)" : "Cumpleaños (Niños y Adultos)", image: "/images/events/80th-birthday-backdrop-setup.jpg", count: "4 themes available", icon: <PartyPopper className="text-white" size={20} /> },
     { id: "babyshowers", title: language === 'en' ? "Baby Showers" : "Baby Showers", image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=600", count: "2 themes available", icon: <Heart className="text-white" size={20} /> },
     { id: "weddings", title: language === 'en' ? "Weddings" : "Bodas", image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600", count: "1 theme available", icon: <Sparkles className="text-white" size={20} /> },
     { id: "graduations", title: language === 'en' ? "Graduations" : "Graduaciones", image: "/images/events/graduation.jpg", count: "1 theme available", icon: <Award className="text-white" size={20} /> },
@@ -97,6 +97,79 @@ export default function EventsPage() {
                   ? 'Select your event type below. We will customize backdrops, floor wraps, and decorations matching your exact theme.' 
                   : 'Selecciona tu tipo de evento a continuación. Personalizaremos backdrops, floor wraps y decoraciones combinadas con tu temática exacta.'}
               </p>
+            </div>
+
+            {/* FEATURED: Full Event Decoration Service */}
+            <div className="mb-24">
+              <div className="text-center max-w-3xl mx-auto mb-12">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d90082]/10 text-[#d90082] font-black text-xs tracking-widest uppercase mb-6 border border-[#d90082]/20">
+                  <PartyPopper size={14} /> {language === 'en' ? 'Full Event Decoration' : 'Decoración Completa de Eventos'}
+                </div>
+                <h2 className="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter italic leading-none">
+                  {language === 'en' ? 'We Style the Whole Event' : 'Decoramos Todo tu Evento'}
+                </h2>
+                <p className="text-gray-400 text-lg font-light italic leading-relaxed">
+                  {language === 'en'
+                    ? 'Real setup from a recent 80th birthday: a custom backdrop with a restored vintage photo panel, velvet draping, floral styling, light-up marquee numbers and candle details — designed, printed, delivered and installed by our team.'
+                    : 'Montaje real de un cumpleaños 80 reciente: backdrop personalizado con panel de foto antigua restaurada, cortinas de terciopelo, arreglo floral, números gigantes con luces y detalle de velas — diseñado, impreso, entregado e instalado por nuestro equipo.'}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div className="lg:col-span-2 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl">
+                  <img src="/images/events/80th-birthday-backdrop-setup.jpg" className="w-full h-full object-cover" alt={language === 'en' ? '80th birthday full decoration setup with custom backdrop, draping and florals' : 'Decoración completa de cumpleaños 80 con backdrop personalizado, cortinas y flores'} />
+                </div>
+                <div className="rounded-[40px] overflow-hidden border border-white/10 shadow-2xl bg-black">
+                  <video src="/images/events/80th-birthday-decoration.mp4" autoPlay muted loop playsInline className="w-full h-full object-cover" />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div className="rounded-[30px] overflow-hidden border border-white/10 shadow-xl aspect-[4/5]">
+                  <img src="/images/events/80th-birthday-backdrop-setup-2.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Custom birthday backdrop with restored photo panel' : 'Backdrop personalizado con panel de foto restaurada'} />
+                </div>
+                <div className="rounded-[30px] overflow-hidden border border-white/10 shadow-xl aspect-[4/5]">
+                  <img src="/images/events/80th-birthday-backdrop-setup-3.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Event backdrop styling with florals and candles' : 'Montaje de backdrop con flores y velas'} />
+                </div>
+                <div className="rounded-[30px] overflow-hidden border border-white/10 shadow-xl aspect-[4/5]">
+                  <img src="/images/events/80th-birthday-light-up-numbers.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Light-up marquee numbers for an 80th birthday' : 'Números gigantes con luces para cumpleaños 80'} />
+                </div>
+                <div className="rounded-[30px] overflow-hidden border border-white/10 shadow-xl aspect-[4/5]">
+                  <img src="/images/events/80th-birthday-cake.jpg" className="w-full h-full object-cover" alt={language === 'en' ? 'Styled 80th birthday cake table detail' : 'Detalle de mesa de pastel de cumpleaños 80'} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white/5 border border-white/10 rounded-[40px] p-10 md:p-14">
+                <div>
+                  <h3 className="text-3xl font-black uppercase tracking-tight mb-4">
+                    {language === 'en' ? 'One Team for the Complete Look' : 'Un Solo Equipo para Todo el Montaje'}
+                  </h3>
+                  <p className="text-gray-400 font-light italic leading-relaxed mb-6">
+                    {language === 'en'
+                      ? 'Hire us to decorate your full event — birthdays, weddings, quinceañeras, baby showers, graduations and corporate events across the DFW area. Tell us your theme and date, and we handle the design, printing, delivery, setup and styling.'
+                      : 'Contrátanos para decorar tu evento completo — cumpleaños, bodas, quinceañeras, baby showers, graduaciones y eventos corporativos en todo el área DFW. Cuéntanos tu temática y fecha, y nosotros nos encargamos del diseño, la impresión, la entrega, el montaje y la decoración.'}
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    <a href="/quote" className="inline-flex items-center gap-2 px-8 py-4 bg-[#d90082] text-white rounded-full font-black text-xs tracking-widest uppercase hover:bg-[#ff2a70] hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
+                      {language === 'en' ? 'Request a Decoration Quote' : 'Pedir Cotización de Decoración'} <ChevronRight size={14} />
+                    </a>
+                    <a href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white rounded-full font-black text-xs tracking-widest uppercase border border-white/20 hover:bg-white/20 active:scale-95 transition-all">
+                      {language === 'en' ? 'Contact Us' : 'Contáctanos'}
+                    </a>
+                  </div>
+                </div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  {(language === 'en'
+                    ? ['Custom backdrops & photo panels', 'Draping & fabric styling', 'Floral arrangements', 'Light-up marquee numbers & letters', 'Balloon garlands & arches', 'Floor wraps & signage', 'Delivery, setup & styling', 'Photo restoration for displays']
+                    : ['Backdrops y paneles de fotos personalizados', 'Cortinas y decoración con telas', 'Arreglos florales', 'Números y letras gigantes con luces', 'Guirnaldas y arcos de globos', 'Floor wraps y letreros', 'Entrega, montaje y decoración', 'Restauración de fotos para exhibición']
+                  ).map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
+                      <span className="w-6 h-6 rounded-full bg-[#d90082] flex items-center justify-center shrink-0 mt-0.5"><Check size={13} className="text-white" /></span>
+                      <span className="font-medium">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
