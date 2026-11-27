@@ -263,6 +263,16 @@ export const CATEGORIZED_PRODUCTS = {
     image: "/images/covers/grand-production-kit.jpg",
     items: [
       {
+        id: "anand-karaj-welcome-backdrop-combo",
+        name: "Anand Karaj Welcome Sign & Backdrop Combo",
+        category: "Signature",
+        image: "/images/anand-karaj-combo.jpg",
+        description: "A two-piece Sikh wedding set for your Anand Karaj: a personalized welcome sign with the Khanda symbol, the couple's names and wedding date, paired with a matching floral garden backdrop. Printed on premium foam board with stands included. For indoor use. Built to order in Arlington, TX and shipped folded nationwide.",
+        price: 240.00,
+        includes: ["1 Welcome Sign (5 ft tall x 3.5 ft wide)", "1 Backdrop (6x4 ft)", "Stands Included"],
+        themes: ["wedding", "sikh wedding", "anand karaj"]
+      },
+      {
         id: "essential-kit",
         name: "Essential Event Kit",
         category: "Signature",
